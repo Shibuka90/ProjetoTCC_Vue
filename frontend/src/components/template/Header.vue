@@ -1,18 +1,36 @@
 <template>
   <header class="header">
-      <a class="toggle">
-          <i class="fa fa-lg"></i>
+      <a class="toggle" @click="toggleMenu" v-if="!hideToggle">
+          <i class="fa fa-lg" :class="icon"></i>
       </a>
-      <h1 class="title"><i class="fa fa-home"></i> - {{title}}</h1>
+      <h1 class="title">
+          {{title}}
+      </h1>
+      <UserDropDown v-if="!hideUserDropdown" />
   </header>
 </template>
 
 <script>
+import UserDropDown from './UserDropDown'
+
 export default {
         name: 'Header',
+        components: { UserDropDown },
         props: {
             title: String,
-            hideToogle: Boolean
+            hideToggle: Boolean,
+            hideUserDropdown: Boolean,
+        },
+
+        computed: {
+            icon() {
+                return this.$store.state.isMenuVisible ? "fa-angle-left" : "fa-angle-down"
+            }
+        },
+        methods: {
+            toggleMenu(){
+                this.$store.commit('toggleMenu')
+            }
         }
 }
 </script>
@@ -23,7 +41,7 @@ export default {
         background: linear-gradient(to right,  #e52d27, #b31217 );
 
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
     }
 
@@ -32,6 +50,7 @@ export default {
         color: #fff;
         font-weight: 100;
         flex-grow: 1;
+        text-align: center;
     }
 
     .title a{
@@ -39,7 +58,19 @@ export default {
         text-decoration: none;
     }
 
-    .fa{
-        font-size: 1.6em;
+    header.header > a.toggle {
+        width: 60px;
+        height: 100%;
+        color: #fff;
+        justify-content: flex-start;
+        text-decoration: none;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    header.header > a.toggle:hover{
+        background-color: rgba(0, 0, 0, 0.2);
     }
 </style>

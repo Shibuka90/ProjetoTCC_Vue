@@ -1,25 +1,27 @@
 <template>
-  <div id="app">
-    <Header title="SGCM - Sistema de Gestão de Clínica Médica"/>
+  <div id="app" :class="{'hide-menu': !isMenuVisible}" >
+    <Header title="SGCM - Sistema de Gestão de Clínica Médica" 
+        :hideToggle="false"
+        :hideUserDropdown="false"/>
     <Menu />
     <Content />
     <Footer />
-    <Logo />
+    
     
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Header from "@/components/template/Header"
 import Menu from "@/components/template/Menu"
 import Content from "@/components/template/Content"
 import Footer from "@/components/template/Footer"
-import Logo from "@/components/template/Logo"
-
 
 export default {
   name: 'App',
-  components: { Header, Menu, Content, Footer, Logo }
+  components: { Header, Menu, Content, Footer },
+  computed: mapState(['isMenuVisible'])
 }
 </script>
 
@@ -33,13 +35,24 @@ body{
 }
 
 #app{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
   height: 100vh;
   display: grid;
-  grid-template-rows: 100px 1fr 40px;
-  grid-template-columns: 250px 1fr;
+  grid-template-rows: 60px 1fr 40px;
+  grid-template-columns: 300px 1fr;
   grid-template-areas: 
-        "logo header"
+        "header header"
         "menu content"
         "menu footer";
 }
+
+#app.hide-menu{
+  grid-template-areas: 
+        "header header"
+        "content content"
+        "footer footer";
+}
+
 </style>
