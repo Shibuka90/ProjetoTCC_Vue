@@ -8,20 +8,22 @@
     <div class="menus-homecadastro">
       <div class="coluna1">
         <router-link to="/paciente">
-            <Menus icon="fa fa-user" title="Pacientes" />
+          <Menus icon="fa fa-user" title="Pacientes" />
         </router-link>
         <Menus icon="fa fa-user-md" title="Médicos" />
       </div>
       <div class="coluna2">
-          <Menus icon="fa fa-book-medical" title="Convênios" />
-        <Menus icon="fa fa-stethoscope" title="Especialidades" />          
+        <Menus icon="fa fa-book-medical" title="Convênios" />
+        <Menus icon="fa fa-stethoscope" title="Especialidades" />
       </div>
       <div class="coluna3">
         <Menus icon="fa fa-medkit" title="Serviços" />
+        <router-link to="/usuario">
           <Menus icon="fa fa-users" title="Colaboradores" />
+        </router-link>
       </div>
       <div class="coluna4">
-           <router-link to="/">
+        <router-link to="/">
           <Menus icon="fa fa-home" title="Menu Principal" />
         </router-link>
       </div>
@@ -32,7 +34,6 @@
 <script>
 import PageTitle from "../template/PageTitle.vue";
 import Menus from "./Menus.vue";
-
 
 export default {
   name: "HomeCadastro",
@@ -48,6 +49,21 @@ export default {
 }
 
 .coluna1 a:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.coluna2 a:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.coluna3 a:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.coluna4 a:hover {
   text-decoration: none;
   color: #000;
 }

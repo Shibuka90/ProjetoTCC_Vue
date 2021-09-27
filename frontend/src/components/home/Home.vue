@@ -7,13 +7,15 @@
             <router-link to="/homecadastro">
             <Menus icon="fa fa-folder" title="Cadastros Gerais" />
         </router-link>   
-        </div>             
+        </div> 
         <Menus icon="fa fa-calendar" title="Agendamento" />
-        <Menus icon="fa fa-users" title="Atendimento" />
+        <Menus icon="fa fa-users" title="Atendimento" />            
+        
     </div>
     <hr />
     <PageTitle icon="fa fa-first-aid" main="Gestão Clínica" sub="Apoio Clínico" />
     <div class="menus-home">
+        
         <Menus icon="fa fa-first-aid" title="Prontuario" />
     </div>
     <hr />
@@ -26,7 +28,7 @@ import Menus from './Menus.vue'
 
 export default {
   name: "Home",
-  components: { PageTitle,Menus },
+  components: { PageTitle, Menus },
 }
 </script>
 

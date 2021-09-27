@@ -1,7 +1,7 @@
 <template>
     <div class="menus">
         <div class="menus-icon">
-            <i :class="icon" :style="style"></i>
+            <i :class="icon"></i>
         </div>
         <span class="menus-title">{{title}}</span>
     </div>
