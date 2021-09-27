@@ -6,30 +6,24 @@
       sub="Pacientes - Médicos - Especialidades - Convênios - Serviços - Colaboradores"
     />
     <div class="menus-homecadastro">
-      <div class="home">
-        <router-link to="/">
-          <Menus icon="fa fa-home" title="Menu Principal" />
-        </router-link>
-      </div>
-      <div class="paciente">
-          <router-link to="/paciente">
+      <div class="coluna1">
+        <router-link to="/paciente">
             <Menus icon="fa fa-user" title="Pacientes" />
         </router-link>
+        <Menus icon="fa fa-user-md" title="Médicos" />
       </div>
-      <div class="medico">
-          <Menus icon="fa fa-user-md" title="Médicos" />
-      </div>
-      <div class="convenio">
+      <div class="coluna2">
           <Menus icon="fa fa-book-medical" title="Convênios" />
+        <Menus icon="fa fa-stethoscope" title="Especialidades" />          
       </div>
-      <div class="especialidade">
-          <Menus icon="fa fa-stethoscope" title="Especialidades" />
-      </div>
-      <div class="servico">
-          <Menus icon="fa fa-medkit" title="Serviços" />
-      </div>
-      <div class="usuarios">
+      <div class="coluna3">
+        <Menus icon="fa fa-medkit" title="Serviços" />
           <Menus icon="fa fa-users" title="Colaboradores" />
+      </div>
+      <div class="coluna4">
+           <router-link to="/">
+          <Menus icon="fa fa-home" title="Menu Principal" />
+        </router-link>
       </div>
     </div>
   </div>
@@ -53,7 +47,7 @@ export default {
   flex-wrap: wrap;
 }
 
-.home a:hover {
+.coluna1 a:hover {
   text-decoration: none;
   color: #000;
 }
