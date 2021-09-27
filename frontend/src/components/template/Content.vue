@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-      <p>Conteudo</p>
+      <router-view></router-view>
   </div>
 </template>
 
@@ -16,4 +16,5 @@ export default {
     background: #efefef;
     padding: 20px;
 }
+
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="app" :class="{'hide-menu': !isMenuVisible}" >
     <Header title="SGCM - Sistema de Gestão de Clínica Médica" 
-        :hideToggle="false"
+        :hideToggle="true"
         :hideUserDropdown="false"/>
     <Menu />
     <Content />
