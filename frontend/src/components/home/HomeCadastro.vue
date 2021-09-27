@@ -1,5 +1,5 @@
 <template>
-  <div id="home" :class="{ 'hide-menu': isMenuVisible }">
+  <div class="homecadastro">
     <PageTitle
       icon="fa fa-folder"
       main="Cadastros Gerais"
@@ -12,7 +12,9 @@
         </router-link>
       </div>
       <div class="paciente">
-          <Menus icon="fa fa-user" title="Pacientes" />
+          <router-link to="/paciente">
+            <Menus icon="fa fa-user" title="Pacientes" />
+        </router-link>
       </div>
       <div class="medico">
           <Menus icon="fa fa-user-md" title="Médicos" />
@@ -35,14 +37,12 @@
 
 <script>
 import PageTitle from "../template/PageTitle.vue";
-import Menu from "@/components/template/Menu";
 import Menus from "./Menus.vue";
-import { mapState } from "vuex";
+
 
 export default {
   name: "HomeCadastro",
-  components: { PageTitle, Menu, Menus },
-  computed: mapState(["isMenuVisible"]),
+  components: { PageTitle, Menus },
 };
 </script>
 
