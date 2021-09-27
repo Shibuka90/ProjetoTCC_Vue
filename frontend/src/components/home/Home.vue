@@ -2,29 +2,19 @@
   <div id="home" :class="{ 'hide-menu': isMenuVisible }">
     <PageTitle icon="fa fa-folder" main="Gestão de Cadastros" sub="Cadastros gerais"
     />
-    <div class="cadastros-gerais">
-      <div class="cadastro">
-        <router-link to="/homecadastro">
-          <i class="fa fa-folder"></i>
-        </router-link>
-        <span>Cadastos Gerais</span>
-      </div>
-      <div class="agendamento">
-        <i class="fa fa-calendar"></i>
-        <span>Agendamento</span>
-      </div>
-      <div class="atendimento">
-        <i class="fa fa-users"></i>
-        <span>Atendimento</span>
-      </div>
+    <div class="menus-home">
+        <div class="cadastro">
+            <router-link to="/homecadastro">
+            <Menus icon="fa fa-folder" title="Cadastros Gerais" />
+        </router-link>   
+        </div>             
+        <Menus icon="fa fa-calendar" title="Agendamento" />
+        <Menus icon="fa fa-users" title="Atendimento" />
     </div>
     <hr />
     <PageTitle icon="fa fa-first-aid" main="Gestão Clínica" sub="Apoio Clínico" />
-    <div class="cadastros-gerais">
-      <div class="prontuario">
-        <i class="fa fa-first-aid"></i>
-        <span>Prontuário</span>
-      </div>
+    <div class="menus-home">
+        <Menus icon="fa fa-first-aid" title="Prontuario" />
     </div>
     <hr />
   </div>
@@ -32,78 +22,27 @@
 
 <script>
 import PageTitle from "../template/PageTitle.vue";
+import Menus from './Menus.vue'
 import Menu from "@/components/template/Menu";
 import { mapState } from "vuex";
 
 export default {
   name: "Home",
-  components: { PageTitle, Menu },
+  components: { PageTitle, Menu, Menus },
   computed: mapState(["isMenuVisible"]),
 }
 </script>
 
 <style>
-.cadastros-gerais {
-  display: flex;
-  justify-content: space-evenly;
-}
+    .menus-home{
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
 
-.cadastro {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  align-items: center;
-}
-
-.cadastro i {
-  font-size: 5em;
-  color: red;
-}
-
-.agendamento {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  align-items: center;
-}
-
-.agendamento i {
-  font-size: 5em;
-  color: red;
-}
-
-.atendimento {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  align-items: center;
-}
-
-.atendimento i {
-  font-size: 5em;
-  color: red;
-}
-
-.prontuario {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  align-items: center;
-}
-
-.prontuario i {
-  font-size: 5em;
-  color: red;
-}
-
-#home.hide-menu {
-  grid-template-areas:
-    "header header"
-    "content content"
-    "footer footer";
-
-  display: flex;
-  flex-direction: row;
-}
+    .cadastro a:hover{
+        text-decoration: none;
+        color: #000;
+    }
 
 </style>
