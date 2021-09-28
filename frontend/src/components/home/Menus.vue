@@ -37,12 +37,12 @@ export default {
 
     }
     .menus-icon i{
-        font-size: 5rem;
+        font-size: 4rem;
          text-decoration: none;
     }
 
     .menus-titte{
-        font-size: 1.2rem;
+        font-size: 0.9rem;
          text-decoration: none;
     }
 </style>

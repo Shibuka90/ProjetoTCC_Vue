@@ -7,6 +7,7 @@ import './config/bootstrap'
 import './config/msgs'
 import './config/axios'
 import './config/mq'
+import './config/v-mask'
 
 
 import store from './config/store'
