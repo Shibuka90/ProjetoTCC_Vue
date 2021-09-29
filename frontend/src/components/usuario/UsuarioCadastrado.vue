@@ -235,11 +235,16 @@ export default {
                 })
                 .catch(showError)
         },
+          getUsuario(){
+            const url = `${baseApiUrl}/usuarios/${this.usuario.codigo}`
+             axios(url).then(res => this.usuario = res.data)
+        }
     },
-    mounted() {
-        const url = `${baseApiUrl}/usuarios/${this.$route.params.id}`
-        axios.get(url).then(res => this.usuario = res.data)
-    }
+     mounted() {
+        this.usuario.codigo = this.$route.params.codigo
+        this.getUsuario()
+
+  },
 }
 </script>
 
