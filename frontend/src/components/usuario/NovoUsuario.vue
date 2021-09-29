@@ -53,7 +53,7 @@
                         </datalist>
                     </b-form-group>
                 </b-col>       
-                   <b-col md="auto">
+                   <!-- <b-col md="auto">
                     <b-form-group label="Tipo de Usuário:" label-for="usuario-admin">
                         <b-form-input list="usuario-admin" type="text"  v-model="usuario.admin" required
                         :readonly="mode === 'remove'" />
@@ -61,7 +61,7 @@
                             <option v-for="admin in admin" :key="admin">{{admin}}</option>
                         </datalist>
                     </b-form-group>
-                </b-col>            
+                </b-col>             -->
             </b-row>
             <b-row>
                   <b-col md="6">
@@ -119,6 +119,12 @@
                 </b-col>
             </b-row>
             <b-row>
+                 <b-col md="auto">
+                    <b-form-group label="Número:" label-for="usuario-numero">
+                        <b-form-input id="usuario-numero" type="text"  v-model="usuario.numero" required
+                        :readonly="mode === 'remove'" placeholder="Informe o Número......." />
+                    </b-form-group>
+                </b-col>
                  <b-col md="6">
                     <b-form-group label="Bairro:" label-for="usuario-bairro">
                         <b-form-input id="usuario-bairro" type="text"  v-model="usuario.bairro" required
@@ -143,7 +149,7 @@
             </b-row>
             <b-row>
                 <b-col md="auto">
-                    <b-form-group label="Tel.DD:" label-for="usuario-telddd">
+                    <b-form-group label="Tel.DDD:" label-for="usuario-telddd">
                         <b-form-input id="usuario-telddd" type="text" v-mask="'##'" v-model="usuario.telddd" 
                         :readonly="mode === 'remove'" placeholder="xx" />
                     </b-form-group>
@@ -155,7 +161,7 @@
                     </b-form-group>
                 </b-col>
                   <b-col md="auto">
-                    <b-form-group label="Cel.DD:" label-for="usuario-celddd">
+                    <b-form-group label="Cel.DDD:" label-for="usuario-celddd">
                         <b-form-input id="usuario-celddd" type="text" v-mask="'##'" v-model="usuario.celddd" required
                         :readonly="mode === 'remove'" placeholder="xx" />
                     </b-form-group>
@@ -181,10 +187,10 @@
             </b-row>
             <b-row>
                 <b-col md="6">
-                <b-button variant="success" size='lg' class="mb-2" block>Incluir</b-button>
+                <b-button router-link to="/usuario" size='lg' class="mb-2" block>Cancelar</b-button>
                 </b-col>
                 <b-col md="6">
-                <b-button router-link to="/usuario" size='lg' block>Cancelar</b-button>
+                <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" >Incluir</b-button>
                 </b-col>
             </b-row>
         </b-form>
@@ -194,6 +200,8 @@
 
 <script>
 import PageTitle from "../template/PageTitle.vue"
+import { baseApiUrl, showError } from '@/global'
+import axios from 'axios'
 
 export default {
     name: "NovoUsuario",
@@ -203,7 +211,7 @@ export default {
             mode:'save',
             usuario: {},
             estadoCivil: ['Solteiro(a)', 'Divorciado(a)', 'Amasiado(a)', 'Casado(a)', 'Separado(a)', 'Uniao Estavel', 'Viuvo(a)'],
-            sexo: ['Masculino', 'Feminino', 'Outro'],
+            sexo: ['M', 'F'],
             admin: ['Gerente', 'Colaborador','Medico'],
             siglacr: ['CRM', 'COREN'],
             ufcr: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
@@ -213,6 +221,26 @@ export default {
                     'Vale', 'Via', 'Viela', 'Vila'],
             ufmunicipio: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
                     'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
+        }
+    },
+    methods: {
+        reset(){
+            this.mode = 'save'
+            this.usuario = {}
+        },
+       save() {
+            const method = this.usuario.codigo ? 'put' : 'post'
+            const codigo = this.usuario.codigo ? `/${this.usuario.codigo}` : ''
+            axios[method](`${baseApiUrl}/usuarios${codigo}`, this.usuario)
+                .then(() => {
+                    this.$toasted.global.defaultSuccess()
+                    this.reset()
+                })
+                .catch(showError)
+        },
+        loadUser(usuario, mode='save'){
+            this.mode = mode
+            this.usuario = {...usuario}
         }
     }
 }

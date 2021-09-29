@@ -5,14 +5,31 @@
       main="Colaboradores"
       sub="Grid de Colaboradores"
     />
-    <b-row class="botoes">
-      <b-button router-link to="/novousuario" variant="primary" size='lg'>Novo</b-button>
-      <b-button router-link to="/homecadastro" class="ml-2 mr-2" size="lg">Voltar</b-button>  
-      <b-button router-link to="/" class="fa fa-home" variant="danger" size="lg"></b-button>
+    <b-row>
+      <b-col md="8"> 
+        <div class="input">
+          <b-form-input id="presquisa" type="search" placeholder="Digite para pesquisar..."></b-form-input>     
+        </div>        
+      </b-col>
+      <b-col md="4">
+        <div class="botoes">
+         <b-button router-link to="/novousuario" variant="primary" size='lg'>Novo</b-button>
+          <b-button router-link to="/homecadastro" class="ml-2 mr-2" size="lg">Voltar</b-button>  
+          <b-button router-link to="/" class="fa fa-home" variant="danger" size="lg"></b-button>
+        </div>
+      </b-col>
+      
     </b-row>
-
     <b-table hover striped :items="usuarios" :fields="fields">
-      <template slot="actions"> </template>
+      <template slot="actions" slot-scope="data"> 
+        <b-button variant = "warning" class="mr-2">
+          <i class="fa fa-pencil"></i>
+        </b-button>
+        <b-button variant = "danger">
+          <i class="fas fa-trash-alt"></i>
+        </b-button>
+
+      </template>
     </b-table>
   </div>
 </template>
@@ -36,11 +53,9 @@ export default {
         { key: "email", label: "E-mail" },
         { key: "cpf", label: "CPF" },
         { key: "cargo", label: "Cargo" },
-        {
-          key: "admin",
-          label: "Adminstrador",
-          formatter: (value) => (value ? "Sim" : "Não"),
-        },
+        {key: "admin", label: "Adm",
+          formatter: (value) => (value ? "Sim" : "Não")},
+        { key:"actions", label: "Ações" },
       ],
     };
   },
@@ -63,7 +78,13 @@ export default {
 
 .botoes{
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    margin: 10px;
+}
+
+.input{
+    display: flex;
+    justify-content: flex-start;
     margin: 10px;
 }
 </style>
