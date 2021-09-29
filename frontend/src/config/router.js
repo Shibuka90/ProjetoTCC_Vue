@@ -6,6 +6,7 @@ import HomeCadastro from '@/components/home/HomeCadastro'
 import Pacientes from '@/components/paciente/Pacientes'
 import Usuarios from '@/components/usuario/Usuarios'
 import NovoUsuario from '@/components/usuario/NovoUsuario'
+import UsuarioCadastrado from '@/components/usuario/UsuarioCadastrado'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,10 @@ const routes = [{
     name: 'novousuario',
     path: '/novousuario',
     component: NovoUsuario
+}, {
+    name: 'usuariocadastrado',
+    path: '/usuario/:codigo',
+    component: UsuarioCadastrado
 }]
 
 export default new VueRouter({

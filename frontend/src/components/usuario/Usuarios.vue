@@ -23,7 +23,7 @@
     </b-row>
     <b-table hover striped :items="usuarios" :fields="fields">
       <template slot="actions" slot-scope="data"> 
-        <b-button variant = "warning" class="mr-2">
+        <b-button variant = "warning" class="mr-2" @click="loadUsuario()" router-link to ="/usuariocadastrado/:id">
           <i class="fa fa-pencil"></i>
         </b-button>
         <b-button variant = "danger">
@@ -37,7 +37,7 @@
 
 <script>
 import PageTitle from "../template/PageTitle.vue";
-import { baseApiUrl,  } from "@/global";
+import { baseApiUrl} from "@/global";
 import axios from "axios";
 
 export default {
