@@ -52,6 +52,7 @@ module.exports = app => {
             app.db('usuarios')
                 .update(usuario)
                 .where({ codigo: usuario.codigo })
+                .whereNull('deletedAt')
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
@@ -65,19 +66,36 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('usuarios')
-            .select('codigo', 'nome', 'email', 'cpf', 'cargo', 'admin' )
+            .select('codigo', 'nome', 'email', 'cpf', 'datanasc', 'estadocivil', 'sexo', 'cargo', 'siglacr', 'cr', 'ufcr',
+                    'cepusuario', 'tipo', 'endereco', 'numero', 'bairro', 'municipio', 'ufmunicipio', 'telddd', 'tel',
+                    'celddd', 'cel', 'admin' )
+            .whereNull('deletedAt')
             .then(usuarios => res.json(usuarios))
             .catch(err => res.status(500).send(err))
     }
 
-    const getById = (req, res) => {
+    const getByName = (req, res) => {
         app.db('usuarios')
-            .select('codigo', 'nome', 'email', 'cargo', 'admin' )
-            .where({ codigo: req.params.codigo })
+            .select('codigo', 'nome', 'email', 'cpf', 'cargo', 'admin' )
+            .where({ nome: req.params.codigo })
+            .whereNull('deletedAt')
             .first()
             .then(usuario => res.json(usuario))
             .catch(err => res.status(500).send(err))
     }
 
-    return { save, get, getById }
+    const remove = async (req, res) => {
+        try{
+            const rowsUpdate = await app.db('usuarios')
+                .update({ deletedAt: new Date() })
+                .where({ codigo: req.params.codigo })
+            existsOrError(rowsUpdate, 'Usuário não foi encontrado.')
+            
+            res.status(204).send()
+        } catch(msg) {
+            res.status(400).send(e)
+        }
+    }
+
+    return { save, get, getByName, remove }
 }

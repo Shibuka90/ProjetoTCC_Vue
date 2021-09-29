@@ -8,7 +8,8 @@
     <b-row>
       <b-col md="8"> 
         <div class="input">
-          <b-form-input id="presquisa" type="search" placeholder="Digite para pesquisar..."></b-form-input>     
+          <b-form-input id="presquisa" type="search" placeholder="Digite para pesquisar..." size='lg' class="mr-3"></b-form-input>    
+          <b-button id="presquisa" variant="primary" size='lg' class="fa fa-search"></b-button>
         </div>        
       </b-col>
       <b-col md="4">
@@ -36,7 +37,7 @@
 
 <script>
 import PageTitle from "../template/PageTitle.vue";
-import { baseApiUrl } from "@/global";
+import { baseApiUrl,  } from "@/global";
 import axios from "axios";
 
 export default {
@@ -65,7 +66,7 @@ export default {
       axios.get(url).then((res) => {
         this.usuarios = res.data;
       });
-    },
+    }
   },
   mounted() {
     this.loadUsuarios();
