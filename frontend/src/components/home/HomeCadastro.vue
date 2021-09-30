@@ -18,7 +18,7 @@
       </div>
       <div class="coluna3">
         <Menus icon="fa fa-medkit" title="Serviços" />
-        <router-link to="/usuario">
+        <router-link to="/usuarios">
           <Menus icon="fa fa-users" title="Colaboradores" />
         </router-link>
       </div>

@@ -24,7 +24,7 @@ const routes = [{
     component: Pacientes
 }, {
     name: 'usuario',
-    path: '/usuario',
+    path: '/usuarios',
     component: Usuarios
 }, {
     name: 'novousuario',
@@ -32,7 +32,7 @@ const routes = [{
     component: NovoUsuario
 }, {
     name: 'usuariocadastrado',
-    path: '/usuario/:codigo',
+    path: '/usuarios/:codigo',
     component: UsuarioCadastrado
 }]
 

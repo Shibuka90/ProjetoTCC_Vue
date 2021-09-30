@@ -18,14 +18,18 @@
           <b-button router-link to="/homecadastro" class="ml-2 mr-2" size="lg">Voltar</b-button>  
           <b-button router-link to="/" class="fa fa-home" variant="danger" size="lg"></b-button>
         </div>
-      </b-col>
-      
+      </b-col>      
     </b-row>
     <b-table hover striped :items="usuarios" :fields="fields">
       <template slot="actions" slot-scope="data"> 
-        <b-button variant = "warning" class="mr-2" @click="loadUsuario()">
+        <router-link :to="{name: 'usuariocadastrado' , params: { codigo: usuario.codigo }} ">
+        <b-button variant = "warning" class="mr-2">
           <i class="fa fa-pencil"></i>
         </b-button>
+        </router-link>
+        <!-- <b-button variant = "warning" class="mr-2" @click="$route.push('/usuarios/:codigo')">
+          <i class="fa fa-pencil"></i>
+        </b-button> -->
         <b-button variant = "danger">
           <i class="fas fa-trash-alt"></i>
         </b-button>
@@ -65,11 +69,14 @@ export default {
       const url = `${baseApiUrl}/usuarios`;
       axios.get(url).then((res) => {
         this.usuarios = res.data;
+       
       });
     }
-  },
+  },    
+  
   mounted() {
     this.loadUsuarios();
+    this.usuario.codigo = this.$route.params.codigo    
   },
 };
 </script>

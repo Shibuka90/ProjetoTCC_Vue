@@ -1,9 +1,9 @@
 <template>
-  <div class="novousuario">
+  <div class="usuariocadastrado">
         <PageTitle
       icon="fa fa-users"
       main="Colaboradores"
-      sub="Cadastro de Colaborador"
+      sub="Cadastro do Colaborador"
     />
     <div class="form">
         <b-form>
@@ -203,14 +203,16 @@
 import PageTitle from "../template/PageTitle.vue"
 import { baseApiUrl, showError } from '@/global'
 import axios from 'axios'
+import Usuarios from './Usuarios.vue'
 
 export default {
-    name: "NovoUsuario",
-    components: { PageTitle },
+    name: "UsuarioCadastrado",
+    components: { PageTitle, Usuarios },
     data: function() {
         return {
             mode:'save',
             usuario: {},
+            usuarios: [],
             estadoCivil: ['Solteiro(a)', 'Divorciado(a)', 'Amasiado(a)', 'Casado(a)', 'Separado(a)', 'Uniao Estavel', 'Viuvo(a)'],
             sexo: ['M', 'F'],
             admin: ['Gerente', 'Colaborador','Medico'],
@@ -243,6 +245,8 @@ export default {
      mounted() {
         this.usuario.codigo = this.$route.params.codigo
         this.getUsuario()
+        
+        
 
   },
 }

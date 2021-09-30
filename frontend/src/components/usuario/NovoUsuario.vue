@@ -197,10 +197,10 @@
         </b-form>
         <b-table hover striped :items="usuarios" :fields="fields">
       <template slot="actions" slot-scope="data"> 
-        <b-button variant = "warning" class="mr-2"  @click="loadUser(data.item)">
+        <b-button variant = "warning" class="mr-2"  @click="loadUsuario(data.item)">
           <i class="fa fa-pencil"></i>
         </b-button>
-        <b-button variant = "danger" @click="loadUser(data.item, 'remove')">
+        <b-button variant = "danger" @click="loadUsuario(data.item, 'remove')">
           <i class="fas fa-trash-alt"></i>
         </b-button>
       </template>
@@ -275,7 +275,7 @@ export default {
                 })
                 .catch(showError)
          },
-        loadUser(usuario, mode='save'){
+        loadUsuario(usuario, mode='save'){
             this.mode = mode
             this.usuario = {...usuario}
         },
