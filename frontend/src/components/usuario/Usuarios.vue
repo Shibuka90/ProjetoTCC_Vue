@@ -22,12 +22,12 @@
     </b-row>
     <b-table hover striped :items="usuarios" :fields="fields">
       <template slot="actions" slot-scope="data"> 
-        <router-link :to="{name: 'usuariocadastrado' , params: { codigo: usuario.codigo }} ">
+        <router-link :to="'/usuarios/'+ usuario.codigo">
         <b-button variant = "warning" class="mr-2">
           <i class="fa fa-pencil"></i>
         </b-button>
         </router-link>
-        <!-- <b-button variant = "warning" class="mr-2" @click="$route.push('/usuarios/:codigo')">
+        <!-- <b-button variant = "warning" class="mr-2" router-link :to="'/usuarios/' + usuario.codigo">
           <i class="fa fa-pencil"></i>
         </b-button> -->
         <b-button variant = "danger">
@@ -47,9 +47,11 @@ import axios from "axios";
 export default {
   name: "Usuarios",
   components: { PageTitle },
+  
   data: function () {
     return {
       mode: "save",
+      codigo: this.$route.params.codigo,
       usuario: {},
       usuarios: [],
       fields: [
@@ -71,12 +73,16 @@ export default {
         this.usuarios = res.data;
        
       });
-    }
-  },    
-  
+    },
+      getUsuario(){
+            const url = `${baseApiUrl}/usuario/${this.usuario.codigo}`
+             axios(url).then(res => this.usuario = res.data)
+             
+        }
+  },      
   mounted() {
-    this.loadUsuarios();
-    this.usuario.codigo = this.$route.params.codigo    
+    this.loadUsuarios(); 
+    
   },
 };
 </script>

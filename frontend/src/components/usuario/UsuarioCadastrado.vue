@@ -187,7 +187,7 @@
             </b-row>
             <b-row>
                 <b-col md="6">
-                <b-button router-link to="/usuario" size='lg' class="mb-2" block>Cancelar</b-button>
+                <b-button router-link to="/usuarios" size='lg' class="mb-2" block>Cancelar</b-button>
                 </b-col>
                 <b-col md="6">
                 <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" >Incluir</b-button>
@@ -203,16 +203,16 @@
 import PageTitle from "../template/PageTitle.vue"
 import { baseApiUrl, showError } from '@/global'
 import axios from 'axios'
-import Usuarios from './Usuarios.vue'
+
 
 export default {
     name: "UsuarioCadastrado",
-    components: { PageTitle, Usuarios },
+    components: { PageTitle},
     data: function() {
         return {
             mode:'save',
+            codigo: this.$route.params.codigo,
             usuario: {},
-            usuarios: [],
             estadoCivil: ['Solteiro(a)', 'Divorciado(a)', 'Amasiado(a)', 'Casado(a)', 'Separado(a)', 'Uniao Estavel', 'Viuvo(a)'],
             sexo: ['M', 'F'],
             admin: ['Gerente', 'Colaborador','Medico'],
@@ -246,9 +246,7 @@ export default {
         this.usuario.codigo = this.$route.params.codigo
         this.getUsuario()
         
-        
-
-  },
+     },
 }
 </script>
 
