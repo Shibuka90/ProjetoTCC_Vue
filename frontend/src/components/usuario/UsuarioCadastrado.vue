@@ -240,7 +240,8 @@ export default {
           getUsuario(){
             const url = `${baseApiUrl}/usuarios/${this.usuario.codigo}`
              axios(url).then(res => this.usuario = res.data)
-        }
+        },
+        
     },
      mounted() {
         this.usuario.codigo = this.$route.params.codigo

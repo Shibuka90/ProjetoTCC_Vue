@@ -76,11 +76,7 @@ module.exports = app => {
 
     const getByCodigo = (req, res) => {
         app.db('usuarios')
-            .select('codigo', 'nome', 'email', 'cpf', 'datanasc', 'estadocivil', 'sexo', 'cargo', 'siglacr', 'cr', 'ufcr',
-            'cepusuario', 'tipo', 'endereco', 'numero', 'bairro', 'municipio', 'ufmunicipio', 'telddd', 'tel',
-            'celddd', 'cel', 'admin' )
             .where({ codigo: req.params.codigo })
-            .whereNull('deletedAt')
             .first()
             .then(usuario => res.json(usuario))
             .catch(err => res.status(500).send(err))

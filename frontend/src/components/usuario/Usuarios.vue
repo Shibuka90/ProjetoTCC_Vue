@@ -7,7 +7,7 @@
     />
     <b-row>
       <b-col md="8"> 
-        <div class="input">
+        <div class="pesquisa">
           <b-form-input id="presquisa" type="search" placeholder="Digite para pesquisar..." size='lg' class="mr-3"></b-form-input>    
           <b-button id="presquisa" variant="primary" size='lg' class="fa fa-search"></b-button>
         </div>        
@@ -22,14 +22,9 @@
     </b-row>
     <b-table hover striped :items="usuarios" :fields="fields">
       <template slot="actions" slot-scope="data"> 
-        <router-link :to="'/usuarios/'+ usuario.codigo">
-        <b-button variant = "warning" class="mr-2">
+       <b-button variant = "warning" class="mr-2" @click="getUsuario">
           <i class="fa fa-pencil"></i>
         </b-button>
-        </router-link>
-        <!-- <b-button variant = "warning" class="mr-2" router-link :to="'/usuarios/' + usuario.codigo">
-          <i class="fa fa-pencil"></i>
-        </b-button> -->
         <b-button variant = "danger">
           <i class="fas fa-trash-alt"></i>
         </b-button>
@@ -44,14 +39,13 @@ import PageTitle from "../template/PageTitle.vue";
 import { baseApiUrl} from "@/global";
 import axios from "axios";
 
+
 export default {
   name: "Usuarios",
   components: { PageTitle },
-  
   data: function () {
     return {
       mode: "save",
-      codigo: this.$route.params.codigo,
       usuario: {},
       usuarios: [],
       fields: [
@@ -65,6 +59,7 @@ export default {
         { key:"actions", label: "Ações" },
       ],
     };
+    
   },
   methods: {
     loadUsuarios() {
@@ -74,17 +69,17 @@ export default {
        
       });
     },
-      getUsuario(){
-            const url = `${baseApiUrl}/usuario/${this.usuario.codigo}`
-             axios(url).then(res => this.usuario = res.data)
-             
-        }
+     getUsuario(){
+            console.log(document.getElementById('codigo'))
+     }
   },      
   mounted() {
-    this.loadUsuarios(); 
+    this.loadUsuarios();
+    this.getUsuario();
     
-  },
-};
+    
+  }
+}
 </script>
 
 
@@ -96,7 +91,7 @@ export default {
     margin: 10px;
 }
 
-.input{
+.pesquisa{
     display: flex;
     justify-content: flex-start;
     margin: 10px;

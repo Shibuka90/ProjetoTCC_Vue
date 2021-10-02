@@ -111,7 +111,7 @@
                             </datalist>
                     </b-form-group>
                 </b-col> 
-                <b-col sm="8">
+                <b-col md="8">
                     <b-form-group label="Endereço:" label-for="usuario-enderenco">
                         <b-form-input id="usuario-enderenco" type="text"  v-model="usuario.endereco" required
                         :readonly="mode === 'remove'" placeholder="Informe o Endereço......." />
