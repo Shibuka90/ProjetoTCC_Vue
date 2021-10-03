@@ -180,7 +180,7 @@
                 </b-col>
                   <b-col md="auto">
                     <b-form-group label="Confimar Senha:" label-for="usuario-confirmpassword">
-                        <b-form-input id="usuario-confirmpassword" type="password"  v-model="usuario.confirmPassword" required
+                        <b-form-input id="usuario-confirmpassword" type="password"  v-model="usuario.confirmpassword" required
                         :readonly="mode === 'remove'" placeholder="xxxxxxxxxxx" />
                     </b-form-group>
                 </b-col>
@@ -190,8 +190,7 @@
                 <b-button router-link to="/usuarios" size='lg' class="mb-2" block>Cancelar</b-button>
                 </b-col>
                 <b-col md="6">
-                <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" >Incluir</b-button>
-                <b-button variant="danger"  size='lg' block v-if="mode === 'remove'" @click="remove">Excluir</b-button>
+                <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" router-link to="/usuarios">Alterar</b-button>
                 </b-col>
             </b-row>
         </b-form>
@@ -211,8 +210,8 @@ export default {
     data: function() {
         return {
             mode:'save',
-            codigo: this.$route.params.codigo,
             usuario: {},
+            usuarios: [],
             estadoCivil: ['Solteiro(a)', 'Divorciado(a)', 'Amasiado(a)', 'Casado(a)', 'Separado(a)', 'Uniao Estavel', 'Viuvo(a)'],
             sexo: ['M', 'F'],
             admin: ['Gerente', 'Colaborador','Medico'],
@@ -227,7 +226,7 @@ export default {
         }
     },
     methods: {
-       save() {
+          save() {
             const method = this.usuario.codigo ? 'put' : 'post'
             const codigo = this.usuario.codigo ? `/${this.usuario.codigo}` : ''
             axios[method](`${baseApiUrl}/usuarios${codigo}`, this.usuario)
@@ -245,8 +244,7 @@ export default {
     },
      mounted() {
         this.usuario.codigo = this.$route.params.codigo
-        this.getUsuario()
-        
+        this.getUsuario()        
      },
 }
 </script>

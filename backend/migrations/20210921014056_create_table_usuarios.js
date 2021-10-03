@@ -29,5 +29,5 @@ exports.up = function(knex) {
   };
   
   exports.down = function(knex) {
-    return knex.schema.dropTable('colaboradores')
+    return knex.schema.dropTable('usuarios')
   };

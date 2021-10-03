@@ -9,6 +9,11 @@ module.exports = app => {
         return bcrypt.hashSync(password, salt)
     }
     
+    const encryptConfirmPassword = confirmpassword => {
+        const salt = bcrypt .genSaltSync(10)
+        return bcrypt.hashSync(confirmpassword, salt)
+    }
+
     const save = async (req, res) => {
         const usuario = { ...req.body }
         if(req.params.codigo) usuario.codigo = req.params.codigo
@@ -34,19 +39,28 @@ module.exports = app => {
             existsOrError(usuario.ufmunicipio, 'UF do Municipio não informado')
             existsOrError(usuario.celddd, 'DDD do Celular não informado')
             existsOrError(usuario.cel, 'Celular não informado')
-            equalsOrError(usuario.password, usuario.confirmPassword, 'Senha não conferem')
 
             const usuarioFromDB = await app.db('usuarios')
                 .where ({ email: usuario.email }).first()
             if(!usuario.codigo){
                 notExistsOrError(usuarioFromDB, 'Usuário já cadastrado')
+                existsOrError(usuario.password, 'Senha não informada')
+                existsOrError(usuario.confirmpassword, 'Confirmação de senha não informada')
+                equalsOrError(usuario.password, usuario.confirmpassword, 'Senhas não conferem')
+            } else {
+                if (usuario.password || usuario.confirmpassword) {
+                    existsOrError(usuario.password, 'Senha não informada')
+                    existsOrError(usuario.confirmpassword, 'Confirmação de senha não informada')
+                    equalsOrError(usuario.password, usuario.confirmpassword, 'Senhas não conferem')
+                }
             }            
         }catch(msg) {
             return res.status(400).send(msg)
         }
 
         usuario.password = encryptPassword(req.body.password)
-        delete usuario.confirmPassword
+        usuario.confirmpassword = encryptConfirmPassword(req.body.confirmpassword)
+      
 
         if(usuario.codigo){
             app.db('usuarios')

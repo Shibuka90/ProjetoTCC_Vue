@@ -1,9 +1,9 @@
 <template>
-  <div class="novousuario">
+  <div class="usuariocadastrado">
         <PageTitle
       icon="fa fa-users"
       main="Colaboradores"
-      sub="Cadastro de Colaborador"
+      sub="Cadastro do Colaborador"
     />
     <div class="form">
         <b-form>
@@ -111,7 +111,7 @@
                             </datalist>
                     </b-form-group>
                 </b-col> 
-                <b-col md="8">
+                <b-col sm="8">
                     <b-form-group label="Endereço:" label-for="usuario-enderenco">
                         <b-form-input id="usuario-enderenco" type="text"  v-model="usuario.endereco" required
                         :readonly="mode === 'remove'" placeholder="Informe o Endereço......." />
@@ -180,7 +180,7 @@
                 </b-col>
                   <b-col md="auto">
                     <b-form-group label="Confimar Senha:" label-for="usuario-confirmpassword">
-                        <b-form-input id="usuario-confirmpassword" type="password"  v-model="usuario.confirmpassword" required
+                        <b-form-input id="usuario-confirmpassword" type="password"  v-model="usuario.confirmPassword" required
                         :readonly="mode === 'remove'" placeholder="xxxxxxxxxxx" />
                     </b-form-group>
                 </b-col>
@@ -190,21 +190,10 @@
                 <b-button router-link to="/usuarios" size='lg' class="mb-2" block>Cancelar</b-button>
                 </b-col>
                 <b-col md="6">
-                <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" >Incluir</b-button>
-                <b-button variant="danger"  size='lg' block v-if="mode === 'remove'" @click="remove">Excluir</b-button>
+                <b-button variant="danger" size='lg' class="mb-2" block v-if="mode === 'remove'" @click="remove" >Excluir</b-button>
                 </b-col>
             </b-row>
         </b-form>
-        <b-table hover striped :items="usuarios" :fields="fields">
-      <template slot="actions" slot-scope="data"> 
-        <b-button variant = "warning" class="mr-2"  @click="loadUsuario(data.item)">
-          <i class="fa fa-pencil"></i>
-        </b-button>
-        <b-button variant = "danger" @click="loadUsuario(data.item, 'remove')">
-          <i class="fas fa-trash-alt"></i>
-        </b-button>
-      </template>
-    </b-table>
     </div>
   </div>  
 </template>
@@ -214,9 +203,10 @@ import PageTitle from "../template/PageTitle.vue"
 import { baseApiUrl, showError } from '@/global'
 import axios from 'axios'
 
+
 export default {
-    name: "NovoUsuario",
-    components: { PageTitle },
+    name: "UsuarioCadastrado",
+    components: { PageTitle},
     data: function() {
         return {
             mode:'save',
@@ -232,31 +222,10 @@ export default {
                     'Vale', 'Via', 'Viela', 'Vila'],
             ufmunicipio: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
                     'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
-             usuarios: [],
-            fields: [
-                 { key: "codigo", label: "Código", sortable: true },
-                 { key: "nome", label: "Nome", sortable: true },
-                 { key: "email", label: "E-mail" },
-                 { key: "cpf", label: "CPF" },
-                 { key: "cargo", label: "Cargo" },
-                 { key: "admin", label: "Adm",
-                    formatter: (value) => (value ? "Sim" : "Não")},
-                 { key:"actions", label: "Ações" },
-      ],
         }
     },
     methods: {
-          loadUsuarios() {
-      const url = `${baseApiUrl}/usuarios`;
-      axios.get(url).then((res) => {
-        this.usuarios = res.data;
-      });
-    },
-        reset(){
-            this.mode = 'save'
-            this.usuario = {}
-        },
-       save() {
+          save() {
             const method = this.usuario.codigo ? 'put' : 'post'
             const codigo = this.usuario.codigo ? `/${this.usuario.codigo}` : ''
             axios[method](`${baseApiUrl}/usuarios${codigo}`, this.usuario)
@@ -266,23 +235,16 @@ export default {
                 })
                 .catch(showError)
         },
-         remove() {
-            const codigo = this.usuario.codigo
-            axios.delete(`${baseApiUrl}/usuarios/${codigo}`)
-                .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    this.reset()
-                })
-                .catch(showError)
-         },
-        loadUsuario(usuario, mode='save'){
-            this.mode = mode
-            this.usuario = {...usuario}
+          getUsuario(){
+            const url = `${baseApiUrl}/usuarios/${this.usuario.codigo}`
+             axios(url).then(res => this.usuario = res.data)
         },
+        
     },
      mounted() {
-    this.loadUsuarios();
-  },
+        this.usuario.codigo = this.$route.params.codigo
+        this.getUsuario()        
+     },
 }
 </script>
 
