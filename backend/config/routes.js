@@ -17,7 +17,11 @@ module.exports = app => {
         .get(app.api.usuario.getByCodigo)
         .delete(app.api.usuario.remove)
         
-        app.route('/usuarios/:nome')
+    app.route('/usuarios/:nome')
         .get(app.api.usuario.getByNome)
+    
+    app.route('/especialiades')
+        .post(app.api.especialidade.save)
+        .get(app.api.especialidade.get)
 
 }

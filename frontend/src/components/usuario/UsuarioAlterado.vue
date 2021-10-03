@@ -111,18 +111,24 @@
                             </datalist>
                     </b-form-group>
                 </b-col> 
-                <b-col sm="8">
+                   <b-col md="6">
                     <b-form-group label="Endereço:" label-for="usuario-enderenco">
                         <b-form-input id="usuario-enderenco" type="text"  v-model="usuario.endereco" required
                         :readonly="mode === 'remove'" placeholder="Informe o Endereço......." />
                     </b-form-group>
                 </b-col>
-            </b-row>
-            <b-row>
-                 <b-col md="auto">
+                    <b-col md="auto">
                     <b-form-group label="Número:" label-for="usuario-numero">
                         <b-form-input id="usuario-numero" type="text"  v-model="usuario.numero" required
                         :readonly="mode === 'remove'" placeholder="Informe o Número......." />
+                    </b-form-group>
+                </b-col>
+            </b-row>
+            <b-row>
+              <b-col md="auto">
+                    <b-form-group label="Complemento:" label-for="usuario-complemento">
+                        <b-form-input id="usuario-complemento" type="text"  v-model="usuario.complemento" required
+                        :readonly="mode === 'remove'" placeholder="Informe o Complemento......." />
                     </b-form-group>
                 </b-col>
                  <b-col md="6">

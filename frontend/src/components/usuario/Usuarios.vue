@@ -7,15 +7,15 @@
     />
      <div class="pesquisa"> 
       <b-form>
-      <b-row>
-        <b-col md="6"> 
+      <b-row >
+        <b-col md="8" class="justify-content-flex-start"> 
           <b-form-input input type="text" id="usuario-codigo" v-model="usuario.nome" autofocus size="lg"></b-form-input>   
         </b-col>
-       <b-col md="6">
-         <b-button router-link to="/novousuario" variant="primary" size='lg'>Novo</b-button>
-          <b-button @click="getUsuario" router-link :to="'/usuarios/' + this.usuario.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
-          <b-button router-link to="/homecadastro" class="ml-2 mr-2" size="lg">Voltar</b-button>  
-          <b-button router-link to="/" class="fa fa-home" variant="danger" size="lg"></b-button>
+       <b-col md="4">
+          <b-button router-link to="/homecadastro" class="mr-2" size="lg"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
+         <b-button router-link to="/novousuario" variant="primary" size='lg' class="ml-2 mr-2">Novo</b-button>
+          <b-button v-if="usuario.nome" @click="getUsuario" router-link :to="'/usuarios/' + this.usuario.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
+          <b-button router-link to="/" class="fa fa-home ml-2" variant="info" size="lg"></b-button>
         </b-col> 
       </b-row>
     </b-form>     
@@ -24,7 +24,7 @@
         <b-row>
           <b-col md="6">
             <b-form-group label="Pesquisar:" label-for="filtro-usuario">
-              <b-form-input id="filtro-usuario" v-model="filter" type="search" placeholder="Digite para filtrar...."></b-form-input>
+              <b-form-input id="filtro-usuario" v-model="filter" size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
             </b-form-group>
           </b-col>
         </b-row>
@@ -35,6 +35,7 @@
         </b-button>
       </template>
     </b-table>
+    <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit" />
   </div>
 </template>
 
@@ -52,6 +53,9 @@ export default {
       mode: "save",
       usuario: {},
       usuarios: [],
+      page: 1,
+      limit: 0,
+      count: 0,
       fields: [
         { id: 'codigo', key: "codigo", label: "Código", sortable: true },
         { key: "nome", label: "Nome", sortable: true },
@@ -71,7 +75,9 @@ export default {
     loadUsuarios() {
       const url = `${baseApiUrl}/usuarios`;
       axios.get(url).then((res) => {
-        this.usuarios = res.data;       
+        this.usuarios = res.data; 
+        this.count = res.data.count
+        this.limit = res.data.limit      
       });
     },
   
@@ -89,7 +95,12 @@ export default {
         this.totalRows = filteredItems.length
         this.currentPage = 1
       }
-  },      
+  }, 
+  watch: {
+      page() {
+        this.loadUsuarios()
+      }
+  } ,   
   mounted() {
     this.loadUsuarios();  
   }

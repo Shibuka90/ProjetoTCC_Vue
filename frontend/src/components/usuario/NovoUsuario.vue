@@ -111,18 +111,24 @@
                             </datalist>
                     </b-form-group>
                 </b-col> 
-                <b-col md="8">
+                <b-col md="6">
                     <b-form-group label="Endereço:" label-for="usuario-enderenco">
                         <b-form-input id="usuario-enderenco" type="text"  v-model="usuario.endereco" required
                         :readonly="mode === 'remove'" placeholder="Informe o Endereço......." />
                     </b-form-group>
                 </b-col>
-            </b-row>
-            <b-row>
-                 <b-col md="auto">
+                   <b-col md="auto">
                     <b-form-group label="Número:" label-for="usuario-numero">
                         <b-form-input id="usuario-numero" type="text"  v-model="usuario.numero" required
                         :readonly="mode === 'remove'" placeholder="Informe o Número......." />
+                    </b-form-group>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col md="auto">
+                    <b-form-group label="Complemento:" label-for="usuario-complemento">
+                        <b-form-input id="usuario-complemento" type="text"  v-model="usuario.complemento" required
+                        :readonly="mode === 'remove'" placeholder="Informe o Complemento......." />
                     </b-form-group>
                 </b-col>
                  <b-col md="6">
@@ -195,17 +201,7 @@
                 </b-col>
             </b-row>
         </b-form>
-        <b-table hover striped :items="usuarios" :fields="fields">
-      <template slot="actions" slot-scope="data"> 
-        <b-button variant = "warning" class="mr-2"  @click="loadUsuario(data.item)">
-          <i class="fa fa-pencil"></i>
-        </b-button>
-        <b-button variant = "danger" @click="loadUsuario(data.item, 'remove')">
-          <i class="fas fa-trash-alt"></i>
-        </b-button>
-      </template>
-    </b-table>
-    </div>
+  </div>  
   </div>  
 </template>
 
@@ -232,27 +228,10 @@ export default {
                     'Vale', 'Via', 'Viela', 'Vila'],
             ufmunicipio: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
                     'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
-             usuarios: [],
-            fields: [
-                 { key: "codigo", label: "Código", sortable: true },
-                 { key: "nome", label: "Nome", sortable: true },
-                 { key: "email", label: "E-mail" },
-                 { key: "cpf", label: "CPF" },
-                 { key: "cargo", label: "Cargo" },
-                 { key: "admin", label: "Adm",
-                    formatter: (value) => (value ? "Sim" : "Não")},
-                 { key:"actions", label: "Ações" },
-      ],
-        }
+             usuarios: [],        }
     },
     methods: {
-          loadUsuarios() {
-      const url = `${baseApiUrl}/usuarios`;
-      axios.get(url).then((res) => {
-        this.usuarios = res.data;
-      });
-    },
-        reset(){
+           reset(){
             this.mode = 'save'
             this.usuario = {}
         },
@@ -280,9 +259,7 @@ export default {
             this.usuario = {...usuario}
         },
     },
-     mounted() {
-    this.loadUsuarios();
-  },
+ 
 }
 </script>
 

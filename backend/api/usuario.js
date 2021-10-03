@@ -116,5 +116,21 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getByCodigo, getByNome, remove }
+    const limit = 10 // usado para paginação
+    const getpg = async (req, res) => {
+        const page = req.query.page || 1
+
+        const result = await app.db('usuarios').count('codigo').first()
+        const count = parseInt(result.count)
+
+        app.db('usuarios')
+            .select('codigo', 'nome', 'email', 'cpf', 'datanasc', 'estadocivil', 'sexo', 'cargo', 'siglacr', 'cr', 'ufcr',
+            'cepusuario', 'tipo', 'endereco', 'numero', 'bairro', 'municipio', 'ufmunicipio', 'telddd', 'tel',
+            'celddd', 'cel', 'admin' )
+            .limit(limit).offset(page * limit - limit)
+            .then(usuarios => res.json({ data: usuarios, count, limit }))
+            .catch(err => res.status(500).send(err))
+    }
+
+    return { save, get, getByCodigo, getByNome, remove, getpg}
 }
