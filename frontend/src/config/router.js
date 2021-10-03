@@ -8,6 +8,7 @@ import Usuarios from '@/components/usuario/Usuarios'
 import NovoUsuario from '@/components/usuario/NovoUsuario'
 import UsuarioAlterado from '@/components/usuario/UsuarioAlterado'
 
+
 Vue.use(VueRouter)
 
 const routes = [{

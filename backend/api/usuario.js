@@ -13,11 +13,11 @@ module.exports = app => {
         const salt = bcrypt .genSaltSync(10)
         return bcrypt.hashSync(confirmpassword, salt)
     }
-
+    
     const save = async (req, res) => {
         const usuario = { ...req.body }
         if(req.params.codigo) usuario.codigo = req.params.codigo
-
+        
         // if(!req.originalUrl.startWith('/usuarios')) usuario.admin = false
         // if(!req.usuario || !req.usuario.admin) usuario.admin = false
         
@@ -51,7 +51,6 @@ module.exports = app => {
                 if (usuario.password || usuario.confirmpassword) {
                     existsOrError(usuario.password, 'Senha não informada')
                     existsOrError(usuario.confirmpassword, 'Confirmação de senha não informada')
-                    equalsOrError(usuario.password, usuario.confirmpassword, 'Senhas não conferem')
                 }
             }            
         }catch(msg) {
@@ -95,6 +94,14 @@ module.exports = app => {
             .then(usuario => res.json(usuario))
             .catch(err => res.status(500).send(err))
     }
+    const getByNome = (req, res) => {
+        app.db('usuarios')
+            .where({ nome: req.params.nome })
+            .first()
+            .then(usuario => res.json(usuario))
+            .catch(err => res.status(500).send(err))
+    }
+
 
     const remove = async (req, res) => {
         try{
@@ -109,5 +116,5 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getByCodigo, remove }
+    return { save, get, getByCodigo, getByNome, remove }
 }

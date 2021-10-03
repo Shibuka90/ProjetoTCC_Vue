@@ -186,11 +186,14 @@
                 </b-col>
             </b-row>
             <b-row>
-                <b-col md="6">
+                <b-col md="4">
                 <b-button router-link to="/usuarios" size='lg' class="mb-2" block>Cancelar</b-button>
                 </b-col>
+                <b-col md="2">
+                <b-button variant="danger" size='lg' class="mb-2" block @click="remove" router-link to="/usuarios">Excluir</b-button>
+                </b-col>
                 <b-col md="6">
-                <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" router-link to="/usuarios">Alterar</b-button>
+                <b-button variant="success" size='lg' class="mb-2" block  @click="save" router-link to="/usuarios">Alterar</b-button>
                 </b-col>
             </b-row>
         </b-form>
@@ -205,7 +208,7 @@ import axios from 'axios'
 
 
 export default {
-    name: "UsuarioCadastrado",
+    name: "UsuarioAlterado",
     components: { PageTitle},
     data: function() {
         return {
@@ -240,6 +243,15 @@ export default {
             const url = `${baseApiUrl}/usuarios/${this.usuario.codigo}`
              axios(url).then(res => this.usuario = res.data)
         },
+             remove() {
+            const codigo = this.usuario.codigo
+            axios.delete(`${baseApiUrl}/usuarios/${codigo}`)
+                .then(() => {
+                    this.$toasted.global.defaultSuccess()
+                    this.reset()
+                })
+                .catch(showError)
+         },
         
     },
      mounted() {

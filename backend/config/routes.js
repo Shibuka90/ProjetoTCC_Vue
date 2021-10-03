@@ -16,4 +16,8 @@ module.exports = app => {
         .put(app.api.usuario.save)
         .get(app.api.usuario.getByCodigo)
         .delete(app.api.usuario.remove)
+        
+        app.route('/usuarios/:nome')
+        .get(app.api.usuario.getByNome)
+
 }
