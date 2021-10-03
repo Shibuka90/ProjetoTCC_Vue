@@ -9,12 +9,9 @@
       <b-form>
       <b-row>
         <b-col md="6"> 
-          <b-form-input input type="text" id="usuario-codigo" v-model="usuario.nome" size="lg" @keypress="loadUsuario"></b-form-input>   
+          <b-form-input input type="text" id="usuario-codigo" v-model="usuario.nome" autofocus size="lg"></b-form-input>   
         </b-col>
-        <b-col m="2">
-          <b-button id="usuario-codigo" variant="primary" size='lg' class="fa fa-search" @click="loadUsuarioNome"></b-button>              
-        </b-col>
-       <b-col md="4">
+       <b-col md="6">
          <b-button router-link to="/novousuario" variant="primary" size='lg'>Novo</b-button>
           <b-button @click="getUsuario" router-link :to="'/usuarios/' + this.usuario.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
           <b-button router-link to="/homecadastro" class="ml-2 mr-2" size="lg">Voltar</b-button>  
@@ -24,7 +21,14 @@
     </b-form>     
     </div>   
     <hr>
-    <b-table hover striped :items="usuarios" :fields="fields">
+        <b-row>
+          <b-col md="6">
+            <b-form-group label="Pesquisar:" label-for="filtro-usuario">
+              <b-form-input id="filtro-usuario" v-model="filter" type="search" placeholder="Digite para filtrar...."></b-form-input>
+            </b-form-group>
+          </b-col>
+        </b-row>
+    <b-table hover striped :items="usuarios" :fields="fields" :filter="filter" @filtered="onFiltered">
       <template slot="actions" slot-scope="data" > 
        <b-button variant = "info" class="mr-2" @click="loadUsuario(data.item)" >
           Selecionar
@@ -58,6 +62,8 @@ export default {
           formatter: (value) => (value ? "Sim" : "Não")},
         { key:"actions", label: "Ação" },
       ],
+      totalRows: 1,
+      filter: null,
     };
     
   },
@@ -68,19 +74,7 @@ export default {
         this.usuarios = res.data;       
       });
     },
-    
-    loadUsuarioNome() {
-      let texto= document.querySelector("#usuario-codigo")
-      console.log(texto)
-
-    },
-
-    loadUsuarioN() {
-      const url = `${baseApiUrl}/usuarios/${this.texto}`;
-      axios.get(url).then((res) => {
-        this.usuario = res.data;       
-      });
-    },
+  
      getUsuario(){
             const url = `${baseApiUrl}/usuarios/${this.usuario.codigo}`
              axios(url).then(res => this.usuario = res.data)
@@ -90,9 +84,14 @@ export default {
             this.mode = mode
             this.usuario = {...usuario}
         },
+        onFiltered(filteredItems) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.totalRows = filteredItems.length
+        this.currentPage = 1
+      }
   },      
   mounted() {
-    this.loadUsuarios();   
+    this.loadUsuarios();  
   }
 }
 </script>
