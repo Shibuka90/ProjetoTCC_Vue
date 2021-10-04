@@ -8,14 +8,16 @@
      <div class="pesquisa"> 
       <b-form>
       <b-row >
-        <b-col md="8" class="justify-content-flex-start"> 
-          <b-form-input input type="text" id="usuario-codigo" v-model="usuario.nome" autofocus size="lg"></b-form-input>   
+        <b-col md="2"> 
+          <b-button router-link to="/" class="fa fa-home mr-4 mb-4" variant="info" size="lg"></b-button>
+          <b-button router-link to="/homecadastro"  size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
+        </b-col>
+        <b-col md="6">
+          <b-form-input input type="text" id="usuario-codigo" v-model="usuario.nome" autofocus size="lg" class="mb-4"></b-form-input> 
         </b-col>
        <b-col md="4">
-          <b-button router-link to="/homecadastro" class="mr-2" size="lg"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
-         <b-button router-link to="/novousuario" variant="primary" size='lg' class="ml-2 mr-2">Novo</b-button>
+         <b-button router-link to="/novousuario" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
           <b-button v-if="usuario.nome" @click="getUsuario" router-link :to="'/usuarios/' + this.usuario.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
-          <b-button router-link to="/" class="fa fa-home ml-2" variant="info" size="lg"></b-button>
         </b-col> 
       </b-row>
     </b-form>     

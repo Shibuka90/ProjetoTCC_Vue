@@ -1,23 +1,23 @@
 <template>
-  <div class="especialidades">
+  <div class="convenios">
        <PageTitle
-      icon="fa fa-stethoscope"
-      main="Especialidades"
-      sub="Grid de Especiadlidades"
+      icon="fa fa-book-medical"
+      main="Convênios"
+      sub="Grid de Convênios"
     />
     <div class="pesquisa">
-    <b-form>
+      <b-form>
       <b-row >
         <b-col md="2"> 
           <b-button router-link to="/" class="fa fa-home ml-2 mr-4 mb-4" variant="info" size="lg"></b-button>
-          <b-button router-link to="/homecadastro" size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
+          <b-button router-link to="/homecadastro" class="mb-4" size="lg"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
         </b-col>
         <b-col md="8">
-          <b-form-input input type="text" id="especialidade-codigo" v-model="especialidade.especialidades" autofocus size="lg" class="mb-4"></b-form-input> 
+          <b-form-input input type="text" id="convenio-codigo" class="mb-4" v-model="convenio.convenio" autofocus size="lg"></b-form-input> 
         </b-col>          
        <b-col md="auto">
-         <b-button variant="success" v-if="mode === 'save'" size="lg" block @click="save">Incluir/Aterar</b-button> 
-         <b-button variant="danger" v-if="mode === 'remove'" size="lg" block @click="remove">Excluir</b-button> 
+         <b-button variant="success" v-if="mode === 'save'" block size="lg" @click="save">Incluir/Aterar</b-button> 
+         <b-button variant="danger" v-if="mode === 'remove'" block size="lg" @click="remove">Excluir</b-button> 
         </b-col> 
       </b-row>
     </b-form>     
@@ -30,12 +30,12 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered">
+        <b-table hover striped :items="convenios" :fields="fields" :filter="filter" @filtered="onFiltered">
           <template slot="actions" slot-scope="data">
-             <b-button variant='warning' @click="loadEspecialidade(data.item)" class="mr-2">
+             <b-button variant='warning' @click="loadConvenio(data.item)" class="mr-2">
                  <i class="fa fa-pencil"></i>
              </b-button>
-             <b-button variant='danger' @click="loadEspecialidade(data.item, 'remove')">
+             <b-button variant='danger' @click="loadConvenio(data.item, 'remove')">
                  <i class="fas fa-trash"></i>
              </b-button>
          </template>
@@ -49,19 +49,19 @@ import PageTitle from "../template/PageTitle.vue";
 import { baseApiUrl, showError} from "@/global";
 import axios from "axios";
 export default {
-    name: "Especialidades",
+    name: "Convenios",
     components: { PageTitle },
     data: function(){
         return{
             mode: 'save',
-            especialidade: {},
-            especialidades: [],
+            convenio: {},
+            convenios: [],
              page: 1,
              limit: 0,
              count: 0,
              fields: [
                  { key: "codigo", label: "Código", sortable: true},
-                 { key: "especialidades", label: "Especialidade", sortable: true},
+                 { key: "convenio", label: "Convênio", sortable: true},
                  { key: "actions", label: "Ações"},
              ],
              totalRows: 1,
@@ -69,23 +69,23 @@ export default {
         };
     },
     methods: {
-          loadEspecialdiades() {
-            const url = `${baseApiUrl}/especialidades`;
+          loadConvenios() {
+            const url = `${baseApiUrl}/convenios`;
             axios.get(url).then((res) => {
-            this.especialidades = res.data; 
+            this.convenios = res.data; 
             this.count = res.data.count
             this.limit = res.data.limit
             })
         },
         reset() {
             this.mode = 'save'
-            this.especialidade = {}
-            this.loadEspecialidades()
+            this.convenio = {}
+            this.loadConvenio()
         },
         save() {
-            const method = this.especialidade.codigo ? 'put' : 'post'
-            const codigo = this.especialidade.codigo ? `/${this.especialidade.codigo}` : ''
-            axios[method](`${baseApiUrl}/especialidades${codigo}`, this.especialidade)
+            const method = this.convenio.codigo ? 'put' : 'post'
+            const codigo = this.convenio.codigo ? `/${this.convenio.codigo}` : ''
+            axios[method](`${baseApiUrl}/convenios${codigo}`, this.convenio)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.reset()
@@ -93,8 +93,8 @@ export default {
                 .catch(showError)
         },
         remove() {
-            const codigo = this.especialidade.codigo
-            axios.delete(`${baseApiUrl}/especialidades/${codigo}`)
+            const codigo = this.convenio.codigo
+            axios.delete(`${baseApiUrl}/convenios/${codigo}`)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.reset()
@@ -102,9 +102,9 @@ export default {
                 .catch(showError)
         },
 
-        loadEspecialidade(especialidades, mode='save'){
+        loadConvenio(convenios, mode='save'){
             this.mode = mode
-            this.especialidade = {...especialidades}
+            this.convenio = {...convenios}
         },
 
         onFiltered(filteredItems) {
@@ -115,11 +115,11 @@ export default {
     },
      watch: {
       page() {
-        this.loadEspecialdiades()
+        this.loadConvenios()
       }
   } ,   
     mounted() {
-        this.loadEspecialdiades();  
+        this.loadConvenios();  
   }
 }
 </script>

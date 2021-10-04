@@ -29,4 +29,22 @@ module.exports = app => {
         .get(app.api.especialidade.get)
         .delete(app.api.especialidade.remove)
 
+    app.route('/servicos')
+        .post(app.api.servico.save)
+        .get(app.api.servico.get)
+    
+    app.route('/servicos/:codigo')
+        .put(app.api.servico.save)
+        .get(app.api.servico.get)
+        .delete(app.api.servico.remove)
+
+    app.route('/convenios')
+        .post(app.api.convenio.save)
+        .get(app.api.convenio.get)
+    
+    app.route('/convenios/:codigo')
+        .put(app.api.convenio.save)
+        .get(app.api.convenio.get)
+        .delete(app.api.convenio.remove)
+
 }
