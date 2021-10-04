@@ -2,15 +2,13 @@ module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
 
     const save = async (req, res) => {
-        const especialidades = { ...req.body }
-        if(req.params.codigo) especialidades.codigo = req.params.codigo
+        const especialidade = { ...req.body }
+        if(req.params.codigo) especialidade.codigo = req.params.codigo
         
         // if(!req.originalUrl.startWith('/especialidades')) especialidade.admin = false
         // if(!req.especialidade || !req.especialidade.admin) especialidade.admin = false
         
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
-        const especialidadeFromDB = await app.db('usuarios')
-                .where ({ especialidades: especialidade.especialidades }).first()
         try {
             existsOrError(especialidade.especialidades, 'Especialidade não informado')
         }catch(msg) {
@@ -45,11 +43,26 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
     const remove = async (req, res) => {
-       app.db('especialidades')
-            .where({ codigo: req.params.codigo })
-            .first()
-            .then(especialidade => res.json(especialidade))
-            .catch(err => res.status(500).send(err))
+        try {
+            // existsOrError(req.params.id, 'Código da Especialidade não informado.!')
+
+            // const subcategory = await app.db('categories')
+            //     .where({ parentId: req.params.id })
+
+            //     notExistsOrError(subcategory, 'Categoria possui subcategorias.!')
+
+            // const articles = await app.db('articles')
+            //     .where({ categoryId: req.params.id })
+            //     notExistsOrError(articles, 'Categoria possui artigos')
+
+            const rowsDeleted = await app.db('especialidades')
+                .where ({ codigo: req.params.codigo }).del()
+                existsOrError(rowsDeleted, 'Especialidade não encontrada')
+
+            res.status(204).send()
+        }catch(msg) {
+            res.status(400).send(msg)
+        }
     }
 
     const limit = 10 // usado para paginação

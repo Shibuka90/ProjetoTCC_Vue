@@ -7,6 +7,7 @@ import Pacientes from '@/components/paciente/Pacientes'
 import Usuarios from '@/components/usuario/Usuarios'
 import NovoUsuario from '@/components/usuario/NovoUsuario'
 import UsuarioAlterado from '@/components/usuario/UsuarioAlterado'
+import Especialidades from '@/components/especialidade/Especialidades'
 
 
 Vue.use(VueRouter)
@@ -35,6 +36,10 @@ const routes = [{
     name: 'usuarioalterado',
     path: '/usuarios/:codigo',
     component: UsuarioAlterado
+}, {
+    name: 'especialidade',
+    path: '/especialidades',
+    component: Especialidades
 }]
 
 export default new VueRouter({

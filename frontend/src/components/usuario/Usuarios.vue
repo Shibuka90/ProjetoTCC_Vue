@@ -57,7 +57,7 @@ export default {
       limit: 0,
       count: 0,
       fields: [
-        { id: 'codigo', key: "codigo", label: "Código", sortable: true },
+        { key: "codigo", label: "Código", sortable: true },
         { key: "nome", label: "Nome", sortable: true },
         { key: "email", label: "E-mail" },
         { key: "cpf", label: "CPF" },

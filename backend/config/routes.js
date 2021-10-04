@@ -20,8 +20,13 @@ module.exports = app => {
     app.route('/usuarios/:nome')
         .get(app.api.usuario.getByNome)
     
-    app.route('/especialiades')
+    app.route('/especialidades')
         .post(app.api.especialidade.save)
         .get(app.api.especialidade.get)
+    
+    app.route('/especialidades/:codigo')
+        .put(app.api.especialidade.save)
+        .get(app.api.especialidade.get)
+        .delete(app.api.especialidade.remove)
 
 }

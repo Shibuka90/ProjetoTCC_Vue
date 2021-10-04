@@ -14,7 +14,9 @@
       </div>
       <div class="coluna2">
         <Menus icon="fa fa-book-medical" title="Convênios" />
-        <Menus icon="fa fa-stethoscope" title="Especialidades" />
+        <router-link to="/especialidades">
+          <Menus icon="fa fa-stethoscope" title="Especialidades" />
+        </router-link>
       </div>
       <div class="coluna3">
         <Menus icon="fa fa-medkit" title="Serviços" />
