@@ -42,7 +42,7 @@
              </b-button>
          </template>
     </b-table>
-    <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit" />
+   <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
   </div>
 </template>
 
@@ -58,7 +58,6 @@ export default {
             mode: 'save',
             convenio: {},
             convenios: [],
-            sortBy: 'codigo',
              page: 1,
              limit: 0,
              count: 0,
@@ -68,14 +67,17 @@ export default {
                  { key: "actions", label: "Ações"},
              ],
              totalRows: 1,
+             currentPage: 1,
+             perPage: 5,
              filter: null,
+             sortBy: 'codigo',
         };
     },
     methods: {
           loadConvenios() {
-            const url = `${baseApiUrl}/convenios?page=${this.page}`;
+            const url = `${baseApiUrl}/convenios`;
             axios.get(url).then((res) => {
-            this.convenios = res.data.data; 
+            this.convenios = res.data; 
             this.count = res.data.count
             this.limit = res.data.limit
             })

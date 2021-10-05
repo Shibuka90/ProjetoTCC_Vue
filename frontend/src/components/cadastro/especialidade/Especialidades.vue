@@ -32,7 +32,8 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy">
+        <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy" :current-page="currentPage"
+                   :per-page="perPage">
           <template slot="actions" slot-scope="data">
              <b-button variant='warning' @click="loadEspecialidade(data.item)" class="mr-2">
                  <i class="fa fa-pencil"></i>
@@ -42,7 +43,7 @@
              </b-button>
          </template>
     </b-table>
-    <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit" />
+    <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
   </div>
 </template>
 
@@ -67,15 +68,17 @@ export default {
                  { key: "actions", label: "Ações"},
              ],
              totalRows: 1,
+             currentPage: 1,
+             perPage: 5,
              filter: null,
              sortBy: 'codigo',
         };
     },
     methods: {
         loadEspecialidades(){
-          const url = `${baseApiUrl}/especialidades?page=${this.page}`;
+          const url = `${baseApiUrl}/especialidades`;
             axios.get(url).then((res) => {
-            this.especialidades = res.data.data;
+            this.especialidades = res.data;
             this.count = res.data.count;
             this.limit = res.data.limit; 
             })

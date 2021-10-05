@@ -34,7 +34,7 @@
       <template slot="actions" > 
       </template>
     </b-table>
-    <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit" />
+    <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
   </div>
 </template>
 
@@ -66,13 +66,15 @@ export default {
           formatter: (value) => (value ? "Sim" : "Não")},
       ],
       totalRows: 1,
+      currentPage: 1,
+      perPage: 5,
       filter: null,
     };
     
   },
   methods: {
     loadUsuarios() {
-      const url = `${baseApiUrl}/usuarios?page=${this.page}`;
+      const url = `${baseApiUrl}/usuarios`;
       axios.get(url).then((res) => {
         this.usuarios = res.data; 
         this.count = res.data.count

@@ -37,7 +37,14 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
      }
     }
-      const getByCodigo = (req, res) =>{ 
+    const get = (req, res) => {
+        app.db('servicos')
+            .select('codigo', 'servico' )
+            .then(servicos => res.json(servicos))
+            .catch(err => res.status(500).send(err))
+    }
+
+    const getByCodigo = (req, res) =>{ 
         app.db('servicos')
             .where({ codigo: req.params.codigo })
             .first()
@@ -66,21 +73,6 @@ module.exports = app => {
             res.status(400).send(msg)
         }
     }
-
-    const limit = 5 // usado para paginação
-    const get = async (req, res) => {
-        const page = req.query.page || 1
-
-        const result = await app.db('servicos').count('codigo').first()
-        const count = parseInt(result.count)
-
-        app.db('servicos')
-            .select('codigo', 'servico')
-            .limit(limit).offset(page * limit - limit)
-            .then(servicos => res.json({ data: servicos, count, limit }))
-            .catch(err => res.status(500).send(err))
-    }
-
 
     return { save, get, getByCodigo, remove}
 }

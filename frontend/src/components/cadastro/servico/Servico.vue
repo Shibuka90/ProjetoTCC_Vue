@@ -40,7 +40,7 @@
              </b-button>
          </template>
     </b-table>
-    <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit" />
+    <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
   </div>
 </template>
 
@@ -66,14 +66,16 @@ export default {
                  { key: "actions", label: "Ações"},
              ],
              totalRows: 1,
+             currentPage: 1,
+             perPage: 5,
              filter: null,
         };
     },
     methods: {
           loadServicos() {
-            const url = `${baseApiUrl}/servicos?page=${this.page}`;
+            const url = `${baseApiUrl}/servicos`;
             axios.get(url).then((res) => {
-            this.servicos = res.data.data; 
+            this.servicos = res.data; 
             this.count = res.data.count
             this.limit = res.data.limit
             })

@@ -40,6 +40,13 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
      }
     }
+    const get = (req, res) => {
+        app.db('convenios')
+            .select('codigo', 'convenio' )
+            .then(convenios => res.json(convenios))
+            .catch(err => res.status(500).send(err))
+    }
+
     const getByCodigo = (req, res) =>{ 
         app.db('convenios')
             .where({ codigo: req.params.codigo })
@@ -77,22 +84,6 @@ module.exports = app => {
             res.status(400).send(msg)
         }
     }
-
-    const limit = 5
-    const get = async (req, res) => {
-        const page = req.query.page || 1
-
-        const result = await app.db('convenios').count('codigo').first()
-        const count = parseInt(result.count)
-
-        app.db('convenios')
-            .select('codigo', 'convenio')
-            .limit(limit).offset(page * limit - limit)
-            .then(convenios => res.json({data: convenios, count, limit }))
-            .catch(err => res.status(500).send(err))
-
-    }
-
 
     return { save, get, getByCodigo, remove, getByNome}
 }

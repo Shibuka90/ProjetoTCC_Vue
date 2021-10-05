@@ -34,7 +34,7 @@
       <template slot="actions"> 
       </template>
     </b-table>
-    <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit" />
+    <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
   </div>
 </template>
 
@@ -64,15 +64,17 @@ export default {
         { key: "especialidade", label: "Especialidade" },
       ],
       totalRows: 1,
+      currentPage: 1,
+      perPage: 5,
       filter: null,
     };
     
   },
   methods: {
     loadMedicos() {
-      const url = `${baseApiUrl}/medicos?page=${this.page}`;
+      const url = `${baseApiUrl}/medicos`;
       axios.get(url).then((res) => {
-        this.medicos = res.data.data; 
+        this.medicos = res.data; 
         this.count = res.data.count
         this.limit = res.data.limit      
       });
