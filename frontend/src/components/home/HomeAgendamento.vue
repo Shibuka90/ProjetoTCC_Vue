@@ -6,7 +6,7 @@
             <router-link to="/">
              <Menus icon="fas fa-home" title="Menu Principal" />
             </router-link>
-            <router-link to="">
+            <router-link to="/agendapadrao">
              <Menus icon="fas fa-calendar-alt" title="Cadastro de Agenda" />
             </router-link>
             <router-link to="">

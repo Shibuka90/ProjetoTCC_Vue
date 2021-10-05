@@ -219,7 +219,7 @@ export default {
          loadConvenios() {
             const url = `${baseApiUrl}/convenios`;
             axios.get(url).then((res) => {
-            this.convenios = res.data.data.map(convenio => {
+            this.convenios = res.data.map(convenio => {
                 return{value: convenio.codigo, text: `${convenio.convenio}` }
             })
             })

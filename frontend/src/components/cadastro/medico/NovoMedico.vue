@@ -205,7 +205,7 @@ export default {
           loadEspecialidades() {
             const url = `${baseApiUrl}/especialidades`;
             axios.get(url).then((res) => {
-            this.especialidades = res.data.data.map(especialidade => {
+            this.especialidades = res.data.map(especialidade => {
                 return{value: especialidade.codigo, text: `${especialidade.especialidade}` }
             })
             })
