@@ -1,9 +1,9 @@
 <template>
-  <div class="usuarios">
+  <div class="medicos">
     <PageTitle
-      icon="fa fa-users"
-      main="Colaboradores"
-      sub="Grid de Colaboradores"
+      icon="fa fa-user-md"
+      main="Médicos"
+      sub="Grid de Médicos"
     />
      <div class="pesquisa"> 
       <b-form>
@@ -13,11 +13,11 @@
           <b-button router-link to="/homecadastro"  size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
         </b-col>
         <b-col md="6">
-          <b-form-input input type="text" id="usuario-codigo" readonly v-model="usuario.nome" autofocus size="lg" class="mb-4com "></b-form-input> 
+          <b-form-input input type="text" id="medico-codigo" readonly v-model="medico.nome" autofocus size="lg" class="mb-4com "></b-form-input> 
         </b-col>
        <b-col md="4">
-         <b-button router-link to="/novousuario" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
-          <b-button v-if="usuario.nome" @click="getUsuario" router-link :to="'/usuarios/' + this.usuario.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
+         <b-button router-link to="/novomedico" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
+          <b-button v-if="medico.nome" @click="getMedico" router-link :to="'/medicos/' + this.medico.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
         </b-col> 
       </b-row>
     </b-form>     
@@ -25,13 +25,13 @@
     <hr>
         <b-row>
           <b-col md="6">
-            <b-form-group label="Pesquisar:" label-for="filtro-usuario">
-              <b-form-input id="filtro-usuario" v-model="filter" size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
+            <b-form-group label="Pesquisar:" label-for="filtro-medico">
+              <b-form-input id="filtro-medico" v-model="filter" size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
             </b-form-group>
           </b-col>
         </b-row>
-    <b-table hover striped :items="usuarios" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadUsuario" :sort-by.sync="sortBy">
-      <template slot="actions" > 
+    <b-table hover striped :items="medicos" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadMedico" :sort-by.sync="sortBy">
+      <template slot="actions"> 
       </template>
     </b-table>
     <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit" />
@@ -45,13 +45,13 @@ import axios from "axios";
 
 
 export default {
-  name: "Usuarios",
+  name: "Medicos",
   components: { PageTitle },
   data: function () {
     return {
       mode: "save",
-      usuario: {},
-      usuarios: [],
+      medico: {},
+      medicos: [],
       sortBy: 'codigo',
       page: 1,
       limit: 0,
@@ -60,10 +60,8 @@ export default {
         { key: "codigo", label: "Código", sortable: true },
         { key: "nome", label: "Nome", sortable: true },
         { key: "email", label: "E-mail" },
-        { key: "cpf", label: "CPF" },
-        { key: "cargo", label: "Cargo" },
-        {key: "admin", label: "Adm",
-          formatter: (value) => (value ? "Sim" : "Não")},
+        { key: "crm", label: "CRM" },
+        { key: "especialidade", label: "Especialidade" },
       ],
       totalRows: 1,
       filter: null,
@@ -71,23 +69,23 @@ export default {
     
   },
   methods: {
-    loadUsuarios() {
-      const url = `${baseApiUrl}/usuarios`;
+    loadMedicos() {
+      const url = `${baseApiUrl}/medicos`;
       axios.get(url).then((res) => {
-        this.usuarios = res.data; 
+        this.medicos = res.data; 
         this.count = res.data.count
         this.limit = res.data.limit      
       });
     },
   
-     getUsuario(){
-            const url = `${baseApiUrl}/usuarios/${this.usuario.codigo}`
-             axios(url).then(res => this.usuario = res.data)
+     getMedico(){
+            const url = `${baseApiUrl}/medicos/${this.medico.codigo}`
+             axios(url).then(res => this.medico = res.data)
      },
 
-     loadUsuario(usuario, mode='save'){
+     loadMedico(medico, mode='save'){
             this.mode = mode
-            this.usuario = {...usuario}
+            this.medico = {...medico}
         },
         onFiltered(filteredItems) {
         // Trigger pagination to update the number of buttons/pages due to filtering
@@ -97,11 +95,11 @@ export default {
   }, 
   watch: {
       page() {
-        this.loadUsuarios()
+        this.loadMedicos()
       }
   } ,   
   mounted() {
-    this.loadUsuarios();  
+    this.loadMedicos();  
   }
 }
 </script>

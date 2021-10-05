@@ -13,7 +13,7 @@
           <b-button router-link to="/homecadastro" class="mb-4" size="lg"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
         </b-col>
         <b-col md="8">
-          <b-form-input input type="text" id="convenio-codigo" class="mb-4" v-model="convenio.convenio" autofocus size="lg"></b-form-input> 
+          <b-form-input input type="text" id="convenio-codigo"  class="mb-4" v-model="convenio.convenio" autofocus size="lg"></b-form-input> 
         </b-col>          
        <b-col md="auto">
          <b-button variant="success" v-if="mode === 'save'" block size="lg" @click="save">Incluir/Aterar</b-button> 
@@ -30,7 +30,7 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <b-table hover striped :items="convenios" :fields="fields" :filter="filter" @filtered="onFiltered">
+        <b-table hover striped :items="convenios" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy">
           <template slot="actions" slot-scope="data">
              <b-button variant='warning' @click="loadConvenio(data.item)" class="mr-2">
                  <i class="fa fa-pencil"></i>
@@ -56,12 +56,13 @@ export default {
             mode: 'save',
             convenio: {},
             convenios: [],
+            sortBy: 'codigo',
              page: 1,
              limit: 0,
              count: 0,
              fields: [
                  { key: "codigo", label: "Código", sortable: true},
-                 { key: "convenio", label: "Convênio", sortable: true},
+                 { key: "convenio", label: "Convênio"},
                  { key: "actions", label: "Ações"},
              ],
              totalRows: 1,
@@ -80,7 +81,7 @@ export default {
         reset() {
             this.mode = 'save'
             this.convenio = {}
-            this.loadConvenio()
+            this.loadConvenios()
         },
         save() {
             const method = this.convenio.codigo ? 'put' : 'post'

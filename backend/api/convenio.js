@@ -10,10 +10,16 @@ module.exports = app => {
         
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
-            existsOrError(convenio.convenio, 'Convênio não informado')
-        }catch(msg) {
-            return res.status(400).send(msg)
-        }         
+            existsOrError(convenio.convenio, 'Serviço não informado')
+
+            const convenioFromDB = await app.db('convenios')
+            .where({ convenio: convenio.convenio }).first()
+        if(!convenio.convenio) {
+            notExistsOrError(convenioFromDB, 'Serviço já cadastrado')
+        }
+    } catch(msg) {
+        return res.status(400).send(msg)
+    }         
     
     if(convenio.codigo){
         app.db('convenios')

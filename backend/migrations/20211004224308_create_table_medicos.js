@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-    return knex.schema.createTable('usuarios', table => {
+    return knex.schema.createTable('medicos', table => {
         table.increments('codigo').primary()
         table.string('nome', 50).notNull()
         table.string('email', 50).notNull().unique()
@@ -7,11 +7,10 @@ exports.up = function(knex) {
         table.string('datanasc', 10).notNull()
         table.string('estadocivil', 20).notNull()
         table.string('sexo',2).notNull()
-        table.string('cargo', 50).notNull()
-        table.string('siglacr', 15)
-        table.string('cr', 15).unique()
-        table.string('ufcr', 2)
-        table.string('cepusuario',9).notNull()
+        table.string('especialidade', 50).notNull()
+        table.string('crm', 15).unique().notNull()
+        table.string('ufcr', 2).notNull()
+        table.string('cepmedico',9).notNull()
         table.string('tipo',15).notNull()
         table.string('endereco', 100).notNull()
         table.string('complemento', 20).notNull()
@@ -23,14 +22,9 @@ exports.up = function(knex) {
         table.string('tel',9)
         table.string('celddd',4).notNull()
         table.string('cel', 10).notNull()
-        table.string('password').notNull()
-        table.string('confirmpassword').notNull()
-        table.boolean('admin').notNull().defaultTo(false)
-        table.timestamp('deletedAt')
-  
     })
   };
   
   exports.down = function(knex) {
-    return knex.schema.dropTable('usuarios')
+    return knex.schema.dropTable('medicos')
   };

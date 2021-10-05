@@ -11,9 +11,15 @@ module.exports = app => {
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
             existsOrError(servico.servico, 'Serviço não informado')
-        }catch(msg) {
-            return res.status(400).send(msg)
-        }         
+
+            const servicoFromDB = await app.db('servicos')
+            .where({ servico: servico.servico }).first()
+        if(!servico.servico) {
+            notExistsOrError(servicoFromDB, 'Serviço já cadastrado')
+        }
+    } catch(msg) {
+        return res.status(400).send(msg)
+    }
     
     if(servico.codigo){
         app.db('servicos')
@@ -73,7 +79,7 @@ module.exports = app => {
         const count = parseInt(result.count)
 
         app.db('servicos')
-            .select('codigo', 'servicos')
+            .select('codigo', 'servico')
             .limit(limit).offset(page * limit - limit)
             .then(servicos => res.json({ data: servicos, count, limit }))
             .catch(err => res.status(500).send(err))

@@ -10,7 +10,9 @@
         <router-link to="/pacientes">
           <Menus icon="fa fa-user" title="Pacientes" />
         </router-link>
-        <Menus icon="fa fa-user-md" title="Médicos" />
+        <router-link to="/medicos">
+          <Menus icon="fa fa-user-md" title="Médicos" />
+        </router-link>        
       </div>
       <div class="coluna2">
         <router-link to="/convenios">

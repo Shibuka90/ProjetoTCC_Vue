@@ -1,7 +1,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('especialidades', table => {
         table.increments('codigo').primary()
-        table.string('especialidades', 100).notNull()
+        table.string('especialidade', 100).notNull()
     })
 };
 

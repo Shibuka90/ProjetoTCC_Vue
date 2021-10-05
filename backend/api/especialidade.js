@@ -10,10 +10,16 @@ module.exports = app => {
         
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
-            existsOrError(especialidade.especialidades, 'Especialidade não informado')
-        }catch(msg) {
-            return res.status(400).send(msg)
-        }         
+            existsOrError(especialidade.especialidade, 'Serviço não informado')
+
+            const especialidadeFromDB = await app.db('especialidades')
+            .where({ especialidade: especialidade.especialidade }).first()
+        if(!especialidade.especialidade) {
+            notExistsOrError(especialidadeFromDB, 'Serviço já cadastrado')
+        }
+    } catch(msg) {
+        return res.status(400).send(msg)
+    }       
     
     if(especialidade.codigo){
         app.db('especialidades')
@@ -30,7 +36,7 @@ module.exports = app => {
     }
     const get = (req, res) => {
         app.db('especialidades')
-            .select('codigo', 'especialidades' )
+            .select('codigo', 'especialidade' )
             .then(especialidades => res.json(especialidades))
             .catch(err => res.status(500).send(err))
     }

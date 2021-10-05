@@ -10,6 +10,7 @@ import UsuarioAlterado from '@/components/usuario/UsuarioAlterado'
 import Especialidades from '@/components/especialidade/Especialidades'
 import Servicos from '@/components/servico/Servico'
 import Convenios from '@/components/convenio/Convenio'
+import Medicos from '@/components/medico/Medico'
 
 
 Vue.use(VueRouter)
@@ -50,7 +51,12 @@ const routes = [{
     name: 'convenio',
     path: '/convenios',
     component: Convenios
-}]
+}, {
+    name: 'medico',
+    path: '/medicos',
+    component: Medicos
+},
+]
 
 export default new VueRouter({
     mode: 'history',

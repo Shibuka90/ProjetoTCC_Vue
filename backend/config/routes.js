@@ -47,4 +47,19 @@ module.exports = app => {
         .get(app.api.convenio.get)
         .delete(app.api.convenio.remove)
 
+    app.route('/medicos')
+        // .all(app.config.passport.authenticate())
+        .post(app.api.medico.save)
+        // .get(admin(app.api.medico.get))
+        .get(app.api.medico.get)
+
+    app.route('/medicos/:codigo')
+        // .all(app.config.passport.authenticate())
+        .put(app.api.medico.save)
+        .get(app.api.medico.getByCodigo)
+        .delete(app.api.medico.remove)
+        
+    app.route('/medicos/:nome')
+        .get(app.api.medico.getByNome)
+
 }

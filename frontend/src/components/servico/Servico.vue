@@ -13,7 +13,7 @@
           <b-button router-link to="/homecadastro" size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
         </b-col>
         <b-col md="8">
-          <b-form-input input type="text" id="servico-codigo" v-model="servico.servico" autofocus size="lg" class="mb-4"></b-form-input> 
+          <b-form-input input type="text" id="servico-codigo"  v-model="servico.servico" autofocus size="lg" class="mb-4"></b-form-input> 
         </b-col>          
        <b-col md="auto">
          <b-button variant="success" v-if="mode === 'save'" size="lg" block @click="save">Incluir/Aterar</b-button> 
@@ -30,7 +30,7 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <b-table hover striped :items="servicos" :fields="fields" :filter="filter" @filtered="onFiltered">
+        <b-table hover striped :items="servicos" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy">
           <template slot="actions" slot-scope="data">
              <b-button variant='warning' @click="loadServico(data.item)" class="mr-2">
                  <i class="fa fa-pencil"></i>
@@ -56,12 +56,13 @@ export default {
             mode: 'save',
             servico: {},
             servicos: [],
+            sortBy: 'codigo',
              page: 1,
              limit: 0,
              count: 0,
              fields: [
                  { key: "codigo", label: "Código", sortable: true},
-                 { key: "servico", label: "Servico", sortable: true},
+                 { key: "servico", label: "Servicos"},
                  { key: "actions", label: "Ações"},
              ],
              totalRows: 1,
