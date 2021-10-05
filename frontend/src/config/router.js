@@ -11,6 +11,8 @@ import Especialidades from '@/components/especialidade/Especialidades'
 import Servicos from '@/components/servico/Servico'
 import Convenios from '@/components/convenio/Convenio'
 import Medicos from '@/components/medico/Medico'
+import NovoMedico from '@/components/medico/NovoMedico'
+import MedicoAlterado from '@/components/medico/MedicoAlterado'
 
 
 Vue.use(VueRouter)
@@ -55,6 +57,14 @@ const routes = [{
     name: 'medico',
     path: '/medicos',
     component: Medicos
+},{
+    name: 'novomedico',
+    path: '/novomedico',
+    component: NovoMedico
+}, {
+    name: 'medicoalterado',
+    path: '/medicos/:codigo',
+    component: MedicoAlterado
 },
 ]
 

@@ -161,13 +161,15 @@
                     </b-form-group>
                 </b-col>
             </b-row>
-            <b-row>
-                <b-col md="6">
+               <b-row>
+                <b-col md="4">
                 <b-button router-link to="/medicos" size='lg' class="mb-2" block>Cancelar</b-button>
                 </b-col>
+                <b-col md="2">
+                <b-button variant="danger" size='lg' class="mb-2" block @click="remove" router-link to="/medicos">Excluir</b-button>
+                </b-col>
                 <b-col md="6">
-                <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" >Incluir</b-button>
-                <b-button variant="danger"  size='lg' block v-if="mode === 'remove'" @click="remove">Excluir</b-button>
+                <b-button variant="success" size='lg' class="mb-2" block  @click="save" router-link to="/medicos">Alterar</b-button>
                 </b-col>
             </b-row>
         </b-form>
@@ -180,13 +182,15 @@ import PageTitle from "../template/PageTitle.vue"
 import { baseApiUrl, showError } from '@/global'
 import axios from 'axios'
 
+
 export default {
-    name: "NovoMedico",
-    components: { PageTitle },
+    name: "MedicoAlterado",
+    components: { PageTitle},
     data: function() {
         return {
             mode:'save',
             medico: {},
+            medicos: [],
             estadoCivil: ['Solteiro(a)', 'Divorciado(a)', 'Amasiado(a)', 'Casado(a)', 'Separado(a)', 'Uniao Estavel', 'Viuvo(a)'],
             sexo: ['M', 'F'],
             ufcr: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
@@ -196,39 +200,36 @@ export default {
                     'Vale', 'Via', 'Viela', 'Vila'],
             ufmunicipio: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
                     'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
-            medicos: [],
-            }
+        }
     },
     methods: {
-           reset(){
-            this.mode = 'save'
-            this.medico = {}
-        },
-       save() {
+          save() {
             const method = this.medico.codigo ? 'put' : 'post'
             const codigo = this.medico.codigo ? `/${this.medico.codigo}` : ''
             axios[method](`${baseApiUrl}/medicos${codigo}`, this.medico)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
-                    this.reset()
                 })
                 .catch(showError)
         },
-         remove() {
+          getMedico(){
+            const url = `${baseApiUrl}/medicos/${this.medico.codigo}`
+             axios(url).then(res => this.medico = res.data)
+        },
+             remove() {
             const codigo = this.medico.codigo
             axios.delete(`${baseApiUrl}/medicos/${codigo}`)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
-                    this.reset()
                 })
                 .catch(showError)
          },
-        loadMedico(medico, mode='save'){
-            this.mode = mode
-            this.medico = {...medico}
-        },
+        
     },
- 
+     mounted() {
+        this.medico.codigo = this.$route.params.codigo
+        this.getMedico()        
+     },
 }
 </script>
 

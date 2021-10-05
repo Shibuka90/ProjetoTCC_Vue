@@ -27,6 +27,7 @@ export default {
 
     .page-title i{
         color: red;
+        margin: 0px 15px 0px 0px
     }
 
 </style>
