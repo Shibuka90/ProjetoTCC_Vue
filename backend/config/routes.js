@@ -62,4 +62,19 @@ module.exports = app => {
     app.route('/medicos/:nome')
         .get(app.api.medico.getByNome)
 
+    app.route('/pacientes')
+        // .all(app.config.passport.authenticate())
+        .post(app.api.paciente.save)
+        // .get(admin(app.api.paciente.get))
+        .get(app.api.paciente.get)
+
+    app.route('/pacientes/:codigo')
+        // .all(app.config.passport.authenticate())
+        .put(app.api.paciente.save)
+        .get(app.api.paciente.getByCodigo)
+        .delete(app.api.paciente.remove)
+        
+    app.route('/pacientes/:nome')
+        .get(app.api.paciente.getByNome)
+
 }

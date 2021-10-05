@@ -71,7 +71,7 @@ module.exports = app => {
         app.db('medicos')
             .where({ nome: req.params.nome })
             .first()
-            .then(usuario => res.json(usuario))
+            .then(medico => res.json(medico))
             .catch(err => res.status(500).send(err))
     }
 

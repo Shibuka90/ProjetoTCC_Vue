@@ -241,7 +241,6 @@ export default {
             axios[method](`${baseApiUrl}/usuarios${codigo}`, this.usuario)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
-                    this.reset()
                 })
                 .catch(showError)
         },
@@ -254,7 +253,6 @@ export default {
             axios.delete(`${baseApiUrl}/usuarios/${codigo}`)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
-                    this.reset()
                 })
                 .catch(showError)
          },

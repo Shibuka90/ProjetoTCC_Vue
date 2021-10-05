@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import Home from '@/components/home/Home'
 import HomeCadastro from '@/components/home/HomeCadastro'
 import Pacientes from '@/components/paciente/Pacientes'
+import NovoPaciente from '@/components/paciente/NovoPaciente'
+import PacienteAlterado from '@/components/paciente/PacienteAlterado'
 import Usuarios from '@/components/usuario/Usuarios'
 import NovoUsuario from '@/components/usuario/NovoUsuario'
 import UsuarioAlterado from '@/components/usuario/UsuarioAlterado'
@@ -29,6 +31,14 @@ const routes = [{
     name: 'paciente',
     path: '/pacientes',
     component: Pacientes
+}, {
+    name: 'novopaciente',
+    path: '/novopaciente',
+    component: NovoPaciente
+}, {
+    name: 'pacientealterado',
+    path: '/pacientes/:codigo',
+    component: PacienteAlterado
 }, {
     name: 'usuario',
     path: '/usuarios',
