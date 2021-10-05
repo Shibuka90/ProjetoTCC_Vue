@@ -16,6 +16,8 @@ import Medicos from '@/components/cadastro/medico/Medico'
 import NovoMedico from '@/components/cadastro/medico/NovoMedico'
 import MedicoAlterado from '@/components/cadastro/medico/MedicoAlterado'
 
+import HomeAgendamento from '@/components/home/HomeAgendamento'
+
 
 Vue.use(VueRouter)
 
@@ -75,7 +77,11 @@ const routes = [{
     name: 'medicoalterado',
     path: '/medicos/:codigo',
     component: MedicoAlterado
-},
+}, {
+    name:'homeagendamento',
+    path:'/homeagendamento',
+    component:HomeAgendamento
+}
 ]
 
 export default new VueRouter({

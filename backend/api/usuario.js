@@ -76,6 +76,17 @@ module.exports = app => {
         }
 
     }
+
+    const get = (req, res) => {
+        app.db('usuarios')
+            .select('codigo', 'nome', 'email', 'cpf', 'datanasc', 'estadocivil', 'sexo', 'cargo', 'siglacr', 'cr', 'ufcr',
+                    'cepusuario', 'tipo', 'endereco', 'numero', 'bairro', 'municipio', 'ufmunicipio', 'telddd', 'tel',
+                    'celddd', 'cel', 'admin' )
+            .whereNull('deletedAt')
+            .then(usuarios => res.json(usuarios))
+            .catch(err => res.status(500).send(err))
+    }
+
     const getByCodigo = (req, res) => {
         app.db('usuarios')
             .where({ codigo: req.params.codigo })
@@ -103,22 +114,6 @@ module.exports = app => {
         } catch(msg) {
             res.status(400).send(e)
         }
-    }
-
-    const limit = 5 // usado para paginação
-    const get = async (req, res) => {
-        const page = req.query.page || 1
-
-        const result = await app.db('usuarios').count('codigo').first()
-        const count = parseInt(result.count)
-
-        app.db('usuarios')
-            .select('codigo', 'nome', 'email', 'cpf', 'datanasc', 'estadocivil', 'sexo', 'cargo', 'siglacr', 'cr', 'ufcr',
-            'cepusuario', 'tipo', 'endereco', 'numero', 'bairro', 'municipio', 'ufmunicipio', 'telddd', 'tel',
-            'celddd', 'cel', 'admin' )
-            .limit(limit).offset(page * limit - limit)
-            .then(usuarios => res.json({ data: usuarios, count, limit }))
-            .catch(err => res.status(500).send(err))
     }
 
     return { save, get, getByCodigo, getByNome, remove}

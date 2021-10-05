@@ -8,7 +8,11 @@
             <Menus icon="fa fa-folder" title="Cadastros Gerais" />
         </router-link>   
         </div> 
-        <Menus icon="fa fa-calendar" title="Agendamento" />
+        <div class="agendamento">
+          <router-link to="/homeagendamento">
+            <Menus icon="fa fa-calendar" title="Agendamento" />
+          </router-link>
+        </div>
         <Menus icon="fa fa-users" title="Atendimento" />            
         
     </div>
@@ -40,6 +44,11 @@ export default {
     }
 
     .cadastro a:hover{
+        text-decoration: none;
+        color: #000;
+    }
+
+    .agendamento a:hover{
         text-decoration: none;
         color: #000;
     }

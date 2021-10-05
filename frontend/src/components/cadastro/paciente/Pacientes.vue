@@ -13,7 +13,7 @@
           <b-button router-link to="/homecadastro"  size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
         </b-col>
         <b-col md="6">
-          <b-form-input input type="text" id="paciente-codigo" readonly v-model="paciente.nome" autofocus size="lg" class="mb-4com "></b-form-input> 
+          <b-form-input input type="text" id="paciente-codigo" readonly v-model="paciente.nome" autofocus size="lg" class="mb-4"></b-form-input> 
         </b-col>
        <b-col md="4">
          <b-button router-link to="/novopaciente" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
