@@ -7,6 +7,11 @@
     />
     <div class="menus-homecadastro">
       <div class="coluna1">
+        <router-link to="/">
+          <Menus icon="fas fa-home" title="Menu Principal" />
+        </router-link>
+      </div>
+      <div class="coluna2">
         <router-link to="/pacientes">
           <Menus icon="fa fa-user" title="Pacientes" />
         </router-link>
@@ -14,7 +19,7 @@
           <Menus icon="fa fa-user-md" title="Médicos" />
         </router-link>        
       </div>
-      <div class="coluna2">
+      <div class="coluna3">
         <router-link to="/convenios">
          <Menus icon="fa fa-book-medical" title="Convênios" />
         </router-link>
@@ -22,17 +27,12 @@
           <Menus icon="fa fa-stethoscope" title="Especialidades" />
         </router-link>
       </div>
-      <div class="coluna3">
+      <div class="coluna4">
         <router-link to="/servicos">
           <Menus icon="fa fa-medkit" title="Serviços" />  
         </router-link>
         <router-link to="/usuarios">
           <Menus icon="fa fa-users" title="Colaboradores" />
-        </router-link>
-      </div>
-      <div class="coluna4">
-        <router-link to="/">
-          <Menus icon="fa fa-home" title="Menu Principal" />
         </router-link>
       </div>
     </div>
