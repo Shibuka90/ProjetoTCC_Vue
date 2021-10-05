@@ -70,9 +70,9 @@ export default {
   },
   methods: {
     loadPacientes() {
-      const url = `${baseApiUrl}/pacientes`;
+      const url = `${baseApiUrl}/pacientes?=page${this.page}`;
       axios.get(url).then((res) => {
-        this.pacientes = res.data; 
+        this.pacientes = res.data.data; 
         this.count = res.data.count
         this.limit = res.data.limit      
       });
@@ -90,7 +90,7 @@ export default {
         onFiltered(filteredItems) {
         // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length
-        this.currentPage = 1
+       
       }
   }, 
   watch: {

@@ -5,7 +5,10 @@ module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
 
     const save = async (req, res) => {
-        const convenio = { ...req.body }
+        const convenio = { 
+            codigo: req.body.codigo,
+            convenio: req.body.convenio,
+         }
         if(req.params.codigo) convenio.codigo = req.params.codigo
         
         // if(!req.originalUrl.startWith('/convenios')) especialidade.admin = false
@@ -13,12 +16,12 @@ module.exports = app => {
         
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
-            existsOrError(convenio.convenio, 'Serviço não informado')
+            existsOrError(convenio.convenio, 'Convênio não informado')
 
             const convenioFromDB = await app.db('convenios')
             .where({ convenio: convenio.convenio }).first()
         if(!convenio.convenio) {
-            notExistsOrError(convenioFromDB, 'Serviço já cadastrado')
+            notExistsOrError(convenioFromDB, 'Convênio já cadastrado')
         }
     } catch(msg) {
         return res.status(400).send(msg)
@@ -37,18 +40,19 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
      }
     }
-    const get = (req, res) => {
-        app.db('convenios')
-            .select('codigo', 'convenio' )
-            .then(convenios => res.json(convenios))
-            .catch(err => res.status(500).send(err))
-    }
-
     const getByCodigo = (req, res) =>{ 
         app.db('convenios')
             .where({ codigo: req.params.codigo })
             .first()
             .then(convenio => res.json(convenio))
+            .catch(err => res.status(500).send(err))
+    }
+
+    const getByNome = (req, res) => {
+        app.db('convenios')
+            .where({ convenio: req.params.convenio })
+            .first()
+            .then(usuario => res.json(usuario))
             .catch(err => res.status(500).send(err))
     }
     const remove = async (req, res) => {
@@ -74,21 +78,22 @@ module.exports = app => {
         }
     }
 
-    const limit = 10 // usado para paginação
-    const getpg = async (req, res) => {
+    const limit = 5
+    const get = async (req, res) => {
         const page = req.query.page || 1
 
         const result = await app.db('convenios').count('codigo').first()
         const count = parseInt(result.count)
 
         app.db('convenios')
-            .select('codigo', 'convenios')
+            .select('codigo', 'convenio')
             .limit(limit).offset(page * limit - limit)
-            .then(convenios => res.json({ data: convenios, count, limit }))
+            .then(convenios => res.json({data: convenios, count, limit }))
             .catch(err => res.status(500).send(err))
+
     }
 
 
-    return { save, get, getByCodigo, remove, getpg}
+    return { save, get, getByCodigo, remove, getByNome}
 }
 

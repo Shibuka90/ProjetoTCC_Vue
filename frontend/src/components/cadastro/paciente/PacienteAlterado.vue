@@ -54,9 +54,9 @@
                     </b-form-group>
                 </b-col>  
                 <b-col md="4"> 
-                       <b-form-group label="Convênio:" label-for="paciente-convenio">
-                        <b-form-input id="paciente-convenio" type="text"  v-model="paciente.convenio" required
-                        :readonly="mode === 'remove'"  placeholder="Informe o Convênio...."/>
+                    <b-form-group label="Convênio:" label-for="paciente-convenio">
+                        <b-form-select id="paciente-convenio" :options="convenios" v-model="paciente.convenio" required>
+                        </b-form-select>
                     </b-form-group>
                 </b-col>     
             </b-row>
@@ -68,7 +68,7 @@
                     </b-form-group>
                 </b-col> 
                  <b-col md="6">
-                    <b-form-group label="Pai:" label-for="paciente-siglacr">
+                    <b-form-group label="Pai:" label-for="paciente-pai">
                       <b-form-input id="paciente-pai" type="text" v-model="paciente.pai" required
                         :readonly="mode === 'remove'" placeholder="Informe o Cargo do(a) Colaborador(a)" />
                     </b-form-group>
@@ -106,7 +106,7 @@
             <b-row>
                 <b-col md="auto">
                     <b-form-group label="Complemento:" label-for="paciente-complemento">
-                        <b-form-input id="paciente-complemento" type="text"  v-model="paciente.complemento" required
+                        <b-form-input id="paciente-complemento" type="text"  v-model="paciente.complemento" 
                         :readonly="mode === 'remove'" placeholder="Informe o Complemento......." />
                     </b-form-group>
                 </b-col>
@@ -200,6 +200,8 @@ export default {
             mode:'save',
             paciente: {},
             pacientes: [],
+            convenio: {},
+            convenios:[],
             estadoCivil: ['Solteiro(a)', 'Divorciado(a)', 'Amasiado(a)', 'Casado(a)', 'Separado(a)', 'Uniao Estavel', 'Viuvo(a)'],
             sexo: ['M', 'F'],
             admin: ['Gerente', 'Colaborador','Medico'],
@@ -208,12 +210,20 @@ export default {
                     'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
             tipo: ['Area', 'Avenida', 'Alamenda', 'Beco', 'Chacara', 'Condominio', 'Conjunto', 'Distrito', 'Estrada', 'Fazenda', 'Ladeira', 
                     'Largo', 'Loteamento', 'Modulo', 'Parque', 'Praca', 'Quadra', 'Residencial', 'Rodovia', 'Rua', 'Sitio', 'Travessa', 'Trevo',
-                    'Vale', 'Via', 'Viela', 'Vila'],
+                    'Vale', 'Via', 'Viaduto', 'Viela', 'Vila'],
             ufmunicipio: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
                     'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
         }
     },
     methods: {
+         loadConvenios() {
+            const url = `${baseApiUrl}/convenios`;
+            axios.get(url).then((res) => {
+            this.convenios = res.data.map(convenio => {
+                return{value: convenio.codigo, text: `${convenio.convenio}` }
+            })
+            })
+        },
           save() {
             const method = this.paciente.codigo ? 'put' : 'post'
             const codigo = this.paciente.codigo ? `/${this.paciente.codigo}` : ''
@@ -239,7 +249,8 @@ export default {
     },
      mounted() {
         this.paciente.codigo = this.$route.params.codigo
-        this.getPaciente()        
+        this.getPaciente()  
+        this.loadConvenios()      
      },
 }
 </script>

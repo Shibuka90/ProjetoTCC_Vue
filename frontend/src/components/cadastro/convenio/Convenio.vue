@@ -8,16 +8,18 @@
     <div class="pesquisa">
       <b-form>
       <b-row >
-        <b-col md="2"> 
-          <b-button router-link to="/" class="fa fa-home ml-2 mr-4 mb-4" variant="info" size="lg"></b-button>
-          <b-button router-link to="/homecadastro" class="mb-4" size="lg"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
-        </b-col>
+        <b-col md="2">          
+           <b-button router-link to="/" class="fa fa-home mt-4 ml-2 mr-4 mb-4" variant="info" size="lg"></b-button>
+           <b-button router-link to="/homecadastro" class="mb-4 mt-4" size="lg"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
+        </b-col>        
         <b-col md="8">
-          <b-form-input input type="text" id="convenio-codigo"  class="mb-4" v-model="convenio.convenio" autofocus size="lg"></b-form-input> 
+          <b-form-group label="Convênio:" label-for="convenio-convenio">
+           <b-form-input type="text" id="convenio-convenio"  class="mb-4" v-model="convenio.convenio" size="lg"></b-form-input> 
+          </b-form-group>
         </b-col>          
        <b-col md="auto">
-         <b-button variant="success" v-if="mode === 'save'" block size="lg" @click="save">Incluir/Aterar</b-button> 
-         <b-button variant="danger" v-if="mode === 'remove'" block size="lg" @click="remove">Excluir</b-button> 
+         <b-button variant="success" class="mb-4 mt-4" v-if="mode === 'save'" block size="lg" @click="save">Incluir/Aterar</b-button> 
+         <b-button variant="danger" class="mb-4 mt-4" v-if="mode === 'remove'" block size="lg" @click="remove">Excluir</b-button> 
         </b-col> 
       </b-row>
     </b-form>     
@@ -71,9 +73,9 @@ export default {
     },
     methods: {
           loadConvenios() {
-            const url = `${baseApiUrl}/convenios`;
+            const url = `${baseApiUrl}/convenios?page=${this.page}`;
             axios.get(url).then((res) => {
-            this.convenios = res.data; 
+            this.convenios = res.data.data; 
             this.count = res.data.count
             this.limit = res.data.limit
             })

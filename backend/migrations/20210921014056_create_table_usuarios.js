@@ -14,7 +14,7 @@ exports.up = function(knex) {
         table.string('cepusuario',9).notNull()
         table.string('tipo',15).notNull()
         table.string('endereco', 100).notNull()
-        table.string('complemento', 20).notNull()
+        table.string('complemento', 20)
         table.string('numero',5).notNull()
         table.string('bairro', 100).notNull()
         table.string('municipio', 100).notNull()

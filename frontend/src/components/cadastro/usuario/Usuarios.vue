@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     loadUsuarios() {
-      const url = `${baseApiUrl}/usuarios`;
+      const url = `${baseApiUrl}/usuarios?page=${this.page}`;
       axios.get(url).then((res) => {
         this.usuarios = res.data; 
         this.count = res.data.count

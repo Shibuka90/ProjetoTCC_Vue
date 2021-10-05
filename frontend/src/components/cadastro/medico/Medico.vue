@@ -70,9 +70,9 @@ export default {
   },
   methods: {
     loadMedicos() {
-      const url = `${baseApiUrl}/medicos`;
+      const url = `${baseApiUrl}/medicos?page=${this.page}`;
       axios.get(url).then((res) => {
-        this.medicos = res.data; 
+        this.medicos = res.data.data; 
         this.count = res.data.count
         this.limit = res.data.limit      
       });

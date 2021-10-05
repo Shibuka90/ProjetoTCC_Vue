@@ -9,15 +9,17 @@
     <b-form>
       <b-row >
         <b-col md="2"> 
-          <b-button router-link to="/" class="fa fa-home ml-2 mr-4 mb-4" variant="info" size="lg"></b-button>
-          <b-button router-link to="/homecadastro" size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
+          <b-button router-link to="/" class="fa fa-home ml-2 mt-4 mr-4 mb-4" variant="info" size="lg"></b-button>
+          <b-button router-link to="/homecadastro" size="lg" class="mb-4 mt-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
         </b-col>
         <b-col md="8">
-          <b-form-input input type="text" id="especialidade-codigo"  v-model="especialidade.especialidade" autofocus size="lg" class="mb-4"></b-form-input> 
+          <b-form-group label="Especialiade" label-for="especialidade-codigo">
+            <b-form-input input type="text" id="especialidade-codigo"  v-model="especialidade.especialidade" autofocus size="lg" class="mb-4"></b-form-input> 
+          </b-form-group>
         </b-col>          
        <b-col md="auto">
-         <b-button variant="success" v-if="mode === 'save'" size="lg" block @click="save">Incluir/Aterar</b-button> 
-         <b-button variant="danger" v-if="mode === 'remove'" size="lg" block @click="remove">Excluir</b-button> 
+         <b-button variant="success" class="mb-4 mt-4" v-if="mode === 'save'" size="lg" block @click="save">Incluir/Aterar</b-button> 
+         <b-button variant="danger"  class="mb-4 mt-4" v-if="mode === 'remove'" size="lg" block @click="remove">Excluir</b-button> 
         </b-col> 
       </b-row>
     </b-form>     
@@ -56,26 +58,26 @@ export default {
             mode: 'save',
             especialidade: {},
             especialidades: [],
-            sortBy: 'codigo',
-             page: 1,
-             limit: 0,
-             count: 0,
-             fields: [
+            page: 1,
+            limit: 0,
+            count: 0,         
+            fields: [
                  { key: "codigo", label: "Código", sortable: true},
                  { key: "especialidade", label: "Especialidades"},
                  { key: "actions", label: "Ações"},
              ],
              totalRows: 1,
              filter: null,
+             sortBy: 'codigo',
         };
     },
     methods: {
-          loadEspecialidades() {
-            const url = `${baseApiUrl}/especialidades`;
+        loadEspecialidades(){
+          const url = `${baseApiUrl}/especialidades?page=${this.page}`;
             axios.get(url).then((res) => {
-            this.especialidades = res.data; 
-            this.count = res.data.count
-            this.limit = res.data.limit
+            this.especialidades = res.data.data;
+            this.count = res.data.count;
+            this.limit = res.data.limit; 
             })
         },
         reset() {
@@ -103,9 +105,9 @@ export default {
                 .catch(showError)
         },
 
-        loadEspecialidade(especialidades, mode='save'){
+        loadEspecialidade(especialidade, mode='save'){
             this.mode = mode
-            this.especialidade = {...especialidades}
+            this.especialidade = {...especialidade}
         },
 
         onFiltered(filteredItems) {
@@ -120,7 +122,7 @@ export default {
       }
   } ,   
     mounted() {
-        this.loadEspecialidades();  
+        this.loadEspecialidades();
   }
 }
 </script>

@@ -71,9 +71,9 @@ export default {
     },
     methods: {
           loadServicos() {
-            const url = `${baseApiUrl}/servicos`;
+            const url = `${baseApiUrl}/servicos?page=${this.page}`;
             axios.get(url).then((res) => {
-            this.servicos = res.data; 
+            this.servicos = res.data.data; 
             this.count = res.data.count
             this.limit = res.data.limit
             })

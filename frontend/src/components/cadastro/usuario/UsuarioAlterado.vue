@@ -118,7 +118,7 @@
             <b-row>
               <b-col md="auto">
                     <b-form-group label="Complemento:" label-for="usuario-complemento">
-                        <b-form-input id="usuario-complemento" type="text"  v-model="usuario.complemento" required
+                        <b-form-input id="usuario-complemento" type="text"  v-model="usuario.complemento" 
                         :readonly="mode === 'remove'" placeholder="Informe o Complemento......." />
                     </b-form-group>
                 </b-col>

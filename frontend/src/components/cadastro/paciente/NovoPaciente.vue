@@ -54,9 +54,9 @@
                     </b-form-group>
                 </b-col>  
                 <b-col md="4"> 
-                       <b-form-group label="Convênio:" label-for="paciente-convenio">
-                        <b-form-input id="paciente-convenio" type="text"  v-model="paciente.convenio" required
-                        :readonly="mode === 'remove'"  placeholder="Informe o Convênio...."/>
+                    <b-form-group label="Convênio:" label-for="paciente-convenio">
+                        <b-form-select id="paciente-convenio" :options="convenios" v-model="paciente.convenio" required>
+                        </b-form-select>
                     </b-form-group>
                 </b-col>     
             </b-row>
@@ -68,7 +68,7 @@
                     </b-form-group>
                 </b-col> 
                  <b-col md="6">
-                    <b-form-group label="Pai:" label-for="paciente-siglacr">
+                    <b-form-group label="Pai:" label-for="paciente-pai">
                       <b-form-input id="paciente-pai" type="text" v-model="paciente.pai" required
                         :readonly="mode === 'remove'" placeholder="Informe o Cargo do(a) Colaborador(a)" />
                     </b-form-group>
@@ -106,7 +106,7 @@
             <b-row>
                 <b-col md="auto">
                     <b-form-group label="Complemento:" label-for="paciente-complemento">
-                        <b-form-input id="paciente-complemento" type="text"  v-model="paciente.complemento" required
+                        <b-form-input id="paciente-complemento" type="text"  v-model="paciente.complemento"
                         :readonly="mode === 'remove'" placeholder="Informe o Complemento......." />
                     </b-form-group>
                 </b-col>
@@ -172,7 +172,7 @@
             </b-row>
             <b-row>
                 <b-col md="6">
-                <b-button router-link to="/usuarios" size='lg' class="mb-2" block>Cancelar</b-button>
+                <b-button router-link to="/pacientes" size='lg' class="mb-2" block>Cancelar</b-button>
                 </b-col>
                 <b-col md="6">
                 <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" >Incluir</b-button>
@@ -196,17 +196,27 @@ export default {
         return {
             mode:'save',
             paciente: {},
+            convenio: {},
+            convenios:[],
             estadoCivil: ['Solteiro(a)', 'Divorciado(a)', 'Amasiado(a)', 'Casado(a)', 'Separado(a)', 'Uniao Estavel', 'Viuvo(a)'],
             sexo: ['M', 'F'],
             admin: ['Gerente', 'Colaborador','Medico'],
             tipo: ['Area', 'Avenida', 'Alamenda', 'Beco', 'Chacara', 'Condominio', 'Conjunto', 'Distrito', 'Estrada', 'Fazenda', 'Ladeira', 
                     'Largo', 'Loteamento', 'Modulo', 'Parque', 'Praca', 'Quadra', 'Residencial', 'Rodovia', 'Rua', 'Sitio', 'Travessa', 'Trevo',
-                    'Vale', 'Via', 'Viela', 'Vila'],
+                    'Vale', 'Via', 'Viaduto', 'Viela', 'Vila'],
             ufmunicipio: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
                     'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
             pacientes: [],        }
     },
     methods: {
+          loadConvenios() {
+            const url = `${baseApiUrl}/convenios`;
+            axios.get(url).then((res) => {
+            this.convenios = res.data.map(convenio => {
+                return{value: convenio.codigo, text: `${convenio.convenio}` }
+            })
+            })
+        },
            reset(){
             this.mode = 'save'
             this.paciente = {}
@@ -235,6 +245,9 @@ export default {
             this.paciente = {...paciente}
         },
     },
+    mounted(){
+        this.loadConvenios()
+    }
  
 }
 </script>

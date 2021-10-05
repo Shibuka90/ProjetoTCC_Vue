@@ -52,15 +52,6 @@ module.exports = app => {
         }
 
     }
-
-    const get = (req, res) => {
-        app.db('pacientes')
-            .select('codigo', 'nome', 'email', 'cpf', 'datanasc', 'estadocivil', 'sexo', 'mae', 'pai', 'ceppaciente', 'tipo', 
-            'endereco', 'numero', 'bairro', 'municipio', 'ufmunicipio', 'telddd', 'tel', 'celddd', 'cel', 'convenio', 'matricula', 'vencimento' )
-            .then(pacientes => res.json(pacientes))
-            .catch(err => res.status(500).send(err))
-    }
-
     const getByCodigo = (req, res) => {
         app.db('pacientes')
             .where({ codigo: req.params.codigo })
@@ -100,8 +91,8 @@ module.exports = app => {
         }
     }
 
-    const limit = 10 // usado para paginação
-    const getpg = async (req, res) => {
+    const limit = 5 // usado para paginação
+    const get = async (req, res) => {
         const page = req.query.page || 1
 
         const result = await app.db('pacientes').count('codigo').first()
@@ -115,5 +106,5 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    return { save, get, getByCodigo, getByNome, remove, getpg}
+    return { save, get, getByCodigo, getByNome, remove}
 }

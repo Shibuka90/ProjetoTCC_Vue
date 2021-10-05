@@ -37,18 +37,19 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
      }
     }
-    const get = (req, res) => {
-        app.db('especialidades')
-            .select('codigo', 'especialidade' )
-            .then(especialidades => res.json(especialidades))
-            .catch(err => res.status(500).send(err))
-    }
 
     const getByCodigo = (req, res) =>{ 
         app.db('especialidades')
             .where({ codigo: req.params.codigo })
             .first()
             .then(especialidade => res.json(especialidade))
+            .catch(err => res.status(500).send(err))
+    }
+    const getByNome = (req, res) => {
+        app.db('especialidades')
+            .where({ especialidade: req.params.especialidade })
+            .first()
+            .then(usuario => res.json(usuario))
             .catch(err => res.status(500).send(err))
     }
     const remove = async (req, res) => {
@@ -74,21 +75,20 @@ module.exports = app => {
         }
     }
 
-    const limit = 10 // usado para paginação
-    const getpg = async (req, res) => {
+    const limit = 5
+    const get = async (req, res) => {
         const page = req.query.page || 1
 
         const result = await app.db('especialidades').count('codigo').first()
         const count = parseInt(result.count)
 
         app.db('especialidades')
-            .select('codigo', 'especialidades')
+            .select('codigo', 'especialidade')
             .limit(limit).offset(page * limit - limit)
-            .then(especialidades => res.json({ data: especialidades, count, limit }))
+            .then(especialidades => res.json({data: especialidades, count, limit }))
             .catch(err => res.status(500).send(err))
+
     }
 
-
-    return { save, get, getByCodigo, remove, getpg}
+    return { save, getByCodigo, remove, getByNome, get }
 }
-

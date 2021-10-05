@@ -57,8 +57,8 @@
             <b-row>
                   <b-col md="6">
                     <b-form-group label="Especialidade:" label-for="medico-especialidade">
-                        <b-form-input id="medico-especialidade" type="text" v-model="medico.especialidade" required
-                        :readonly="mode === 'remove'" placeholder="Informe a Especialidade do(a) Médico(a)" />
+                        <b-form-select id="medico-especialidade" :options="especialidades" v-model="medico.especialidade" required>
+                        </b-form-select>
                     </b-form-group>
                 </b-col> 
                     <b-col md="auto">
@@ -109,7 +109,7 @@
             <b-row>
                 <b-col md="auto">
                     <b-form-group label="Complemento:" label-for="medico-complemento">
-                        <b-form-input id="medico-complemento" type="text"  v-model="medico.complemento" required
+                        <b-form-input id="medico-complemento" type="text"  v-model="medico.complemento"
                         :readonly="mode === 'remove'" placeholder="Informe o Complemento......." />
                     </b-form-group>
                 </b-col>
@@ -187,6 +187,8 @@ export default {
         return {
             mode:'save',
             medico: {},
+            especialidade: {},
+            especialidades: [],
             estadoCivil: ['Solteiro(a)', 'Divorciado(a)', 'Amasiado(a)', 'Casado(a)', 'Separado(a)', 'Uniao Estavel', 'Viuvo(a)'],
             sexo: ['M', 'F'],
             ufcr: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
@@ -200,6 +202,14 @@ export default {
             }
     },
     methods: {
+          loadEspecialidades() {
+            const url = `${baseApiUrl}/especialidades`;
+            axios.get(url).then((res) => {
+            this.especialidades = res.data.map(especialidade => {
+                return{value: especialidade.codigo, text: `${especialidade.especialidade}` }
+            })
+            })
+        },
            reset(){
             this.mode = 'save'
             this.medico = {}
@@ -226,9 +236,11 @@ export default {
         loadMedico(medico, mode='save'){
             this.mode = mode
             this.medico = {...medico}
-        },
+        }
     },
- 
+    mounted(){
+        this.loadEspecialidades()
+    }
 }
 </script>
 
