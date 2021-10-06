@@ -77,4 +77,16 @@ module.exports = app => {
     app.route('/pacientes/:nome')
         .get(app.api.paciente.getByNome)
 
+    app.route('/agendas')
+        // .all(app.config.passport.authenticate())
+        .post(app.api.agenda.save)
+        // .get(admin(app.api.agenda.get))
+        .get(app.api.agenda.get)
+
+    app.route('/agendas/:codigo')
+        // .all(app.config.passport.authenticate())
+        // .put(app.api.agenda.save)
+        // .get(app.api.agenda.getByCodigo)
+        // .delete(app.api.agenda.remove)
+
 }
