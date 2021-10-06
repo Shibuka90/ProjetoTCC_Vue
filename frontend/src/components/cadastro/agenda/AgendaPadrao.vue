@@ -1,6 +1,6 @@
 <template>
   <div class="agendapadrao">
-      <PageTitle icon="fas fa-calendar-alt" main="Agenda Padrão" sub="Cdastro de Agenda" />
+      <PageTitle icon="fas fa-calendar-alt" main="Agenda Padrão" sub="Grid de Agenda" />
 
   <div class="pesquisa"> 
       <b-form>
@@ -10,7 +10,7 @@
           <b-button router-link to="/homeagendamento"  size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
         </b-col>
         <b-col md="6">
-          <b-form-input input type="text" id="agenda-codigo" readonly autofocus size="lg" class="mb-4 "></b-form-input> 
+          <b-form-input input type="text" id="agenda-codigo" readonly size="lg" class="mb-4 "></b-form-input> 
         </b-col>
        <b-col md="4">
          <b-button router-link to="/novaagenda" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
@@ -23,7 +23,7 @@
      <b-row>
           <b-col md="6">
             <b-form-group label="Pesquisar:" label-for="filtro-medico">
-              <b-form-input id="filtro-medico" v-model="filter" size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
+              <b-form-input id="filtro-medico" autofocus v-model="filter" size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
             </b-form-group>
           </b-col>
         </b-row>
@@ -68,7 +68,13 @@ export default {
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
       }
-        }
+    },
+    watch: {
+      
+  },
+    mounted() {
+    
+  }
 }
 </script>
 

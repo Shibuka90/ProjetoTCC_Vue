@@ -31,3 +31,17 @@ exports.up = function(knex) {
   exports.down = function(knex) {
     return knex.schema.dropTable('pacientes')
   };
+
+
+  // table.increments('codigo').primary()
+  // table.integer('codigomedico').references('codigo').inTable('medicos').notNull()
+  // table.string('medico', 50).notNull()
+  // table.string('tipodaagenda', 20).notNull()
+  // table.string('diasdasemana', 2).notNull()  
+  // table.timestamp('tempodeatendimento', 10 ).notNull()
+  // table.timestamp('periodo', 30 ).notNull()
+  // table.timestamp('inntervalo', 30).notNull()
+  // table.integer('codigoservico').references('codigo').inTable('servicos').notNull()
+  // table.string('servico', 100).notNull()
+  // table.integer('codigoespecialidade').references('codigo').inTable('especialidades').notNull()
+  // table.string('especialidade').notNull()
