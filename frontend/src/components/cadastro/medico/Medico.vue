@@ -13,7 +13,7 @@
           <b-button router-link to="/homecadastro"  size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
         </b-col>
         <b-col md="6">
-          <b-form-input input type="text" id="medico-codigo" readonly v-model="medico.nome" autofocus size="lg" class="mb-4 "></b-form-input> 
+          <b-form-input input type="text" id="medico-codigo" readonly v-model="medico.nome" size="lg" class="mb-4 "></b-form-input> 
         </b-col>
        <b-col md="4">
          <b-button router-link to="/novomedico" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
@@ -26,7 +26,7 @@
         <b-row>
           <b-col md="6">
             <b-form-group label="Pesquisar:" label-for="filtro-medico">
-              <b-form-input id="filtro-medico" v-model="filter" size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
+              <b-form-input id="filtro-medico" v-model="filter" autofocus  size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
             </b-form-group>
           </b-col>
         </b-row>
