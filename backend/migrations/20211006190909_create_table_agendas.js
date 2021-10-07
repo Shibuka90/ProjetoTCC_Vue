@@ -9,8 +9,6 @@ exports.up = function(knex) {
         table.time('horafinal').notNull()
         table.time('intervaloinicial').notNull()
         table.time('intervalofinal').notNull()
-        table.integer('codigoservico').references('codigo').inTable('servicos').notNull()
-        table.string('servico', 100).notNull()
         table.integer('codigoespecialidade').references('codigo').inTable('especialidades').notNull()
         table.string('especialidade').notNull()
     })

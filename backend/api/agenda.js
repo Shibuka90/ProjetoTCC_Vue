@@ -19,7 +19,6 @@ module.exports = app => {
             existsOrError(agenda.horafinal, 'Hora Final não informada')
             existsOrError(agenda.intervaloinicial, 'Inervalo Inical não informado')
             existsOrError(agenda.intervalofinal, 'Inervalo Final não informado')
-            existsOrError(agenda.servico, 'Serviço não informado')
             existsOrError(agenda.especialidade, 'Especialidade não informada')
 
     } catch(msg) {
