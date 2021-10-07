@@ -55,13 +55,13 @@
                 </b-col>       
             </b-row>
             <b-row>
-                  <b-col md="6">
+                <b-col md="6">
                     <b-form-group label="Especialidade:" label-for="medico-especialidade">
                         <b-form-select id="medico-especialidade" :options="especialidades" v-model="medico.especialidade" required>
                         </b-form-select>
                     </b-form-group>
                 </b-col> 
-                    <b-col md="auto">
+                <b-col md="auto">
                     <b-form-group label="CRM:" label-for="medico-crm">
                         <b-form-input id="medico-crm" type="text" v-model="medico.crm" 
                         :readonly="mode === 'remove'" placeholder="Informe o CRM " />
@@ -205,15 +205,19 @@ export default {
         }
     },
     methods: {
-        loadEspecialidades() {
+            loadEspecialidades() {
             const url = `${baseApiUrl}/especialidades`;
             axios.get(url).then((res) => {
             this.especialidades = res.data.map(especialidade => {
-                return{value: especialidade.codigo, text: `${especialidade.especialidade}` }
+                return{value: especialidade.especialidade, text: `${especialidade.especialidade}` }
             })
             })
         },
-          save() {
+            loadEspecialidade(especialidade, mode='save'){
+            this.mode = mode
+            this.especialidade = {...especialidade}
+        },
+            save() {
             const method = this.medico.codigo ? 'put' : 'post'
             const codigo = this.medico.codigo ? `/${this.medico.codigo}` : ''
             axios[method](`${baseApiUrl}/medicos${codigo}`, this.medico)
@@ -234,6 +238,11 @@ export default {
                 })
                 .catch(showError)
          },
+          onFiltered(filteredItems) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.totalRows = filteredItems.length
+        this.currentPage = 1
+        }
         
     },
      mounted() {

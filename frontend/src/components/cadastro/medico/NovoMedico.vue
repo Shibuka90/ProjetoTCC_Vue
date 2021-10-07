@@ -55,7 +55,7 @@
                 </b-col>       
             </b-row>
             <b-row>
-                  <b-col md="6">
+                <b-col md="6">
                     <b-form-group label="Especialidade:" label-for="medico-especialidade">
                         <b-form-select id="medico-especialidade" :options="especialidades" v-model="medico.especialidade" required>
                         </b-form-select>
@@ -202,11 +202,11 @@ export default {
             }
     },
     methods: {
-          loadEspecialidades() {
+         loadEspecialidades() {
             const url = `${baseApiUrl}/especialidades`;
             axios.get(url).then((res) => {
             this.especialidades = res.data.map(especialidade => {
-                return{value: especialidade.codigo, text: `${especialidade.especialidade}` }
+                return{value: especialidade.especialidade, text: `${especialidade.especialidade}` }
             })
             })
         },
@@ -236,7 +236,12 @@ export default {
         loadMedico(medico, mode='save'){
             this.mode = mode
             this.medico = {...medico}
-        }
+        },
+
+        loadEspecialidade(especialidade, mode='save'){
+            this.mode = mode
+            this.especialidade = {...especialidade}
+        },
     },
     mounted(){
         this.loadEspecialidades()

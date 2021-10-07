@@ -14,7 +14,6 @@ module.exports = app => {
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
             existsOrError(agenda.medico, 'Médico não informado')
-            existsOrError(agenda.diasdasemana, 'Dias não informado')
             existsOrError(agenda.tempodeatendimento, 'Tempo de Atendimento não informado')
             existsOrError(agenda.horainicial, 'Hora Inicial não informada')
             existsOrError(agenda.horafinal, 'Hora Final não informada')

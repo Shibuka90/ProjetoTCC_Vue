@@ -4,7 +4,6 @@ exports.up = function(knex) {
         table.increments('codigo').primary()
         table.integer('codigomedico').references('codigo').inTable('medicos').notNull()
         table.string('medico', 100).notNull()
-        table.string('diasdasemana', 2).notNull()  
         table.string('tempodeatendimento', 2).notNull()
         table.time('horainicial').notNull()
         table.time('horafinal').notNull()

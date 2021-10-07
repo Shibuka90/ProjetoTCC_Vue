@@ -31,8 +31,7 @@
           </b-col>
         </b-row>
     <b-table hover striped :items="medicos" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadMedico" :sort-by.sync="sortBy">
-      <template slot="actions"> 
-      </template>
+      <template slot="actions"> </template>
     </b-table>
     <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
   </div>
@@ -61,7 +60,7 @@ export default {
         { key: "nome", label: "Nome", sortable: true },
         { key: "email", label: "E-mail" },
         { key: "crm", label: "CRM" },
-        { key: "especialidade", label: "Especialidade" },
+        { key: "especialidade", label:"Especialidade"}
       ],
       totalRows: 1,
       currentPage: 1,
@@ -76,7 +75,7 @@ export default {
       axios.get(url).then((res) => {
         this.medicos = res.data; 
         this.count = res.data.count
-        this.limit = res.data.limit      
+        this.limit = res.data.limit 
       });
     },
   
