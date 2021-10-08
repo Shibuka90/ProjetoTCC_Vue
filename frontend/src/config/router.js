@@ -18,6 +18,7 @@ import MedicoAlterado from '@/components/cadastro/medico/MedicoAlterado'
 
 import HomeAgendamento from '@/components/home/HomeAgendamento'
 import Agendas from '@/components/cadastro/agenda/Agenda'
+import AgendaAlterada from '@/components/cadastro/agenda/AgendaAlterada'
 
 
 
@@ -87,6 +88,10 @@ const routes = [{
     name:'agendas',
     path:'/agendas',
     component:Agendas
+}, {
+    name: 'agendaalterada',
+    path: '/agendas/:codigo',
+    component: AgendaAlterada
 }]
 
 export default new VueRouter({

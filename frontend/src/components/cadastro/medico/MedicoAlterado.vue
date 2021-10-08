@@ -1,9 +1,9 @@
 <template>
-  <div class="novomedico">
+  <div class="medicoalterado">
         <PageTitle
       icon="fa fa-user-md"
       main="Médicos"
-      sub="Cadastro de Médico"
+      sub="Cadastro do Médico"
     />
     <div class="form">
         <b-form>
@@ -12,13 +12,13 @@
                 <b-col md="6" sm="12">
                      <b-form-group label="Nome:" label-for="medico-nome">
                     <b-form-input id="medico-nome" type="text" v-model="medico.nome" required 
-                    :readonly="mode === 'remove'" placeholder="Informe o Nome do(a) Colaborador(a)...."/>
+                    :readonly="mode === 'remove'" placeholder="Informe o Nome do(a) Médico(a)...."/>
                 </b-form-group>
                 </b-col>
                 <b-col md="6" sm="12">
                 <b-form-group label="E-mail:" label-for="medico-email">
                     <b-form-input id="medico-email" type="text" v-model="medico.email" required 
-                    :readonly="mode === 'remove'" placeholder="Informe o E-mail do(a) Colaborador(a)...."/>
+                    :readonly="mode === 'remove'" placeholder="Informe o E-mail do(a) Médico(a)...."/>
                 </b-form-group>
               </b-col>
             </b-row>

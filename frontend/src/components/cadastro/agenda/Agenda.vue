@@ -62,12 +62,18 @@ export default {
         }
     },
     methods: {
+         reset(){
+            this.mode = 'save'
+            this.usuario = {}
+        },
+            
          loadAgendas() {
              const url = `${baseApiUrl}/agendas`;
              axios.get(url).then((res) => {
                  this.agendas = res.data; 
                  this.count = res.data.count
                  this.limit = res.data.limit 
+                 this.reset()
                  });
             },
         
@@ -79,8 +85,9 @@ export default {
         loadAgenda(agenda, mode='save'){
             this.mode = mode
             this.agenda = {...agenda}
+            console.log(this.agenda)
         },
-             
+     
         onFiltered(filteredItems) {
             // Trigger pagination to update the number of buttons/pages due to filtering
             this.totalRows = filteredItems.length
