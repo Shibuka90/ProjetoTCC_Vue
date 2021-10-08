@@ -41,7 +41,7 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('agendas')
-            .select('codigo', 'medico', 'servico', 'especialidade' )
+            .select('codigo', 'medico', 'especialidade' )
             .then(agendas => res.json(agendas))
             .catch(err => res.status(500).send(err))
     }

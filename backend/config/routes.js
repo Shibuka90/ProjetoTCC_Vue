@@ -85,8 +85,8 @@ module.exports = app => {
 
     app.route('/agendas/:codigo')
         // .all(app.config.passport.authenticate())
-        // .put(app.api.agenda.save)
-        // .get(app.api.agenda.getByCodigo)
-        // .delete(app.api.agenda.remove)
+        .put(app.api.agenda.save)
+        .get(app.api.agenda.getByCodigo)
+        .delete(app.api.agenda.remove)
 
 }

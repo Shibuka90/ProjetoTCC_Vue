@@ -11,6 +11,7 @@ exports.up = function(knex) {
         table.time('intervalofinal').notNull()
         table.integer('codigoespecialidade').references('codigo').inTable('especialidades').notNull()
         table.string('especialidade').notNull()
+        table.string('diasdasemana')
     })
 };
 
