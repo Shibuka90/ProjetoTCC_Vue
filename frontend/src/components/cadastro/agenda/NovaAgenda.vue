@@ -1,14 +1,13 @@
 <template>
   <div class="agendaalterada">
-      <PageTitle icon="fas fa-calendar-alt" main="Agendas" sub="Cadastro da Agendas" />
+      <PageTitle icon="fas fa-calendar-alt" main="Agendas" sub="Cadastro de Agendas" />
       <div class="form">
           <b-form>
               <input id="agenda-codigomedico" type="hidden"  v-model="agenda.codigo" />
               <b-row>
                    <b-col md="auto">
                      <b-form-group label="Código Médico:" label-for="agenda-codigomedico">
-                        <b-form-input id="agenda-codigomedico" type="text" v-model="agenda.codigomedico" required
-                        readonly />
+                        <b-form-input id="agenda-codigomedico" type="text" v-model="agenda.codigomedico" required />
                 </b-form-group>
                 </b-col>
                    <b-col md="6" sm="12">
@@ -21,13 +20,12 @@
               <b-row>
                 <b-col md="auto">
                     <b-form-group label="Código Especialidade:" label-for="agenda-codigoespecialidade">
-                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="agenda.codigoespecialidade" required
-                         readonly />
+                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="agenda.codigoespecialidade" required />
                      </b-form-group>
                 </b-col>
                 <b-col md="6" sm="12">
-                    <b-form-group label="Especialidade:" label-for="agenda-especialidade">
-                        <b-form-input id="agenda-especialidade" type="text" v-model="agenda.especialidade"  required 
+                    <b-form-group label="Especialidade:" label-for="agenda-especialidade"> 
+                        <b-form-input id="agenda-especialidade" type="text" v-model="especialidade.especialidade" :key="agenda.especialidade" required 
                          placeholder="Informe a Especialidade...."/>
                 </b-form-group>
                 </b-col>
@@ -42,43 +40,14 @@
                             <b-form-input id="filtro-agenda" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
                         </b-form-group>                    
                   
-                        <b-table hover striped :items="especialidades"  :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
+                        <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
                             <template slot="actions"> </template>
                         </b-table>
                     </b-modal> -->
               </b-row>
               <b-row>
-                  <b-col md="auto">
-                    <b-form-group label="Código Especialidade:" label-for="agenda-codigoespecialidade">
-                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="especialidade.codigo" required
-                         readonly />
-                     </b-form-group>
-                </b-col>
-                <b-col md="6" sm="12">
-                    <b-form-group label="Especialidade:" label-for="agenda-especialidade">
-                        <b-form-input id="agenda-especialidade" type="text" v-model="especialidade.especialidade"  required 
-                         placeholder="Informe a Especialidade...."/>
-                </b-form-group>
-                </b-col>
-                    <b-col>
-                    <b-button v-b-modal="'modal-especialidades'"><i class="fas fa-search"></i></b-button>
-                    
-                </b-col>
-                    <b-modal id="modal-especialidades"  centered size="xl" title="Especialidades" >                             
-                                <!-- <b-form-select id="agenda-especialidade" :options="especialidades" v-model="agenda.especialidade" ></b-form-select> -->
-                        <b-form-group label="Pesquisar:" label-for="filtro-agenda">
-                            <b-form-input id="filtro-agenda" v-model="filter" autofocus  size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
-                            <b-form-input id="filtro-agenda" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
-                        </b-form-group>                    
-                  
-                        <b-table hover striped :items="especialidades"  :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
-                            <template slot="actions"> </template>
-                        </b-table>
-                    </b-modal>
-              </b-row>
-              <b-row>
                 <b-col md="auto">
-                    <b-form-group label="Tempo de Atendimento:" label-for="agenda-tempodeatendimento" @submit.prevent="onSubimit">
+                    <b-form-group label="Tempo de Atendimento:" label-for="agenda-tempodeatendimento">
                         <b-form-input id="agenda-tempodeatendimento" type="text" v-model="agenda.tempodeatendimento" required />
                      </b-form-group>
                 </b-col>
@@ -116,17 +85,15 @@
                     </b-form-checkbox-group>
                 </b-col>
               </b-row>
-                 <b-row>
-                    <b-col md="4">
-                        <b-button router-link to="/agendas" size='lg' class="mb-2" block>Cancelar</b-button>
-                    </b-col>
-                    <b-col md="2">
-                        <b-button variant="danger" size='lg' class="mb-2" block @click="remove" router-link to="/agendas">Excluir</b-button>
-                    </b-col>
-                        <b-col md="6">
-                    <b-button variant="success" size='lg' class="mb-2" block  @click="save" router-link to="/agendas">Alterar</b-button>
+                     <b-row>
+                <b-col md="6">
+                <b-button router-link to="/agendas" size='lg' class="mb-2" block>Cancelar</b-button>
+                </b-col>
+                <b-col md="6">
+                <b-button variant="success" size='lg' class="mb-2" block  @click="save" >Incluir</b-button>
                 </b-col>
             </b-row>
+           
           </b-form>
       </div>
   </div>
@@ -161,11 +128,9 @@ export default {
                 currentPage: 1,
                 perPage: 5,
                 filter: null,
-
-            }          
+        }               
 
         },
-
         methods: {
                 save() {
                     const method = this.agenda.codigo ? 'put' : 'post'
@@ -184,11 +149,6 @@ export default {
                         this.$toasted.global.defaultSuccess()
                         })
                         .catch(showError)
-                    },
-
-                getAgenda(){
-                    const url = `${baseApiUrl}/agendas/${this.agenda.codigo}`
-                    axios(url).then(res => this.agenda = res.data)
                     },
                     
                 loadEspecialidades() {
@@ -223,13 +183,10 @@ export default {
                      // Trigger pagination to update the number of buttons/pages due to filtering
                      this.totalRows = filteredItems.length
                      this.currentPage = 1
-                     },
-                     
-                },
-                mounted(){
-                    this.agenda.codigo = this.$route.params.codigo
-                    this.getAgenda()
-                    this.loadEspecialidades()
+      }
+        },
+        mounted(){
+            this.loadEspecialidades()
         }
 }
 </script>

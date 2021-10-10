@@ -19,6 +19,7 @@ import MedicoAlterado from '@/components/cadastro/medico/MedicoAlterado'
 import HomeAgendamento from '@/components/home/HomeAgendamento'
 import Agendas from '@/components/cadastro/agenda/Agenda'
 import AgendaAlterada from '@/components/cadastro/agenda/AgendaAlterada'
+import NovaAgenda from '@/components/cadastro/agenda/NovaAgenda'
 
 
 
@@ -88,7 +89,11 @@ const routes = [{
     name:'agendas',
     path:'/agendas',
     component:Agendas
-}, {
+},{
+    name: 'novaagenda',
+    path: '/novaagenda',
+    component: NovaAgenda
+},{
     name: 'agendaalterada',
     path: '/agendas/:codigo',
     component: AgendaAlterada

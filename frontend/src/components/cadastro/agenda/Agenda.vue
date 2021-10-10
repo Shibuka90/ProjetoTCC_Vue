@@ -12,8 +12,8 @@
                         <b-form-input input type="text" id="agenda-codigo" readonly size="lg" v-model="agenda.medico" class="mb-4 "></b-form-input>
                     </b-col>
                     <b-col md="4">
-                        <!-- <b-button router-link to="/novomedico" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button> -->
-                        <b-button v-if="agenda.medico" @click="getAgenda" router-link :to="'/agendas/' + this.agenda.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
+                        <b-button router-link to="/novaagenda" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
+                        <b-button v-if="agenda.codigomedico" @click="getAgenda" router-link :to="'/agendas/' + this.agenda.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
                     </b-col> 
                 </b-row>
           </b-form>
@@ -59,6 +59,7 @@ export default {
             currentPage: 1,
             perPage: 5,
             filter: null,
+           
         }
     },
     methods: {
@@ -85,7 +86,6 @@ export default {
         loadAgenda(agenda, mode='save'){
             this.mode = mode
             this.agenda = {...agenda}
-            console.log(this.agenda)
         },
      
         onFiltered(filteredItems) {
