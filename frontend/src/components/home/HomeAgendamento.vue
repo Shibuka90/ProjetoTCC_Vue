@@ -9,7 +9,7 @@
             <router-link to="/agendas">
              <Menus icon="fas fa-calendar-alt" title="Cadastro de Agenda" />
             </router-link>
-            <router-link to="">
+            <router-link to="/agendamentos">
              <Menus icon="far fa-calendar-alt" title="Agendamento" />
             </router-link>
         </div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="agendas">
-      <PageTitle icon="fas fa-calendar-alt" main="Agendas" sub="Grid de Agendas" />
+  <div class="agendas"><PageTitle icon="fas fa-calendar-alt" main="Agendas" sub="Grid de Agendas" />
+      
       <div class="pesquisa">
           <b-form>
               <b-row>

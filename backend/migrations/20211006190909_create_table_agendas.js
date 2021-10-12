@@ -10,14 +10,7 @@ exports.up = function(knex) {
         table.time('intervaloinicial').notNull()
         table.time('intervalofinal').notNull()
         table.integer('codigoespecialidade').references('codigo').inTable('especialidades').notNull()
-        table.string('especialidade').notNull()
-        // table.string('domingo')
-        // table.string('segunda')
-        // table.string('terca')
-        // table.string('quarta')
-        // table.string('quinta')
-        // table.string('sexta')
-        // table.string('sabado')       
+        table.string('especialidade').notNull() 
     })
 };
 
