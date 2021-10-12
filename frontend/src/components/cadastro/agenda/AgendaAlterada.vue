@@ -4,47 +4,31 @@
       <div class="form">
           <b-form v-on:submit.prevent="save">
               <input id="agenda-codigomedico" type="hidden"  v-model="agenda.codigo" />
-              <b-row>
+            <b-row>
                    <b-col md="auto">
-                     <b-form-group label="Código Médico:" label-for="agenda-codigomedico">
-                        <b-form-input id="agenda-codigomedico" type="text" v-model="agenda.codigomedico" required
-                        readonly/>
-                </b-form-group>
+                     <b-form-group label="Código Médico:" label-for="agenda-codigomed">
+                        <b-form-input id="agenda-codigomed" type="text" v-model="agenda.codigomedico" readonly required />
+                    </b-form-group>
                 </b-col>
                    <b-col md="6" sm="12">
                      <b-form-group label="Médico:" label-for="agenda-medico">
-                    <b-form-input id="agenda-medico" type="text" v-model="agenda.medico" required 
-                     placeholder="Informe o Nome do(a) Médico(a)...."/>
+                    <b-form-input id="agenda-medico" type="text" v-model="agenda.medico" readonly required 
+                     placeholder="Informe o Nome do(a) Médico(a)...." />
                 </b-form-group>
                 </b-col>
               </b-row>
               <b-row>
                 <b-col md="auto">
                     <b-form-group label="Código Especialidade:" label-for="agenda-codigoespecialidade">
-                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="agenda.codigoespecialidade" required />
+                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="agenda.codigoespecialidade" readonly required />
                      </b-form-group>
                 </b-col>
                 <b-col md="6" sm="12">
                     <b-form-group label="Especialidade:" label-for="agenda-especialidade"> 
-                        <b-form-input id="agenda-especialidade" type="text" v-model.lazy="agenda.especialidade" required 
-                         placeholder="Informe a Especialidade...."/>
+                        <b-form-input id="agenda-especialidade" type="text" v-model="agenda.especialidade" readonly required 
+                         placeholder="Informe a Especialidade...."  />
                 </b-form-group>
                 </b-col>
-                <b-col>
-                    <b-form-group label="Pesquisar:" label-for="pesquisar-especialidade"> 
-                        <b-button v-b-modal="'modal-especialidades'" variant="primary"><i class="fas fa-search">Especialidades</i></b-button>  
-                    </b-form-group>                  
-                </b-col>
-                    <b-modal id="modal-especialidades"  centered size="xl" title="Especialidades" @ok="capturar">                             
-                        <b-form-group label="Pesquisar:" label-for="filtro-agenda">
-                            <b-form-input id="filtro-agenda" v-model="filter" autofocus  size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
-                            <b-form-input id="especialidade" class="mt-2 mb-2" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
-                        </b-form-group>                    
-                  
-                        <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
-                            <template slot="actions"> </template>
-                        </b-table>
-                    </b-modal>
               </b-row>
               <b-row>
                 <b-col md="auto">
@@ -71,19 +55,6 @@
                     <b-form-group label="Intervalo Final:" label-for="agenda-intervalofinal">
                         <b-form-input id="agenda-intervalofinal" type="time" v-model="agenda.intervalofinal" required />
                      </b-form-group>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col md="6">
-                    <b-form-checkbox-group>
-                        <!-- <b-form-checkbox  value="dom" v-model="agenda.domingo">Dom</b-form-checkbox> -->
-                        <!-- <b-form-checkbox  value="seg" v-model="agenda.segunda">Seg</b-form-checkbox> -->
-                        <!-- <b-form-checkbox value="2" v-model="agenda.terca">Ter</b-form-checkbox> -->
-                        <!-- <b-form-checkbox value="3" v-model="agenda.quarta">Qua</b-form-checkbox> -->
-                        <!-- <b-form-checkbox value="4" v-model="agenda.quinta">Qui</b-form-checkbox> -->
-                        <!-- <b-form-checkbox value="5" v-model="agenda.sexta">Sex</b-form-checkbox> -->
-                        <!-- <b-form-checkbox value="6" v-model="agenda.sabado">Sab</b-form-checkbox> -->
-                    </b-form-checkbox-group>
                 </b-col>
               </b-row>
                  <b-row>
@@ -183,10 +154,6 @@ export default {
                      this.currentPage = 1
                      },
 
-                capturar(capturando){
-                    capturando = document.getElementById('especialidade').value
-                    document.getElementById('agenda-especialidade').value = capturando
-                }
          
                 },
                 mounted(){

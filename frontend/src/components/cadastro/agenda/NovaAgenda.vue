@@ -4,13 +4,13 @@
       <div class="form">
           <b-form>
               <input id="agenda-codigomedico" type="hidden"  v-model="agenda.codigo" />
-                   <b-row>
+                <b-row>
                 <b-col md="2">
                     <b-form-group label="Pesquisar:" label-for="pesquisar-medicos"> 
                         <b-button v-b-modal="'modal-medicos'" variant="primary" block><i class="fas fa-search"> Médicos</i></b-button>  
                     </b-form-group>                  
                 </b-col>
-                    <b-modal id="modal-medicos" centered size="xl" title="Médicos" >
+                    <b-modal id="modal-medicos" centered size="xl" title="Médicos" @ok="resetFilter">
                         <b-row>
                             <b-col md="12">
                                 <b-form-group label="Pesquisar:" label-for="filtro-agendamedico">
@@ -21,12 +21,12 @@
                         <b-row>
                             <b-col md="2">
                                 <b-form-group label="Códgio" label-for="medico-codigo">
-                                    <b-form-input id="medico-codigo" v-model="medico.codigo"  size="lg" type="text" ></b-form-input>
+                                    <b-form-input id="medico-codigo" v-model="medico.codigo" readonly size="lg" type="text" ></b-form-input>
                                 </b-form-group>
                             </b-col>
                             <b-col md="8">
                                 <b-form-group label="Médicos" label-for="medico-nome">
-                                    <b-form-input id="medico-nome" v-model="medico.nome" size="lg" type="text" ></b-form-input>
+                                    <b-form-input id="medico-nome" v-model="medico.nome" readonly size="lg" type="text" ></b-form-input>
                                 </b-form-group>
                             </b-col>
                         </b-row>                  
@@ -52,7 +52,7 @@
                         <b-button v-b-modal="'modal-especialidades'" variant="primary" block><i class="fas fa-search"> Especialidades</i></b-button>  
                     </b-form-group>                  
                 </b-col>
-                    <b-modal id="modal-especialidades"  centered size="xl" title="Especialidades">
+                    <b-modal id="modal-especialidades"  centered size="xl" title="Especialidades" @ok="resetFilter">
                         <b-row>
                             <b-col md="12">
                                 <b-form-group label="Pesquisar:" label-for="filtro-agendaespecialidade">
@@ -63,12 +63,12 @@
                         <b-row>
                             <b-col md="auto">
                                 <b-form-group label="Códgio" label-for="especialidade-codigo">
-                                    <b-form-input id="especialidade-codigo" v-model="especialidade.codigo" autofocus  size="lg" type="text" ></b-form-input>
+                                    <b-form-input id="especialidade-codigo" v-model="especialidade.codigo" readonly size="lg" type="text" ></b-form-input>
                                 </b-form-group>
                             </b-col>
                             <b-col md="8">
                                 <b-form-group label="Especialidade" label-for="especialidade-especialidade">
-                                    <b-form-input id="especialidade-especialidade" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
+                                    <b-form-input id="especialidade-especialidade" v-model="especialidade.especialidade" readonly size="lg" type="text" ></b-form-input>
                                 </b-form-group>
                             </b-col>
                         </b-row>                  
@@ -164,7 +164,6 @@ export default {
                 currentPage: 1,
                 perPage: 5,
                 filter: null,
-
         }               
 
         },
@@ -215,6 +214,10 @@ export default {
                     this.mode = mode
                     this.especialidade = {...especialidade}
                     },
+
+                resetFilter(){
+                    this.filter = null
+                },
 
                  onFiltered(filteredItems) {
                      // Trigger pagination to update the number of buttons/pages due to filtering
