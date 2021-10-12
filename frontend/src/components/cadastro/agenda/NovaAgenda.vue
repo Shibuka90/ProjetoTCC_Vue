@@ -25,11 +25,11 @@
                 </b-col>
                 <b-col md="6" sm="12">
                     <b-form-group label="Especialidade:" label-for="agenda-especialidade"> 
-                        <b-form-input id="agenda-especialidade" type="text" v-model="especialidade.especialidade" :key="agenda.especialidade" required 
+                        <b-form-input id="agenda-especialidade" type="text" :value="especialidade.especialidade" @update="agenda.especialidade = $event.target.value" required 
                          placeholder="Informe a Especialidade...."/>
                 </b-form-group>
                 </b-col>
-                <!-- <b-col>
+                <b-col>
                     <b-button v-b-modal="'modal-especialidades'"><i class="fas fa-search"></i></b-button>
                     
                 </b-col>
@@ -37,13 +37,14 @@
                                 <b-form-select id="agenda-especialidade" :options="especialidades" v-model="agenda.especialidade" ></b-form-select>
                         <b-form-group label="Pesquisar:" label-for="filtro-agenda">
                             <b-form-input id="filtro-agenda" v-model="filter" autofocus  size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
-                            <b-form-input id="filtro-agenda" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
+                            <b-form-input id="especialidade" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
+                            <b-button >Selecionar</b-button>
                         </b-form-group>                    
                   
                         <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
                             <template slot="actions"> </template>
                         </b-table>
-                    </b-modal> -->
+                    </b-modal>
               </b-row>
               <b-row>
                 <b-col md="auto">
@@ -92,8 +93,7 @@
                 <b-col md="6">
                 <b-button variant="success" size='lg' class="mb-2" block  @click="save" >Incluir</b-button>
                 </b-col>
-            </b-row>
-           
+            </b-row> 
           </b-form>
       </div>
   </div>
@@ -128,6 +128,7 @@ export default {
                 currentPage: 1,
                 perPage: 5,
                 filter: null,
+                esp: '',
         }               
 
         },
@@ -183,7 +184,7 @@ export default {
                      // Trigger pagination to update the number of buttons/pages due to filtering
                      this.totalRows = filteredItems.length
                      this.currentPage = 1
-      }
+                     },
         },
         mounted(){
             this.loadEspecialidades()

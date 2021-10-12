@@ -13,13 +13,15 @@ module.exports = app => {
         
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
-            existsOrError(agenda.codigomedico, 'Médico não informado')
+            existsOrError(agenda.especialidade, 'Especialidade não informada')
+            existsOrError(agenda.codigomedico, 'Código Médico não informado')
+            existsOrError(agenda.medico, 'Médico não informado')
             existsOrError(agenda.tempodeatendimento, 'Tempo de Atendimento não informado')
             existsOrError(agenda.horainicial, 'Hora Inicial não informada')
             existsOrError(agenda.horafinal, 'Hora Final não informada')
             existsOrError(agenda.intervaloinicial, 'Inervalo Inical não informado')
             existsOrError(agenda.intervalofinal, 'Inervalo Final não informado')
-            existsOrError(agenda.codigoespecialidade, 'Especialidade não informada')
+            existsOrError(agenda.codigoespecialidade, 'Código Especialidade não informada')
 
     } catch(msg) {
         return res.status(400).send(msg)

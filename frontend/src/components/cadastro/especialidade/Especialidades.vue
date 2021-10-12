@@ -5,7 +5,7 @@
       main="Especialidades"
       sub="Grid de Especiadlidades"
     />
-    <div class="pesquisa">
+    <div class="pesquisa" >
     <b-form>
       <b-row >
         <b-col md="2"> 
@@ -112,12 +112,12 @@ export default {
             this.mode = mode
             this.especialidade = {...especialidade}
         },
-
+        
         onFiltered(filteredItems) {
         // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length
         this.currentPage = 1
-        }
+        },
     },
      watch: {
       page() {

@@ -2,7 +2,7 @@
   <div class="agendaalterada">
       <PageTitle icon="fas fa-calendar-alt" main="Agendas" sub="Cadastro da Agendas" />
       <div class="form">
-          <b-form>
+          <b-form v-on:submit.prevent="save">
               <input id="agenda-codigomedico" type="hidden"  v-model="agenda.codigo" />
               <b-row>
                    <b-col md="auto">
@@ -21,13 +21,12 @@
               <b-row>
                 <b-col md="auto">
                     <b-form-group label="Código Especialidade:" label-for="agenda-codigoespecialidade">
-                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="agenda.codigoespecialidade" required
-                         readonly />
+                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="agenda.especialidade" required readonly />
                      </b-form-group>
                 </b-col>
                 <b-col md="6" sm="12">
                     <b-form-group label="Especialidade:" label-for="agenda-especialidade">
-                        <b-form-input id="agenda-especialidade" type="text" v-model="agenda.especialidade"  required 
+                        <b-form-input id="agenda-especialidade" type="text"  v-model="agenda.especialidade" required 
                          placeholder="Informe a Especialidade...."/>
                 </b-form-group>
                 </b-col>
@@ -55,8 +54,8 @@
                      </b-form-group>
                 </b-col>
                 <b-col md="6" sm="12">
-                    <b-form-group label="Especialidade:" label-for="agenda-especialidade">
-                        <b-form-input id="agenda-especialidade" type="text" v-model="especialidade.especialidade"  required 
+                    <b-form-group label="Especialidade:" label-for="especialidade-especialidade">
+                        <b-form-input id="especialidade-especialidade" type="text" name="especialidade" v-model="especialidade.especialidade" required 
                          placeholder="Informe a Especialidade...."/>
                 </b-form-group>
                 </b-col>
@@ -65,8 +64,8 @@
                     
                 </b-col>
                     <b-modal id="modal-especialidades"  centered size="xl" title="Especialidades" >                             
-                                <!-- <b-form-select id="agenda-especialidade" :options="especialidades" v-model="agenda.especialidade" ></b-form-select> -->
                         <b-form-group label="Pesquisar:" label-for="filtro-agenda">
+                            <b-form-input id="especialidade" v-model="agenda.especialidade"  size="lg" type="text" ></b-form-input>
                             <b-form-input id="filtro-agenda" v-model="filter" autofocus  size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
                             <b-form-input id="filtro-agenda" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
                         </b-form-group>                    
@@ -78,7 +77,7 @@
               </b-row>
               <b-row>
                 <b-col md="auto">
-                    <b-form-group label="Tempo de Atendimento:" label-for="agenda-tempodeatendimento" @submit.prevent="onSubimit">
+                    <b-form-group label="Tempo de Atendimento:" label-for="agenda-tempodeatendimento">
                         <b-form-input id="agenda-tempodeatendimento" type="text" v-model="agenda.tempodeatendimento" required />
                      </b-form-group>
                 </b-col>
@@ -125,10 +124,10 @@
                     </b-col>
                         <b-col md="6">
                     <b-button variant="success" size='lg' class="mb-2" block  @click="save" router-link to="/agendas">Alterar</b-button>
-                </b-col>
+                </b-col> 
             </b-row>
           </b-form>
-      </div>
+      </div>                
   </div>
 </template>
 
@@ -161,8 +160,9 @@ export default {
                 currentPage: 1,
                 perPage: 5,
                 filter: null,
-
-            }          
+                capturando: '',
+                value:'',
+            }
 
         },
 
@@ -200,7 +200,7 @@ export default {
                         });
                     },
 
-                // loadEspecialidades() {
+                // loadEsp() {
                 //     const url = `${baseApiUrl}/especialidades`;
                 //     axios.get(url).then((res) => {
                 //          this.especialidades = res.data.map(especialidade => {
@@ -212,24 +212,21 @@ export default {
                 loadEspecialidade(especialidade, mode='save'){
                     this.mode = mode
                     this.especialidade = {...especialidade}
-                    },
-                    
-                loadAgenda(agenda, mode='save'){
-                    this.mode = mode
-                    this.agenda = {...agenda}
+                    console.log(this.especialidade)
                     },
 
-                 onFiltered(filteredItems) {
+                onFiltered(filteredItems) {
                      // Trigger pagination to update the number of buttons/pages due to filtering
                      this.totalRows = filteredItems.length
                      this.currentPage = 1
                      },
-                     
+         
                 },
                 mounted(){
                     this.agenda.codigo = this.$route.params.codigo
                     this.getAgenda()
                     this.loadEspecialidades()
+                    // this.loadEsp()
         }
 }
 </script>
