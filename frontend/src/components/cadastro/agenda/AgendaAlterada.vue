@@ -8,7 +8,7 @@
                    <b-col md="auto">
                      <b-form-group label="Código Médico:" label-for="agenda-codigomedico">
                         <b-form-input id="agenda-codigomedico" type="text" v-model="agenda.codigomedico" required
-                        readonly />
+                        readonly/>
                 </b-form-group>
                 </b-col>
                    <b-col md="6" sm="12">
@@ -21,56 +21,27 @@
               <b-row>
                 <b-col md="auto">
                     <b-form-group label="Código Especialidade:" label-for="agenda-codigoespecialidade">
-                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="agenda.especialidade" required readonly />
+                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="agenda.codigoespecialidade" required />
                      </b-form-group>
                 </b-col>
                 <b-col md="6" sm="12">
-                    <b-form-group label="Especialidade:" label-for="agenda-especialidade">
-                        <b-form-input id="agenda-especialidade" type="text"  v-model="agenda.especialidade" required 
+                    <b-form-group label="Especialidade:" label-for="agenda-especialidade"> 
+                        <b-form-input id="agenda-especialidade" type="text" v-model.lazy="agenda.especialidade" required 
                          placeholder="Informe a Especialidade...."/>
                 </b-form-group>
                 </b-col>
-                <!-- <b-col>
-                    <b-button v-b-modal="'modal-especialidades'"><i class="fas fa-search"></i></b-button>
-                    
+                <b-col>
+                    <b-form-group label="Pesquisar:" label-for="pesquisar-especialidade"> 
+                        <b-button v-b-modal="'modal-especialidades'" variant="primary"><i class="fas fa-search">Especialidades</i></b-button>  
+                    </b-form-group>                  
                 </b-col>
-                    <b-modal id="modal-especialidades"  centered size="xl" title="Especialidades" >                             
-                                <b-form-select id="agenda-especialidade" :options="especialidades" v-model="agenda.especialidade" ></b-form-select>
+                    <b-modal id="modal-especialidades"  centered size="xl" title="Especialidades" @ok="capturar">                             
                         <b-form-group label="Pesquisar:" label-for="filtro-agenda">
                             <b-form-input id="filtro-agenda" v-model="filter" autofocus  size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
-                            <b-form-input id="filtro-agenda" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
+                            <b-form-input id="especialidade" class="mt-2 mb-2" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
                         </b-form-group>                    
                   
-                        <b-table hover striped :items="especialidades"  :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
-                            <template slot="actions"> </template>
-                        </b-table>
-                    </b-modal> -->
-              </b-row>
-              <b-row>
-                  <b-col md="auto">
-                    <b-form-group label="Código Especialidade:" label-for="agenda-codigoespecialidade">
-                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="especialidade.codigo" required
-                         readonly />
-                     </b-form-group>
-                </b-col>
-                <b-col md="6" sm="12">
-                    <b-form-group label="Especialidade:" label-for="especialidade-especialidade">
-                        <b-form-input id="especialidade-especialidade" type="text" name="especialidade" v-model="especialidade.especialidade" required 
-                         placeholder="Informe a Especialidade...."/>
-                </b-form-group>
-                </b-col>
-                    <b-col>
-                    <b-button v-b-modal="'modal-especialidades'"><i class="fas fa-search"></i></b-button>
-                    
-                </b-col>
-                    <b-modal id="modal-especialidades"  centered size="xl" title="Especialidades" >                             
-                        <b-form-group label="Pesquisar:" label-for="filtro-agenda">
-                            <b-form-input id="especialidade" v-model="agenda.especialidade"  size="lg" type="text" ></b-form-input>
-                            <b-form-input id="filtro-agenda" v-model="filter" autofocus  size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
-                            <b-form-input id="filtro-agenda" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
-                        </b-form-group>                    
-                  
-                        <b-table hover striped :items="especialidades"  :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
+                        <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
                             <template slot="actions"> </template>
                         </b-table>
                     </b-modal>
@@ -199,15 +170,6 @@ export default {
                         this.limit = res.data.limit 
                         });
                     },
-
-                // loadEsp() {
-                //     const url = `${baseApiUrl}/especialidades`;
-                //     axios.get(url).then((res) => {
-                //          this.especialidades = res.data.map(especialidade => {
-                //              return{value: especialidade.especialidade, text: `${especialidade.especialidade}` }
-                //              })
-                //             })
-                //         },
                 
                 loadEspecialidade(especialidade, mode='save'){
                     this.mode = mode
@@ -220,13 +182,17 @@ export default {
                      this.totalRows = filteredItems.length
                      this.currentPage = 1
                      },
+
+                capturar(capturando){
+                    capturando = document.getElementById('especialidade').value
+                    document.getElementById('agenda-especialidade').value = capturando
+                }
          
                 },
                 mounted(){
                     this.agenda.codigo = this.$route.params.codigo
                     this.getAgenda()
                     this.loadEspecialidades()
-                    // this.loadEsp()
         }
 }
 </script>

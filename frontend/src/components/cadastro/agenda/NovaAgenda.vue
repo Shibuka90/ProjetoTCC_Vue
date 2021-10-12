@@ -4,47 +4,89 @@
       <div class="form">
           <b-form>
               <input id="agenda-codigomedico" type="hidden"  v-model="agenda.codigo" />
-              <b-row>
+                   <b-row>
+                <b-col md="2">
+                    <b-form-group label="Pesquisar:" label-for="pesquisar-medicos"> 
+                        <b-button v-b-modal="'modal-medicos'" variant="primary" block><i class="fas fa-search"> Médicos</i></b-button>  
+                    </b-form-group>                  
+                </b-col>
+                    <b-modal id="modal-medicos" centered size="xl" title="Médicos" >
+                        <b-row>
+                            <b-col md="12">
+                                <b-form-group label="Pesquisar:" label-for="filtro-agendamedico">
+                                    <b-form-input id="filtro-agendamedico" v-model="filter" autofocus size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
+                            </b-form-group>                    
+                            </b-col>
+                        </b-row>
+                        <b-row>
+                            <b-col md="2">
+                                <b-form-group label="Códgio" label-for="medico-codigo">
+                                    <b-form-input id="medico-codigo" v-model="medico.codigo"  size="lg" type="text" ></b-form-input>
+                                </b-form-group>
+                            </b-col>
+                            <b-col md="8">
+                                <b-form-group label="Médicos" label-for="medico-nome">
+                                    <b-form-input id="medico-nome" v-model="medico.nome" size="lg" type="text" ></b-form-input>
+                                </b-form-group>
+                            </b-col>
+                        </b-row>                  
+                        <b-table hover striped :items="medicos" :fields="fieldsMed" :filter="filter" @filtered="onFiltered" @row-clicked="loadMedico" :sort-by.sync="sortBy">
+                            <template slot="actions"> </template>
+                        </b-table>
+                    </b-modal>
                    <b-col md="auto">
-                     <b-form-group label="Código Médico:" label-for="agenda-codigomedico">
-                        <b-form-input id="agenda-codigomedico" type="text" v-model="agenda.codigomedico" required />
+                     <b-form-group label="Código Médico:" label-for="agenda-codigomed">
+                        <b-form-input id="agenda-codigomed" type="text" :value="medico.codigo" @blur="agenda.codigomedico = $event.target.value" required />
                 </b-form-group>
                 </b-col>
                    <b-col md="6" sm="12">
                      <b-form-group label="Médico:" label-for="agenda-medico">
-                    <b-form-input id="agenda-medico" type="text" v-model="agenda.medico" required 
-                     placeholder="Informe o Nome do(a) Médico(a)...."/>
+                    <b-form-input id="agenda-medico" type="text" :value="medico.nome" @blur="agenda.medico = $event.target.value" required 
+                     placeholder="Informe o Nome do(a) Médico(a)...." />
                 </b-form-group>
                 </b-col>
               </b-row>
               <b-row>
+                <b-col md="2">
+                    <b-form-group label="Pesquisar:" label-for="pesquisar-especialidade"> 
+                        <b-button v-b-modal="'modal-especialidades'" variant="primary" block><i class="fas fa-search"> Especialidades</i></b-button>  
+                    </b-form-group>                  
+                </b-col>
+                    <b-modal id="modal-especialidades"  centered size="xl" title="Especialidades">
+                        <b-row>
+                            <b-col md="12">
+                                <b-form-group label="Pesquisar:" label-for="filtro-agendaespecialidade">
+                                    <b-form-input id="filtro-agendaespecialidade" v-model="filter" autofocus size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
+                            </b-form-group>                    
+                            </b-col>
+                        </b-row>
+                        <b-row>
+                            <b-col md="auto">
+                                <b-form-group label="Códgio" label-for="especialidade-codigo">
+                                    <b-form-input id="especialidade-codigo" v-model="especialidade.codigo" autofocus  size="lg" type="text" ></b-form-input>
+                                </b-form-group>
+                            </b-col>
+                            <b-col md="8">
+                                <b-form-group label="Especialidade" label-for="especialidade-especialidade">
+                                    <b-form-input id="especialidade-especialidade" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
+                                </b-form-group>
+                            </b-col>
+                        </b-row>                  
+                        <b-table hover striped :items="especialidades" :fields="fieldsEsp" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
+                            <template slot="actions"> </template>
+                        </b-table>
+                    </b-modal>'
                 <b-col md="auto">
                     <b-form-group label="Código Especialidade:" label-for="agenda-codigoespecialidade">
-                        <b-form-input id="agenda-codigoespecialidade" type="text" v-model="agenda.codigoespecialidade" required />
+                        <b-form-input id="agenda-codigoespecialidade" type="text" :value="especialidade.codigo" @blur="agenda.codigoespecialidade = $event.target.value" required />
                      </b-form-group>
                 </b-col>
                 <b-col md="6" sm="12">
                     <b-form-group label="Especialidade:" label-for="agenda-especialidade"> 
-                        <b-form-input id="agenda-especialidade" type="text" :value="especialidade.especialidade" @update="agenda.especialidade = $event.target.value" required 
-                         placeholder="Informe a Especialidade...."/>
+                        <b-form-input id="agenda-especialidade" type="text" :value="especialidade.especialidade" @blur="agenda.especialidade = $event.target.value" required 
+                         placeholder="Informe a Especialidade...."  />
                 </b-form-group>
                 </b-col>
-                <b-col>
-                    <b-button v-b-modal="'modal-especialidades'"><i class="fas fa-search"></i></b-button>
-                    
-                </b-col>
-                    <b-modal id="modal-especialidades"  centered size="xl" title="Especialidades" >                             
-                                <b-form-select id="agenda-especialidade" :options="especialidades" v-model="agenda.especialidade" ></b-form-select>
-                        <b-form-group label="Pesquisar:" label-for="filtro-agenda">
-                            <b-form-input id="filtro-agenda" v-model="filter" autofocus  size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
-                            <b-form-input id="especialidade" v-model="especialidade.especialidade" autofocus  size="lg" type="text" ></b-form-input>
-                            <b-button >Selecionar</b-button>
-                        </b-form-group>                    
-                  
-                        <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
-                            <template slot="actions"> </template>
-                        </b-table>
-                    </b-modal>
               </b-row>
               <b-row>
                 <b-col md="auto">
@@ -73,26 +115,13 @@
                      </b-form-group>
                 </b-col>
               </b-row>
-              <b-row>
-                <b-col md="6">
-                    <b-form-checkbox-group>
-                        <!-- <b-form-checkbox  value="dom" v-model="agenda.domingo">Dom</b-form-checkbox> -->
-                        <!-- <b-form-checkbox  value="seg" v-model="agenda.segunda">Seg</b-form-checkbox> -->
-                        <!-- <b-form-checkbox value="2" v-model="agenda.terca">Ter</b-form-checkbox> -->
-                        <!-- <b-form-checkbox value="3" v-model="agenda.quarta">Qua</b-form-checkbox> -->
-                        <!-- <b-form-checkbox value="4" v-model="agenda.quinta">Qui</b-form-checkbox> -->
-                        <!-- <b-form-checkbox value="5" v-model="agenda.sexta">Sex</b-form-checkbox> -->
-                        <!-- <b-form-checkbox value="6" v-model="agenda.sabado">Sab</b-form-checkbox> -->
-                    </b-form-checkbox-group>
-                </b-col>
-              </b-row>
-                     <b-row>
-                <b-col md="6">
-                <b-button router-link to="/agendas" size='lg' class="mb-2" block>Cancelar</b-button>
-                </b-col>
-                <b-col md="6">
-                <b-button variant="success" size='lg' class="mb-2" block  @click="save" >Incluir</b-button>
-                </b-col>
+                <b-row>
+                    <b-col md="6">
+                        <b-button router-link to="/agendas" size='lg' class="mb-2" block>Cancelar</b-button>
+                    </b-col>
+                    <b-col md="6">
+                        <b-button variant="success" size='lg' class="mb-2" block  @click="save" >Incluir</b-button>
+                    </b-col>
             </b-row> 
           </b-form>
       </div>
@@ -116,10 +145,17 @@ export default {
                 medicos: [],
                 especialidade: {},
                 especialidades: [],
-                fields: [
-                            { key: "codigo", label: "Código", sortable: true},
-                            { key: "especialidade", label: "Especialidade", sortable: true},
-                    ],
+                fieldsEsp: [
+                    { key: "codigo", label: "Código", sortable: true},
+                    { key: "especialidade", label: "Especialidade", sortable: true},
+                ],
+                fieldsMed: [
+                    { key: "codigo", label: "Código", sortable: true },
+                    { key: "nome", label: "Nome", sortable: true },
+                    { key: "email", label: "E-mail" },
+                    { key: "crm", label: "CRM" },
+                    { key: "especialidade", label:"Especialidade"}
+                ],
                 sortBy: 'codigo',
                 page: 1,
                 limit: 0,
@@ -128,7 +164,7 @@ export default {
                 currentPage: 1,
                 perPage: 5,
                 filter: null,
-                esp: '',
+
         }               
 
         },
@@ -152,6 +188,15 @@ export default {
                         .catch(showError)
                     },
                     
+                loadMedicos() {
+                    const url = `${baseApiUrl}/medicos`;
+                    axios.get(url).then((res) => {
+                        this.medicos = res.data; 
+                        this.count = res.data.count
+                        this.limit = res.data.limit 
+                        });
+                    },
+                    
                 loadEspecialidades() {
                     const url = `${baseApiUrl}/especialidades`;
                     axios.get(url).then((res) => {
@@ -160,24 +205,15 @@ export default {
                         this.limit = res.data.limit 
                         });
                     },
-
-                // loadEspecialidades() {
-                //     const url = `${baseApiUrl}/especialidades`;
-                //     axios.get(url).then((res) => {
-                //          this.especialidades = res.data.map(especialidade => {
-                //              return{value: especialidade.especialidade, text: `${especialidade.especialidade}` }
-                //              })
-                //             })
-                //         },
+                    
+                loadMedico(medico, mode='save'){
+                    this.mode = mode
+                    this.medico = {...medico}
+                    },
                 
                 loadEspecialidade(especialidade, mode='save'){
                     this.mode = mode
                     this.especialidade = {...especialidade}
-                    },
-                    
-                loadAgenda(agenda, mode='save'){
-                    this.mode = mode
-                    this.agenda = {...agenda}
                     },
 
                  onFiltered(filteredItems) {
@@ -187,6 +223,7 @@ export default {
                      },
         },
         mounted(){
+            this.loadMedicos()
             this.loadEspecialidades()
         }
 }
