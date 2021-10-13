@@ -13,8 +13,11 @@
             <Menus icon="fa fa-calendar" title="Agendamento" />
           </router-link>
         </div>
-        <Menus icon="fa fa-users" title="Atendimento" />            
-        
+        <div class="atendimento">
+          <router-link to="/homeatendimento">
+            <Menus icon="fa fa-users" title="Atendimento" /> 
+          </router-link>
+        </div>        
     </div>
     <hr />
     <PageTitle icon="fa fa-first-aid" main="Gestão Clínica" sub="Apoio Clínico" />
@@ -49,6 +52,11 @@ export default {
     }
 
     .agendamento a:hover{
+        text-decoration: none;
+        color: #000;
+    }
+
+    .atendimento a:hover{
         text-decoration: none;
         color: #000;
     }

@@ -20,8 +20,10 @@ import HomeAgendamento from '@/components/home/HomeAgendamento'
 import Agendas from '@/components/cadastro/agenda/Agenda'
 import AgendaAlterada from '@/components/cadastro/agenda/AgendaAlterada'
 import NovaAgenda from '@/components/cadastro/agenda/NovaAgenda'
-// import Agendamento from '@/components/cadastro/agendamento/Agendamento'
+import Agendamento from '@/components/cadastro/agenda/Agendamento'
 
+import HomeAtendimento from '@/components/home/HomeAtendimento'
+import Atendimentos from '@/components/cadastro/atendimento/Atendimento'
 
 
 
@@ -91,7 +93,7 @@ const routes = [{
     name:'agendas',
     path:'/agendas',
     component:Agendas
-},{
+}, {
     name: 'novaagenda',
     path: '/novaagenda',
     component: NovaAgenda
@@ -99,12 +101,19 @@ const routes = [{
     name: 'agendaalterada',
     path: '/agendas/:codigo',
     component: AgendaAlterada
-},
-// {
-//     name: 'agendamento',
-//     path: '/agendamentos',
-//     component: Agendamento
-// }
+},{
+    name: 'agendamento',
+    path: '/agendamentos',
+    component: Agendamento
+},{
+    name: 'homeatendimento',
+    path: '/homeatendimento',
+    component: HomeAtendimento
+},  {
+    name:'atendimentos',
+    path:'/atendimentos',
+    component:Atendimentos
+}
 ]
 
 export default new VueRouter({

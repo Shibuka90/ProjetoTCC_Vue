@@ -3,6 +3,7 @@ exports.up = function(knex) {
         table.increments('codigo').primary()
         table.time('horario').notNull()
         table.string('dataagendamento',10).notNull()
+        table.integer('codigoagenda').references('codigo').inTable('agendas').notNull()
         table.integer('codigomedico').references('codigo').inTable('medicos').notNull()
         table.string('medico', 100).notNull()
         table.integer('codigopaciente').references('codigo').inTable('pacientes').notNull()
