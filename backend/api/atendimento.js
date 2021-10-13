@@ -36,6 +36,7 @@ module.exports = app => {
      } else {
         app.db('atendimentos')
             .insert(atendimento)
+            // .insert({datadoatendimento: new Date()})
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
      }
@@ -43,7 +44,7 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('atendimentos')
-            .select('codigo', 'codigopaciente', 'paciente', 'convenio', 'medico', 'servico', 'especialidade', 'matricula', 'vencimento', 'alta' )
+            .select('codigo', 'datadoatendimento', 'codigopaciente', 'paciente', 'convenio', 'medico', 'servico', 'especialidade', 'matricula', 'vencimento', 'alta' )
             .whereNull('deletedAt')
             .then(atendimentos => res.json(atendimentos))
             .catch(err => res.status(500).send(err))
@@ -53,7 +54,7 @@ module.exports = app => {
         app.db('atendimentos')
             .where({ codigo: req.params.codigo })
             .first()
-            .then(atendimento => res.json(agenda))
+            .then(atendimento => res.json(atendimento))
             .catch(err => res.status(500).send(err))
     }
     const remove = async (req, res) => {
