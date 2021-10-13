@@ -2,6 +2,7 @@ exports.up = function(knex) {
     return knex.schema.createTable('agendamentos', table => {
         table.increments('codigo').primary()
         table.time('horario').notNull()
+        table.string('dataagendamento',10).notNull()
         table.integer('codigomedico').references('codigo').inTable('medicos').notNull()
         table.string('medico', 100).notNull()
         table.integer('codigopaciente').references('codigo').inTable('pacientes').notNull()

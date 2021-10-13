@@ -14,6 +14,7 @@ module.exports = app => {
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
             existsOrError(agendamento.horario, 'Horário não informado')
+            existsOrError(agendamento.dataagendamento, 'Data não informado')
             existsOrError(agendamento.codigomedico, 'Código Médico não informado')
             existsOrError(agendamento.medico, 'Médico não informado')
             existsOrError(agendamento.codigopaciente, 'Código do Paciente não informada')
@@ -42,7 +43,7 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('agendamentos')
-            .select('codigo', 'codigomedico', 'medico', 'codigopaciente', 'paciente', 'codigoservico', 'servico', 'observacao')
+            .select('codigo', 'horario', 'dataagendamento', 'codigomedico', 'medico', 'codigopaciente', 'paciente', 'codigoservico', 'servico')
             .then(agendas => res.json(agendas))
             .catch(err => res.status(500).send(err))
     }

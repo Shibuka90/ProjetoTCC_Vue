@@ -65,7 +65,7 @@ export default {
     methods: {
          reset(){
             this.mode = 'save'
-            this.usuario = {}
+            this.agenda = {}
         },
             
          loadAgendas() {
