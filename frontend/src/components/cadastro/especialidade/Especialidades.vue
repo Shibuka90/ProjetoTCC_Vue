@@ -32,18 +32,16 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy" :current-page="currentPage"
-                   :per-page="perPage">
-          <template slot="actions" slot-scope="data">
-             <b-button variant='warning' @click="loadEspecialidade(data.item)" class="mr-2">
-                 <i class="fa fa-pencil"></i>
-             </b-button>
-             <b-button variant='danger' @click="loadEspecialidade(data.item, 'remove')">
+        <b-row>
+          <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy" >
+            <template v-slot:cell(actions)="data">
+              <b-button variant ="warning" @click="loadEspecialidade(data.item)" class="mr-2"><i class="fa fa-pencil"></i></b-button>
+               <b-button variant='danger' @click="loadConvenio(data.item, 'remove')">
                  <i class="fas fa-trash"></i>
              </b-button>
-         </template>
-    </b-table>
-    <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
+            </template>
+          </b-table>
+        </b-row>
   </div>
 </template>
 

@@ -101,7 +101,7 @@ module.exports = app => {
         .get(app.api.agendamento.getByCodigo)
         .delete(app.api.agendamento.remove)
     
-        app.route('/atendimentos')
+    app.route('/atendimentos')
         // .all(app.config.passport.authenticate())
         .post(app.api.atendimento.save)
         // .get(admin(app.api.atendimento.get))
@@ -112,5 +112,6 @@ module.exports = app => {
         .put(app.api.atendimento.save)
         .get(app.api.atendimento.getByCodigo)
         .delete(app.api.atendimento.remove)
+        
 
 }

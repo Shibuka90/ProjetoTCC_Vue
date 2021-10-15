@@ -15,10 +15,11 @@ module.exports = app => {
         try {
             existsOrError(atendimento.codigopaciente, 'Código Paciente não informado')
             existsOrError(atendimento.paciente, 'Paciente não informado')
-            existsOrError(atendimento.convenio, 'Convênio não informado')
+            existsOrError(atendimento.datadoatendimento, 'Data não informada')
             existsOrError(atendimento.medico, 'Médico não informado')
             existsOrError(atendimento.servico, 'Serviço não informado')
             existsOrError(atendimento.especialidade, 'Especialidade não informado')
+            existsOrError(atendimento.convenio, 'Convênio não informado')
             existsOrError(atendimento.matricula, 'Matricula não informada')
             existsOrError(atendimento.vencimento, 'Vencimento não informado')
             
@@ -36,7 +37,6 @@ module.exports = app => {
      } else {
         app.db('atendimentos')
             .insert(atendimento)
-            // .insert({datadoatendimento: new Date()})
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
      }
@@ -45,7 +45,7 @@ module.exports = app => {
     const get = (req, res) => {
         app.db('atendimentos')
             .select('codigo', 'datadoatendimento', 'codigopaciente', 'paciente', 'convenio', 'medico', 'servico', 'especialidade', 'matricula', 'vencimento', 'alta' )
-            .whereNull('deletedAt')
+            .whereRaw('censo = ?', true)
             .then(atendimentos => res.json(atendimentos))
             .catch(err => res.status(500).send(err))
     }
@@ -57,21 +57,11 @@ module.exports = app => {
             .then(atendimento => res.json(atendimento))
             .catch(err => res.status(500).send(err))
     }
+
     const remove = async (req, res) => {
         try {
-            // existsOrError(req.params.id, 'Código da Especialidade não informado.!')
-
-            // const subcategory = await app.db('categories')
-            //     .where({ parentId: req.params.id })
-
-            //     notExistsOrError(subcategory, 'Categoria possui subcategorias.!')
-
-            // const articles = await app.db('articles')
-            //     .where({ categoryId: req.params.id })
-            //     notExistsOrError(articles, 'Categoria possui artigos')
-
-            const rowsUpdate = await app.db('atedimentoss')
-                .update({ deletedAt: new Date() })
+            const rowsUpdate = await app.db('atendimentos')
+                .update({ alta: new Date() })
                 .where({ codigo: req.params.codigo })
         existsOrError(rowsUpdate, 'Atendimento não foi encontrado.')
         

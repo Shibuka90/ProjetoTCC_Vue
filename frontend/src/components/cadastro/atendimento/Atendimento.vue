@@ -14,7 +14,7 @@
           <b-form-input input type="text" id="atedimento-codigo" readonly v-model="atendimento.paciente" size="lg" class="mb-4 "></b-form-input> 
         </b-col>
        <b-col md="4">
-         <b-button router-link to="/novomedico" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
+         <b-button router-link to="/novoatendimento" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
           <b-button v-if="atendimento.paciente" @click="getAtendimento" router-link :to="'/atendimentos/' + this.atendimento.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
         </b-col> 
       </b-row>
@@ -27,6 +27,9 @@
               <b-form-input id="filtro-medico" v-model="filter" autofocus  size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
             </b-form-group>
           </b-col>
+           <b-col md="2"> 
+                    <b-form-checkbox id="atendimento"  class="mt-3 mb-3">Censo</b-form-checkbox>
+                </b-col>
         </b-row>
     <b-table hover striped :items="atendimentos" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadAtendimento" :sort-by.sync="sortBy">
       <template slot="actions"> </template>
@@ -46,14 +49,16 @@ export default {
     components: {PageTitle},
     data: function(){
         return {
-            atendimento: [],
-            atendimentos: {},
+            atendimento: {},
+            atendimentos: [],
             fields: [
                 { key: "codigo", label: "Atendimento", sortable: true },
-                { key: "datadoatendimento", label: "Data do Atendimento", sortable: true},
+                { key: "datadoatendimento", label: "Data do Atend.", sortable: true},
+                { key: "alta", label: "Alta", sortable: true},
                 { key: "paciente", label: "Paceinte", sortable: true},
                 { key: "convenio", label: "Convênio" },
-                { key: "servico", label: "Serviço"}
+                { key: "servico", label: "Serviço"},
+                { key: "medico", label: "Médico"},
             ],
             sortBy: 'codigo',
             page: 1,
@@ -78,8 +83,9 @@ export default {
         loadAtendimento(atendimento, mode='save'){
             this.mode = mode
             this.atendimento = {...atendimento}
+           
             },
-        
+
         getAtendimento(){
             const url = `${baseApiUrl}/atendimentos/${this.atendimento.codigo}`
             axios(url).then(res => this.atendimento = res.data)

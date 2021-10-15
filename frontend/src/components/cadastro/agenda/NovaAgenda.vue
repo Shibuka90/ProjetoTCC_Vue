@@ -75,7 +75,7 @@
                         <b-table hover striped :items="especialidades" :fields="fieldsEsp" :filter="filter" @filtered="onFiltered" @row-clicked="loadEspecialidade" :sort-by.sync="sortBy">
                             <template slot="actions"> </template>
                         </b-table>
-                    </b-modal>'
+                    </b-modal>
                 <b-col md="auto">
                     <b-form-group label="Código Especialidade:" label-for="agenda-codigoespecialidade">
                         <b-form-input id="agenda-codigoespecialidade" type="text" :value="especialidade.codigo" @blur="agenda.codigoespecialidade = $event.target.value" required />

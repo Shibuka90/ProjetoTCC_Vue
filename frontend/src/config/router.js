@@ -24,9 +24,8 @@ import Agendamento from '@/components/cadastro/agenda/Agendamento'
 
 import HomeAtendimento from '@/components/home/HomeAtendimento'
 import Atendimentos from '@/components/cadastro/atendimento/Atendimento'
-
-
-
+import NovoAtendimento from '@/components/cadastro/atendimento/NovoAtendimento'
+import AtendimentoAlterado from '@/components/cadastro/atendimento/AtendimentoAlterado'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -113,6 +112,14 @@ const routes = [{
     name:'atendimentos',
     path:'/atendimentos',
     component:Atendimentos
+}, {
+    name: 'novoatendimento',
+    path: '/novoatendimento',
+    component: NovoAtendimento
+}, {
+    name: 'atendimentoalterado',
+    path: '/atendimentos/:codigo',
+    component: AtendimentoAlterado
 }
 ]
 

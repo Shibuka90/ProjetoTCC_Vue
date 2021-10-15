@@ -31,7 +31,7 @@
           </b-col>
         </b-row>
         <b-table hover striped :items="servicos" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy">
-          <template slot="actions" slot-scope="data">
+          <template v-slot:cell(actions)="data">
              <b-button variant='warning' @click="loadServico(data.item)" class="mr-2">
                  <i class="fa fa-pencil"></i>
              </b-button>
