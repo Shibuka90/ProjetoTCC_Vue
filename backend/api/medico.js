@@ -67,14 +67,6 @@ module.exports = app => {
             .then(medico => res.json(medico))
             .catch(err => res.status(500).send(err))
     }
-    const getByNome = (req, res) => {
-        app.db('medicos')
-            .where({ nome: req.params.nome })
-            .first()
-            .then(medico => res.json(medico))
-            .catch(err => res.status(500).send(err))
-    }
-
 
     const remove = async (req, res) => {
         try {
@@ -99,5 +91,5 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getByCodigo, getByNome, remove}
+    return { save, get, getByCodigo, remove}
 }

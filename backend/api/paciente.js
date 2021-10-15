@@ -7,10 +7,7 @@ module.exports = app => {
     const save = async (req, res) => {
         const paciente = { ...req.body }
         if(req.params.codigo) paciente.codigo = req.params.codigo
-        
-        // if(!req.originalUrl.startWith('/pacientes')) paciente.admin = false
-        // if(!req.paciente || !req.paciente.admin) paciente.admin = false
-        
+                
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try{
             existsOrError(paciente.nome, 'Nome não informado')
@@ -68,15 +65,7 @@ module.exports = app => {
             .then(paciente => res.json(paciente))
             .catch(err => res.status(500).send(err))
     }
-    const getByNome = (req, res) => {
-        app.db('pacientes')
-            .where({ nome: req.params.nome })
-            .first()
-            .then(paciente => res.json(paciente))
-            .catch(err => res.status(500).send(err))
-    }
-
-
+ 
     const remove = async (req, res) => {
         try {
             // existsOrError(req.params.id, 'Código da Especialidade não informado.!')
@@ -100,5 +89,5 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getByCodigo, getByNome, remove}
+    return { save, get, getByCodigo, remove}
 }

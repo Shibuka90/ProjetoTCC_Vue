@@ -7,10 +7,7 @@ module.exports = app => {
     const save = async (req, res) => {
         const atendimento = { ...req.body }
         if(req.params.codigo) atendimento.codigo = req.params.codigo
-        
-        // if(!req.originalUrl.startWith('/atendimentos')) atendimento.admin = false
-        // if(!req.atendimento || !req.atendimento.admin) atendimento.admin = false
-        
+               
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
             existsOrError(atendimento.codigopaciente, 'Código Paciente não informado')

@@ -1,27 +1,63 @@
 <template>
-  <div id="app" :class="{'hide-menu': !isMenuVisible}" >
-    <Header title="SGCM - Sistema de Gestão de Clínica Médica" 
-        :hideToggle="false"
-        :hideUserDropdown="false"/>
-    <Menu />
-    <Content />
-    <Footer />
-    
-    
-  </div>
+	<div id="app" :class="{'hide-menu': !isMenuVisible || !usuario}">
+		<Header title="SGCM - Sistema de Gestão de Clínica Médica" 
+			:hideToggle="!usuario"
+			:hideUserDropdown="!usuario" />
+		<Menu v-if="usuario" />
+		<Loading v-if="validatingToken" />
+		<Content v-else />
+		<Footer />
+	</div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import axios from "axios"
+import { baseApiUrl, userKey } from "@/global"
+import { mapState } from "vuex"
 import Header from "@/components/template/Header"
 import Menu from "@/components/template/Menu"
 import Content from "@/components/template/Content"
 import Footer from "@/components/template/Footer"
+import Loading from "@/components/template/Loading"
 
 export default {
-  name: 'App',
-  components: { Header, Menu, Content, Footer },
-  computed: mapState(['isMenuVisible', 'usuario'])
+	name: "App",
+	components: { Header, Menu, Content, Footer, Loading },
+	computed: mapState(['isMenuVisible', 'usuario']),
+	data: function() {
+		return {
+			validatingToken: true
+		}
+	},
+	methods: {
+		async validateToken() {
+			this.validatingToken = true
+
+			const json = localStorage.getItem(userKey)
+			const userData = JSON.parse(json)
+			this.$store.commit('setUsuario', null)
+
+			if(!userData) {
+				this.validatingToken = false
+				this.$router.push({ name: 'auth' })
+				return
+			}
+
+			const res = await axios.post(`${baseApiUrl}/validateToken`, userData)
+
+			if (res.data) {
+				this.$store.commit('setUsuario', userData)
+			} else {
+				localStorage.removeItem(userKey)
+				this.$router.push({ name: 'auth' })
+			}
+
+			this.validatingToken = false
+		}
+	},
+	created() {
+		this.validateToken()
+	}
 }
 </script>
 

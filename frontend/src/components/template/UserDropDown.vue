@@ -8,20 +8,28 @@
             <i class="fa fa-angle-down"></i>
         </div>
         <div class="user-dropdown-content">
-            <a href><i class="fa fa-sign-out">Sair</i></a>
+            <a href @click.prevent="logout"><i class="fa fa-sign-out">Sair</i></a>
         </div>
     </div>
   
 </template>
 
 <script>
+import { userKey } from '@/global'
 import { mapState } from 'vuex'
 import Gravatar from 'vue-gravatar'
 
 export default {
     name: 'UserFropDown',
     components: { Gravatar },
-    computed: mapState(['usuario'])
+    computed: mapState(['usuario']),
+    methods: {
+        logout(){
+            localStorage.removeItem(userKey)
+            this.$store.commit('setUsuario', null)
+            this.$router.push({ name: 'auth'})
+        }
+    }
 }
 </script>
 

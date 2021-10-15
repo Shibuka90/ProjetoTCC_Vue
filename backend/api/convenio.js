@@ -55,13 +55,6 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const getByNome = (req, res) => {
-        app.db('convenios')
-            .where({ convenio: req.params.convenio })
-            .first()
-            .then(usuario => res.json(usuario))
-            .catch(err => res.status(500).send(err))
-    }
     const remove = async (req, res) => {
         try {
             // existsOrError(req.params.id, 'Código da Especialidade não informado.!')
@@ -85,6 +78,6 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getByCodigo, remove, getByNome}
+    return { save, get, getByCodigo, remove}
 }
 

@@ -27,9 +27,6 @@
               <b-form-input id="filtro-medico" v-model="filter" autofocus  size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
             </b-form-group>
           </b-col>
-           <b-col md="2"> 
-                    <b-form-checkbox id="atendimento"  class="mt-3 mb-3">Censo</b-form-checkbox>
-                </b-col>
         </b-row>
     <b-table hover striped :items="atendimentos" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadAtendimento" :sort-by.sync="sortBy">
       <template slot="actions"> </template>
@@ -92,7 +89,6 @@ export default {
             },
         
         onFiltered(filteredItems) {
-            // Trigger pagination to update the number of buttons/pages due to filtering
             this.totalRows = filteredItems.length
             this.currentPage = 1
             }

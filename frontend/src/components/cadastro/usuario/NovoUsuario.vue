@@ -53,15 +53,12 @@
                         </datalist>
                     </b-form-group>
                 </b-col>       
-                   <!-- <b-col md="auto">
+                   <b-col md="auto">
                     <b-form-group label="Tipo de Usuário:" label-for="usuario-admin">
-                        <b-form-input list="usuario-admin" type="text"  v-model="usuario.admin" required
-                        :readonly="mode === 'remove'" />
-                        <datalist id="usuario-admin">
-                            <option v-for="admin in admin" :key="admin">{{admin}}</option>
-                        </datalist>
+                        <b-form-checkbox list="usuario-admin" type="text"  v-model="usuario.admin" required
+                        :readonly="mode === 'remove'"> Gerente? </b-form-checkbox>
                     </b-form-group>
-                </b-col>             -->
+                </b-col>            
             </b-row>
             <b-row>
                   <b-col md="6">
@@ -197,7 +194,6 @@
                 </b-col>
                 <b-col md="6">
                 <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" >Incluir</b-button>
-                <b-button variant="danger"  size='lg' block v-if="mode === 'remove'" @click="remove">Excluir</b-button>
                 </b-col>
             </b-row>
         </b-form>

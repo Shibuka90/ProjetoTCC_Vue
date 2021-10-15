@@ -94,15 +94,7 @@ module.exports = app => {
             .then(usuario => res.json(usuario))
             .catch(err => res.status(500).send(err))
     }
-    const getByNome = (req, res) => {
-        app.db('usuarios')
-            .where({ nome: req.params.nome })
-            .first()
-            .then(usuario => res.json(usuario))
-            .catch(err => res.status(500).send(err))
-    }
-
-
+  
     const remove = async (req, res) => {
         try{
             const rowsUpdate = await app.db('usuarios')
@@ -116,5 +108,5 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getByCodigo, getByNome, remove}
+    return { save, get, getByCodigo, remove}
 }

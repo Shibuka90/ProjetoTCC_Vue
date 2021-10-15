@@ -2,16 +2,23 @@ import Vue from "vue"
 import VueRouter from 'vue-router'
 
 import Home from '@/components/home/Home'
+
 import HomeCadastro from '@/components/home/HomeCadastro'
 import Pacientes from '@/components/cadastro/paciente/Pacientes'
 import NovoPaciente from '@/components/cadastro/paciente/NovoPaciente'
 import PacienteAlterado from '@/components/cadastro/paciente/PacienteAlterado'
+
 import Usuarios from '@/components/cadastro/usuario/Usuarios'
 import NovoUsuario from '@/components/cadastro/usuario/NovoUsuario'
 import UsuarioAlterado from '@/components/cadastro/usuario/UsuarioAlterado'
+import NovoUsuarioAuth from '@/components/cadastro/usuario/NovoUsuarioAuth'
+
 import Especialidades from '@/components/cadastro/especialidade/Especialidades'
+
 import Servicos from '@/components/cadastro/servico/Servico'
+
 import Convenios from '@/components/cadastro/convenio/Convenio'
+
 import Medicos from '@/components/cadastro/medico/Medico'
 import NovoMedico from '@/components/cadastro/medico/NovoMedico'
 import MedicoAlterado from '@/components/cadastro/medico/MedicoAlterado'
@@ -26,6 +33,9 @@ import HomeAtendimento from '@/components/home/HomeAtendimento'
 import Atendimentos from '@/components/cadastro/atendimento/Atendimento'
 import NovoAtendimento from '@/components/cadastro/atendimento/NovoAtendimento'
 import AtendimentoAlterado from '@/components/cadastro/atendimento/AtendimentoAlterado'
+
+import Auth from '@/components/auth/Auth'
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -56,6 +66,10 @@ const routes = [{
     name: 'novousuario',
     path: '/novousuario',
     component: NovoUsuario
+}, {
+    name: 'novousuarioatuh',
+    path: '/novousuarioauth',
+    component: NovoUsuarioAuth
 }, {
     name: 'usuarioalterado',
     path: '/usuarios/:codigo',
@@ -120,6 +134,10 @@ const routes = [{
     name: 'atendimentoalterado',
     path: '/atendimentos/:codigo',
     component: AtendimentoAlterado
+}, {
+    name: 'auth',
+    path: '/auth',
+    component: Auth
 }
 ]
 

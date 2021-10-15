@@ -8,9 +8,6 @@ module.exports = app => {
         const agendamento = { ...req.body }
         if(req.params.codigo) agendamento.codigo = req.params.codigo
         
-        // if(!req.originalUrl.startWith('/agendamentos')) agendamento.admin = false
-        // if(!req.agendamento || !req.agendamento.admin) agendamento.admin = false
-        
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
             existsOrError(agendamento.horario, 'Horário não informado')

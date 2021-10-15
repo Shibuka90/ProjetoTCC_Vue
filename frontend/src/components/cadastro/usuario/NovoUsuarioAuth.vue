@@ -1,9 +1,9 @@
 <template>
-  <div class="usuariocadastrado">
+  <div class="novousuario">
         <PageTitle
       icon="fa fa-users"
       main="Colaboradores"
-      sub="Cadastro do Colaborador"
+      sub="Cadastro de Colaborador"
     />
     <div class="form">
         <b-form>
@@ -52,13 +52,7 @@
                             <option v-for="sexo in sexo" :key="sexo">{{sexo}}</option>
                         </datalist>
                     </b-form-group>
-                </b-col>
-                <b-col md="auto">
-                    <b-form-group label="Tipo de Usuário:" label-for="usuario-admin">
-                        <b-form-checkbox list="usuario-admin" type="text"  v-model="usuario.admin" required
-                        :readonly="mode === 'remove'"> Gerente </b-form-checkbox>
-                    </b-form-group>
-                </b-col>       
+                </b-col>            
             </b-row>
             <b-row>
                   <b-col md="6">
@@ -108,13 +102,13 @@
                             </datalist>
                     </b-form-group>
                 </b-col> 
-                   <b-col md="6">
+                <b-col md="6">
                     <b-form-group label="Endereço:" label-for="usuario-enderenco">
                         <b-form-input id="usuario-enderenco" type="text"  v-model="usuario.endereco" required
                         :readonly="mode === 'remove'" placeholder="Informe o Endereço......." />
                     </b-form-group>
                 </b-col>
-                    <b-col md="auto">
+                   <b-col md="auto">
                     <b-form-group label="Número:" label-for="usuario-numero">
                         <b-form-input id="usuario-numero" type="text"  v-model="usuario.numero" required
                         :readonly="mode === 'remove'" placeholder="Informe o Número......." />
@@ -122,9 +116,9 @@
                 </b-col>
             </b-row>
             <b-row>
-              <b-col md="auto">
+                <b-col md="auto">
                     <b-form-group label="Complemento:" label-for="usuario-complemento">
-                        <b-form-input id="usuario-complemento" type="text"  v-model="usuario.complemento" 
+                        <b-form-input id="usuario-complemento" type="text"  v-model="usuario.complemento"
                         :readonly="mode === 'remove'" placeholder="Informe o Complemento......." />
                     </b-form-group>
                 </b-col>
@@ -178,29 +172,26 @@
                  <b-col md="auto">
                     <b-form-group label="Senha:" label-for="usuario-password">
                         <b-form-input id="usuario-password" type="password"  v-model="usuario.password" required
-                        readonly placeholder="xxxxxxxxxxx" />
+                        :readonly="mode === 'remove'" placeholder="xxxxxxxxxxx" />
                     </b-form-group>
                 </b-col>
                   <b-col md="auto">
                     <b-form-group label="Confimar Senha:" label-for="usuario-confirmpassword">
                         <b-form-input id="usuario-confirmpassword" type="password"  v-model="usuario.confirmpassword" required
-                        readonly placeholder="xxxxxxxxxxx" />
+                        :readonly="mode === 'remove'" placeholder="xxxxxxxxxxx" />
                     </b-form-group>
                 </b-col>
             </b-row>
             <b-row>
-                <b-col md="4">
-                <b-button router-link to="/usuarios" size='lg' class="mb-2" block>Cancelar</b-button>
-                </b-col>
-                <b-col md="2">
-                <b-button variant="danger" size='lg' class="mb-2" block @click="remove" router-link to="/usuarios">Excluir</b-button>
+                <b-col md="6">
+                <b-button router-link to="/auth" size='lg' class="mb-2" block>Cancelar</b-button>
                 </b-col>
                 <b-col md="6">
-                <b-button variant="success" size='lg' class="mb-2" block  @click="save" router-link to="/usuarios">Alterar</b-button>
+                <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save"  >Incluir</b-button>
                 </b-col>
             </b-row>
         </b-form>
-    </div>
+  </div>  
   </div>  
 </template>
 
@@ -209,19 +200,17 @@ import PageTitle from "../../template/PageTitle.vue"
 import { baseApiUrl, showError } from '@/global'
 import axios from 'axios'
 
-
 export default {
-    name: "UsuarioAlterado",
-    components: { PageTitle},
+    name: "NovoUsuario",
+    components: { PageTitle },
     data: function() {
         return {
             mode:'save',
             usuario: {},
-            usuarios: [],
             estadoCivil: ['Solteiro(a)', 'Divorciado(a)', 'Amasiado(a)', 'Casado(a)', 'Separado(a)', 'Uniao Estavel', 'Viuvo(a)'],
             sexo: ['M', 'F'],
             admin: ['Gerente', 'Colaborador','Medico'],
-            siglacr: ['CRM', 'COREN'],
+            siglacr: ['CRM', 'COREN', 'CREFITO'],
             ufcr: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
                     'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
             tipo: ['Area', 'Avenida', 'Alamenda', 'Beco', 'Chacara', 'Condominio', 'Conjunto', 'Distrito', 'Estrada', 'Fazenda', 'Ladeira', 
@@ -229,36 +218,38 @@ export default {
                     'Vale', 'Via', 'Viela', 'Vila'],
             ufmunicipio: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
                     'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
-        }
+             usuarios: [],        }
     },
     methods: {
-          save() {
+           reset(){
+            this.mode = 'save'
+            this.usuario = {}
+        },
+       save() {
             const method = this.usuario.codigo ? 'put' : 'post'
             const codigo = this.usuario.codigo ? `/${this.usuario.codigo}` : ''
             axios[method](`${baseApiUrl}/usuarios${codigo}`, this.usuario)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
+                    this.reset()
                 })
                 .catch(showError)
         },
-          getUsuario(){
-            const url = `${baseApiUrl}/usuarios/${this.usuario.codigo}`
-             axios(url).then(res => this.usuario = res.data)
-        },
-             remove() {
+         remove() {
             const codigo = this.usuario.codigo
             axios.delete(`${baseApiUrl}/usuarios/${codigo}`)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
+                    this.reset()
                 })
                 .catch(showError)
          },
-        
+        loadUsuario(usuario, mode='save'){
+            this.mode = mode
+            this.usuario = {...usuario}
+        },
     },
-     mounted() {
-        this.usuario.codigo = this.$route.params.codigo
-        this.getUsuario()        
-     },
+ 
 }
 </script>
 
