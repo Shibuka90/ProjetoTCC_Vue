@@ -22,7 +22,7 @@
                     </b-form-group>
                 </b-col>
                 <b-col md="2"> 
-                    <b-form-checkbox id="atendimento" v-show="mode === 'save'" v-model="atendimento.censo" class="mt-3 mb-3">Censo</b-form-checkbox>
+                    <b-form-checkbox id="atendimento" v-show="mode === 'save'" v-model="atendimento.censo" class="mt-4" size="lg">Censo</b-form-checkbox>
                 </b-col>
             </b-row>
             <b-row>

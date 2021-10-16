@@ -178,13 +178,13 @@
                  <b-col md="auto">
                     <b-form-group label="Senha:" label-for="usuario-password">
                         <b-form-input id="usuario-password" type="password"  v-model="usuario.password" required
-                        readonly placeholder="xxxxxxxxxxx" />
+                        placeholder="xxxxxxxxxxx" />
                     </b-form-group>
                 </b-col>
                   <b-col md="auto">
                     <b-form-group label="Confimar Senha:" label-for="usuario-confirmpassword">
                         <b-form-input id="usuario-confirmpassword" type="password"  v-model="usuario.confirmpassword" required
-                        readonly placeholder="xxxxxxxxxxx" />
+                        placeholder="xxxxxxxxxxx" />
                     </b-form-group>
                 </b-col>
             </b-row>

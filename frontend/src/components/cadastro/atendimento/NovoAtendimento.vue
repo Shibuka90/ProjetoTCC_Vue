@@ -12,10 +12,13 @@
                 </b-col>
                     <b-modal id="modal-atendimentos"  centered size="xl" title="Pacinetes" @ok="resetFilter">
                         <b-row>
-                            <b-col md="12">
+                            <b-col md="8">
                                 <b-form-group label="Pesquisar:" label-for="filtro-atendimento">
                                     <b-form-input id="filtro-atendimento" v-model="filter" autofocus size="lg" type="search" placeholder="Digite para filtrar...."></b-form-input>
                             </b-form-group>                    
+                            </b-col>
+                            <b-col md="4"> 
+                                <b-button variant="info" block router-link to="/novopacienteatendimento">Cadastrar</b-button>
                             </b-col>
                         </b-row>
                         <b-row>

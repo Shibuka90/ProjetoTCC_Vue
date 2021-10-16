@@ -3,7 +3,7 @@
 		<Header title="SGCM - Sistema de Gestão de Clínica Médica" 
 			:hideToggle="!usuario"
 			:hideUserDropdown="!usuario" />
-		<Menu v-if="usuario" />
+		<Menu v-if="usuario"/>
 		<Loading v-if="validatingToken" />
 		<Content v-else />
 		<Footer />
@@ -26,6 +26,7 @@ export default {
 	computed: mapState(['isMenuVisible', 'usuario']),
 	data: function() {
 		return {
+			
 			validatingToken: true
 		}
 	},

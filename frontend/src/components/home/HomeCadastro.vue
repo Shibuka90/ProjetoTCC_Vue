@@ -15,23 +15,23 @@
         <router-link to="/pacientes">
           <Menus icon="fa fa-user" title="Pacientes" />
         </router-link>
-        <router-link to="/medicos">
+        <router-link to="/medicos" v-if="usuario.admin">
           <Menus icon="fa fa-user-md" title="Médicos" />
         </router-link>        
       </div>
       <div class="coluna3">
-        <router-link to="/convenios">
+        <router-link to="/convenios" v-if="usuario.admin">
          <Menus icon="fa fa-book-medical" title="Convênios" />
         </router-link>
-        <router-link to="/especialidades">
+        <router-link to="/especialidades" v-if="usuario.admin">
           <Menus icon="fa fa-stethoscope" title="Especialidades" />
         </router-link>
       </div>
       <div class="coluna4">
-        <router-link to="/servicos">
+        <router-link to="/servicos" v-if="usuario.admin">
           <Menus icon="fa fa-medkit" title="Serviços" />  
         </router-link>
-        <router-link to="/usuarios">
+        <router-link to="/usuarios" v-if="usuario.admin">
           <Menus icon="fa fa-users" title="Colaboradores" />
         </router-link>
       </div>
@@ -41,11 +41,13 @@
 
 <script>
 import PageTitle from "../template/PageTitle.vue";
+import { mapState } from 'vuex'
 import Menus from "./Menus.vue";
 
 export default {
   name: "HomeCadastro",
   components: { PageTitle, Menus },
+  computed: mapState(['usuario']),
 };
 </script>
 

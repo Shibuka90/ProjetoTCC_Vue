@@ -1,5 +1,5 @@
 <template>
-  <div class="novopaciente">
+  <div class="novopacienteatendimento">
         <PageTitle
       icon="fa fa-user"
       main="Pacientes"
@@ -106,7 +106,7 @@
             <b-row>
                 <b-col md="auto">
                     <b-form-group label="Complemento:" label-for="paciente-complemento">
-                        <b-form-input id="paciente-complemento" type="text"  v-model="paciente.complemento" 
+                        <b-form-input id="paciente-complemento" type="text"  v-model="paciente.complemento"
                         :readonly="mode === 'remove'" placeholder="Informe o Complemento......." />
                     </b-form-group>
                 </b-col>
@@ -170,15 +170,12 @@
                     </b-form-group>
                 </b-col>
             </b-row>
-               <b-row>
-                <b-col md="4">
-                <b-button router-link to="/pacientes" size='lg' class="mb-2" block>Cancelar</b-button>
-                </b-col>
-                <b-col md="2">
-                <b-button variant="danger" size='lg' class="mb-2" block @click="remove" router-link to="/pacientes" >Excluir</b-button>
+            <b-row>
+                <b-col md="6">
+                <b-button router-link to="/novoatendimento" size='lg' class="mb-2" block>Cancelar</b-button>
                 </b-col>
                 <b-col md="6">
-                <b-button variant="success" size='lg' class="mb-2" block  @click="save" router-link to="/pacientes">Alterar</b-button>
+                <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" >Incluir</b-button>
                 </b-col>
             </b-row>
         </b-form>
@@ -191,32 +188,28 @@ import PageTitle from "../../template/PageTitle.vue"
 import { baseApiUrl, showError } from '@/global'
 import axios from 'axios'
 
-
 export default {
-    name: "PacienteAlterado",
-    components: { PageTitle},
+    name: "NovoPacienteAtendimento",
+    components: { PageTitle },
     data: function() {
         return {
             mode:'save',
             paciente: {},
-            pacientes: [],
             convenio: {},
             convenios:[],
             estadoCivil: ['Solteiro(a)', 'Divorciado(a)', 'Amasiado(a)', 'Casado(a)', 'Separado(a)', 'Uniao Estavel', 'Viuvo(a)'],
             sexo: ['M', 'F'],
             admin: ['Gerente', 'Colaborador','Medico'],
-            siglacr: ['CRM', 'COREN'],
-            ufcr: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
-                    'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
             tipo: ['Area', 'Avenida', 'Alamenda', 'Beco', 'Chacara', 'Condominio', 'Conjunto', 'Distrito', 'Estrada', 'Fazenda', 'Ladeira', 
                     'Largo', 'Loteamento', 'Modulo', 'Parque', 'Praca', 'Quadra', 'Residencial', 'Rodovia', 'Rua', 'Sitio', 'Travessa', 'Trevo',
                     'Vale', 'Via', 'Viaduto', 'Viela', 'Vila'],
             ufmunicipio: ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
                     'RR', 'RS', 'SC', 'SP', 'SE', 'TO'],
+            pacientes: [],        
         }
     },
     methods: {
-         loadConvenios() {
+          loadConvenios() {
             const url = `${baseApiUrl}/convenios`;
             axios.get(url).then((res) => {
             this.convenios = res.data.map(convenio => {
@@ -224,34 +217,38 @@ export default {
             })
             })
         },
-          save() {
+           reset(){
+            this.mode = 'save'
+            this.paciente = {}
+        },
+       save() {
             const method = this.paciente.codigo ? 'put' : 'post'
             const codigo = this.paciente.codigo ? `/${this.paciente.codigo}` : ''
             axios[method](`${baseApiUrl}/pacientes${codigo}`, this.paciente)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
+                    this.reset()
                 })
                 .catch(showError)
         },
-          getPaciente(){
-            const url = `${baseApiUrl}/pacientes/${this.paciente.codigo}`
-             axios(url).then(res => this.paciente = res.data)
-        },
-             remove() {
+         remove() {
             const codigo = this.paciente.codigo
             axios.delete(`${baseApiUrl}/pacientes/${codigo}`)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
+                    this.reset()
                 })
                 .catch(showError)
          },
-        
+        loadPaciente(paciente, mode='save'){
+            this.mode = mode
+            this.paciente = {...paciente}
+        },
     },
-     mounted() {
-        this.paciente.codigo = this.$route.params.codigo
-        this.getPaciente()  
-        this.loadConvenios()      
-     },
+    mounted(){
+        this.loadConvenios()
+    }
+ 
 }
 </script>
 

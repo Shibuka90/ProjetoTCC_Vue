@@ -6,7 +6,7 @@
             <router-link to="/">
              <Menus icon="fas fa-home" title="Menu Principal" />
             </router-link>
-            <router-link to="/agendas">
+            <router-link to="/agendas" v-if="usuario.admin">
              <Menus icon="fas fa-calendar-alt" title="Cadastro de Agenda" />
             </router-link>
             <router-link to="/agendamentos">
@@ -19,11 +19,13 @@
 
 <script>
 import PageTitle from "../template/PageTitle.vue"
+import {mapState} from 'vuex'
 import Menus from "./Menus.vue"
 
 export default {
     name: "HomeAgendamento",
-    components: { PageTitle, Menus }
+    components: { PageTitle, Menus },
+    computed: mapState(['usuario']),
 }
 </script>
 

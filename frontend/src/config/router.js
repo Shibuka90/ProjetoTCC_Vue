@@ -7,6 +7,7 @@ import HomeCadastro from '@/components/home/HomeCadastro'
 import Pacientes from '@/components/cadastro/paciente/Pacientes'
 import NovoPaciente from '@/components/cadastro/paciente/NovoPaciente'
 import PacienteAlterado from '@/components/cadastro/paciente/PacienteAlterado'
+import NovoPacienteAtendimento from '@/components/cadastro/paciente/NovoPacienteAtendimento'
 
 import Usuarios from '@/components/cadastro/usuario/Usuarios'
 import NovoUsuario from '@/components/cadastro/usuario/NovoUsuario'
@@ -134,6 +135,10 @@ const routes = [{
     name: 'atendimentoalterado',
     path: '/atendimentos/:codigo',
     component: AtendimentoAlterado
+}, {
+    name: 'nonopacienteatendimento',
+    path: '/novopacienteatendimento',
+    component: NovoPacienteAtendimento
 }, {
     name: 'auth',
     path: '/auth',
