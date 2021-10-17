@@ -1,11 +1,9 @@
 <template>
 <div class="auth-content">
     <div class="auth-modal">
-        <span>SGCM</span>
-        <span>Sistema de Gestão de Clínica Médica</span>
+        <img src="@/assets/SGCM.png" width="200" alt="Logo" />
         <hr>
         <div class="auth-title">Login</div>
-
         <input type="text" v-model="usuario.email" placeholder="E-mail">
         <input type="password" v-model="usuario.password" placeholder="Senha">
 
@@ -92,9 +90,13 @@ export default {
     width: 100%;
     height: 1px;
     background-image: linear-gradient(to right,
-        rgba(120, 120, 120, 0)
-        rgba(120, 120, 120, 0.75)
+        rgba(120, 120, 120, 0),
+        rgba(120, 120, 120, 0.75),
         rgba(120, 120, 120, 0));
+    }
+
+.auth-modal img {
+    width: 100%;
 }
 
 

@@ -56,6 +56,7 @@ export default {
 
 .home-menu{
   margin: 10px 0px 0px 10px;
+ 
 }
 .home-menu i{
   color:white;
@@ -71,6 +72,7 @@ export default {
 
 .home-menu a:hover{
   text-decoration: none;
+  
 }
 
 </style>
