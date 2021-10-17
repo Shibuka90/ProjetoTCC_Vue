@@ -2,7 +2,7 @@
   <div class="home">
     <PageTitle icon="fa fa-folder" main="Gestão de Cadastros" sub="Cadastros gerais"
     />
-    <div class="menus-home">
+    <div class="menus-cadastro">
         <div class="cadastro">
             <router-link to="/homecadastro">
             <Menus icon="fa fa-folder" title="Cadastros Gerais" />
@@ -21,9 +21,12 @@
     </div>
     <hr />
     <PageTitle icon="fa fa-first-aid" main="Gestão Clínica" sub="Apoio Clínico" />
-    <div class="menus-home">
-        
-        <Menus icon="fa fa-first-aid" title="Prontuario" />
+    <div class="menus-prontuario">
+      <div class="prontuario">
+        <router-link to="/homeprontuario">
+          <Menus icon="fa fa-first-aid" title="Prontuários" />
+        </router-link>
+      </div>
     </div>
     <hr />
   </div>
@@ -40,7 +43,7 @@ export default {
 </script>
 
 <style>
-    .menus-home{
+    .menus-cadastro{
         display: flex;
         justify-content: space-evenly;
         flex-wrap: wrap;
@@ -57,6 +60,16 @@ export default {
     }
 
     .atendimento a:hover{
+        text-decoration: none;
+        color: #000;
+    }
+
+    .menus-prontuario{
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+    .prontuario a:hover{
         text-decoration: none;
         color: #000;
     }

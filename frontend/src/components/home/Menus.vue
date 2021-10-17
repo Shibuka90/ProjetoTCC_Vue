@@ -30,19 +30,19 @@ export default {
     }
 
     .menus-icon{
-         display: flex;
-         color: red;
+        display: flex;
+        color: red;
         align-items: center;
-         text-decoration: none;
+        text-decoration: none;
 
     }
     .menus-icon i{
         font-size: 4rem;
-         text-decoration: none;
+        text-decoration: none;
     }
 
     .menus-titte{
         font-size: 0.9rem;
-         text-decoration: none;
+        text-decoration: none;
     }
 </style>

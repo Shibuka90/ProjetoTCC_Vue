@@ -35,6 +35,9 @@ import Atendimentos from '@/components/cadastro/atendimento/Atendimento'
 import NovoAtendimento from '@/components/cadastro/atendimento/NovoAtendimento'
 import AtendimentoAlterado from '@/components/cadastro/atendimento/AtendimentoAlterado'
 
+import HomePronturario from '@/components/home/HomeProntuario'
+import Prontuarios from '@/components/cadastro/prontuario/Prontuario'
+
 import Auth from '@/components/auth/Auth'
 
 Vue.use(VueRouter)
@@ -143,6 +146,14 @@ const routes = [{
     name: 'auth',
     path: '/auth',
     component: Auth
+}, {
+    name: 'homeprontuario',
+    path: '/homeprontuario',
+    component: HomePronturario
+}, {
+    name: 'prontuario',
+    path: '/prontuarios',
+    component: Prontuarios
 }
 ]
 
