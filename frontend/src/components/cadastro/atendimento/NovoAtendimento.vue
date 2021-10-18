@@ -38,7 +38,7 @@
                         </b-table>
                     </b-modal>
                     <b-col md="auto">
-                     <b-form-group label="Código Paciente :" label-for="atendimento-codigopaciente">
+                     <b-form-group label="Código Paciente:" label-for="atendimento-codigopaciente">
                         <b-form-input id="atendimento-codigopaciente" type="text" :value="paciente.codigo" @blur="atendimento.codigopaciente = $event.target.value" required />
                 </b-form-group>
                 </b-col>
@@ -150,14 +150,6 @@ export default {
             .then(() => {
                 this.$toasted.global.defaultSuccess()
                 this.reset()
-                })
-                .catch(showError)
-            },
-        remove() {
-            const codigo = this.atendimento.codigo
-            axios.delete(`${baseApiUrl}/atendimentos/${codigo}`)
-            .then(() => {
-                this.$toasted.global.defaultSuccess()
                 })
                 .catch(showError)
             },

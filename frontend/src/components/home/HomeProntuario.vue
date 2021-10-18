@@ -3,7 +3,7 @@
     <PageTitle
       icon="fa fa-first-aid"
       main="Prontuários"
-      sub="Abertura de Prontuários por Atendimento"
+      sub="Abertura de Prontuários"
     />
     <div class="menus-homecadastro">
       <div class="coluna1">

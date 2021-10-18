@@ -10,12 +10,12 @@ module.exports = app => {
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
             existsOrError(prontuario.codigoatendimento, 'Código Atendimento não informado')
-            existsOrError(prontuario.atendimento, 'Atendimento não informado')
+            existsOrError(prontuario.paciente, 'Paciente não informado')
             existsOrError(prontuario.datadoprontuario, 'Data não informada')
             existsOrError(prontuario.medico, 'Médico não informado')
-            existsOrError(prontuario.servico, 'Serviço não informado')
-            existsOrError(prontuario.especialidade, 'Especialidade não informado')
             existsOrError(prontuario.convenio, 'Convênio não informado')
+            existsOrError(prontuario.especialidade, 'Especialidade não informado')
+            existsOrError(prontuario.servico, 'Serviço não informado')
             existsOrError(prontuario.relatorio, 'Relatorio não preenchido')
            
             
@@ -40,7 +40,7 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('prontuarios')
-            .select('codigo', 'datadoprontuario', 'codigoatendimento', 'atendimento', 'convenio', 'medico', 'servico', 'especialidade', 'relatorio' )
+            .select('codigo', 'datadoprontuario', 'codigoatendimento', 'paciente', 'convenio', 'medico', 'servico', 'especialidade', 'relatorio' )
             .then(prontuarios => res.json(prontuarios))
             .catch(err => res.status(500).send(err))
     }

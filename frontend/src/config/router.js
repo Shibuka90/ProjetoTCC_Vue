@@ -37,6 +37,8 @@ import AtendimentoAlterado from '@/components/cadastro/atendimento/AtendimentoAl
 
 import HomePronturario from '@/components/home/HomeProntuario'
 import Prontuarios from '@/components/cadastro/prontuario/Prontuario'
+import NovoProntuario from '@/components/cadastro/prontuario/NovoProntuario'
+import ProntuarioAlterado from '@/components/cadastro/prontuario/ProntuarioAlterado'
 
 import Auth from '@/components/auth/Auth'
 
@@ -139,7 +141,7 @@ const routes = [{
     path: '/atendimentos/:codigo',
     component: AtendimentoAlterado
 }, {
-    name: 'nonopacienteatendimento',
+    name: 'novopacienteatendimento',
     path: '/novopacienteatendimento',
     component: NovoPacienteAtendimento
 }, {
@@ -154,6 +156,14 @@ const routes = [{
     name: 'prontuario',
     path: '/prontuarios',
     component: Prontuarios
+}, {
+    name: 'novoprontuario',
+    path: '/novoprontuario',
+    component: NovoProntuario
+}, {
+    name: 'prontuarioalterado',
+    path: '/prontuarios/:codigo',
+    component: ProntuarioAlterado
 }
 ]
 
