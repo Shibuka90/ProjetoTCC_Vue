@@ -49,8 +49,7 @@
          <b-row>
             <b-col md="12">
                 <b-form-group label="Relatório:" label-for="prontuario-relatorio">
-                    <VueEditor v-model="prontuario.relatorio" placeholder="Relatar o atendimento...." />
-                    <b-button @click="loadProntuario">Carregar</b-button>
+                    <VueEditor v-model="prontuario.relatorio"  placeholder="Relatar o atendimento...." />
                 </b-form-group>
             </b-col>
         </b-row>
@@ -92,6 +91,7 @@ export default {
             currentPage: 1,
             perPage: 5,
             filter: null,
+             
        }
     },
     methods: {
@@ -124,13 +124,7 @@ export default {
             const url = `${baseApiUrl}/prontuarios/${this.prontuario.codigo}`
              axios(url).then(res => this.prontuario = res.data)
             },
-
-        loadProntuario(prontuario, mode = 'save') {
-            this.mode = mode
-            axios.get(`${baseApiUrl}/prontuarios/${prontuario.id}`)
-                .then(res => this.prontuario = res.data)
-                console.log(this.prontuario)
-        },
+       
         resetFilter(){
             this.filter = null
             },
@@ -143,6 +137,8 @@ export default {
     mounted(){
         this.prontuario.codigo = this.$route.params.codigo
         this.getProntuario()
+       
+      
         
     }
 

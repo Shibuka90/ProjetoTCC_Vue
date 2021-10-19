@@ -1,5 +1,3 @@
-const bcrypt = require('bcrypt-nodejs')
-const { serializeUser } = require('passport')
 
 module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation

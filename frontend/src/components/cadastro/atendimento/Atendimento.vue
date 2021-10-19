@@ -52,6 +52,7 @@ export default {
                 { key: "codigo", label: "Atendimento", sortable: true },
                 { key: "datadoatendimento", label: "Data do Atend.", sortable: true},
                 { key: "alta", label: "Alta", sortable: true},
+                { key: "codigopaciente", label: "Cod.Pac", sortable: true},
                 { key: "paciente", label: "Paceinte", sortable: true},
                 { key: "convenio", label: "Convênio" },
                 { key: "servico", label: "Serviço"},

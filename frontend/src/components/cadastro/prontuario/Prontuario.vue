@@ -75,7 +75,7 @@ export default {
             axios.get(url).then((res) => {
                 this.prontuarios = res.data; 
                 this.count = res.data.count
-                this.limit = res.data.limit      
+                this.limit = res.data.limit 
                 });
             },
         
@@ -84,10 +84,11 @@ export default {
             axios(url).then(res => this.prontuario = res.data)
             },
             
-        loadProntuario(prontuario, mode='save'){
+         loadProntuario(prontuario, mode = 'save') {
             this.mode = mode
-            this.prontuario = {...prontuario}
-            },
+            axios.get(`${baseApiUrl}/prontuarios/${prontuario.codigo}`)
+                .then(res => this.prontuario = res.data)          
+        },
             
         onFiltered(filteredItems) {
             this.totalRows = filteredItems.length
@@ -99,7 +100,7 @@ export default {
         },
     },       
     mounted() {
-        this.loadProntuarios();  
+          this.loadProntuarios()
         }
     }
 </script>

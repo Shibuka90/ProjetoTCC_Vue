@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt-nodejs')
 
 module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
@@ -17,9 +16,6 @@ module.exports = app => {
             existsOrError(prontuario.especialidade, 'Especialidade não informado')
             existsOrError(prontuario.servico, 'Serviço não informado')
             existsOrError(prontuario.relatorio, 'Relatorio não preenchido')
-           
-            
-
     } catch(msg) {
         return res.status(400).send(msg)
     }       
@@ -40,7 +36,7 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('prontuarios')
-            .select('codigo', 'datadoprontuario', 'codigoatendimento', 'paciente', 'convenio', 'medico', 'servico', 'especialidade', 'relatorio' )
+            .select('codigo', 'datadoprontuario', 'codigoatendimento', 'paciente', 'convenio', 'medico', 'servico', 'especialidade')
             .then(prontuarios => res.json(prontuarios))
             .catch(err => res.status(500).send(err))
     }
@@ -55,13 +51,18 @@ module.exports = app => {
 
     const remove = async (req, res) => {
         try {
-            const rowsDeleted = await app.db('prontuarios')
-                .where ({ codigo: req.params.codigo }).del()
-                existsOrError(rowsDeleted, 'Prontuario não encontrada')
-        
-        res.status(204).send()
-        }catch(msg) {
-            res.status(400).send(msg)
+            const rowsDeleted = await app.db('prontuario')
+                .where({ codigo: req.params.codigo }).del()
+            
+            try {
+                existsOrError(rowsDeleted, 'Prontuario não foi encontrado.')
+            } catch(msg) {
+                return res.status(400).send(msg)    
+            }
+
+            res.status(204).send()
+        } catch(msg) {
+            res.status(500).send(msg)
         }
     }
 

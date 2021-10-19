@@ -1,5 +1,3 @@
-const bcrypt = require('bcrypt-nodejs')
-const { serializeUser } = require('passport')
 
 module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
@@ -43,7 +41,9 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('agendas')
-            .select('codigo', 'codigomedico', 'medico', 'tempodeatendimento', 'horainicial', 'horafinal', 'intervaloinicial', 'intervalofinal', 'codigoespecialidade', 'especialidade')
+            .select('codigo', 'codigomedico', 'medico', 'tempodeatendimento', 
+            'horainicial', 'horafinal', 'intervaloinicial', 'intervalofinal', 
+            'codigoespecialidade', 'especialidade')
             .then(agendas => res.json(agendas))
             .catch(err => res.status(500).send(err))
     }

@@ -1,6 +1,3 @@
-const bcrypt = require('bcrypt-nodejs')
-const { serializeUser } = require('passport')
-
 module.exports = app => {
     const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
 
@@ -41,7 +38,8 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('atendimentos')
-            .select('codigo', 'datadoatendimento', 'codigopaciente', 'paciente', 'convenio', 'medico', 'servico', 'especialidade', 'matricula', 'vencimento', 'alta' )
+            .select('codigo', 'datadoatendimento', 'codigopaciente', 
+            'paciente', 'convenio', 'medico', 'servico', 'especialidade', 'matricula', 'vencimento', 'alta' )
             .whereRaw('censo = ?', true)
             .then(atendimentos => res.json(atendimentos))
             .catch(err => res.status(500).send(err))

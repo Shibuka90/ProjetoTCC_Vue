@@ -161,6 +161,15 @@ export default {
             this.atendimento = {...atendimento}           
             },
 
+        loadProntuarios(){
+            const url = `${baseApiUrl}/prontuarios`;
+            axios.get(url).then((res) => {
+            this.prontuarios = res.data;
+            this.count = res.data.count;
+            this.limit = res.data.limit; 
+            })
+        },
+
         resetFilter(){
             this.filter = null
             },
@@ -172,6 +181,7 @@ export default {
     },
     mounted(){
         this.loadAtendimentos()
+        this.loadProntuarios()
     }
 
 }

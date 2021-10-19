@@ -9,7 +9,7 @@ exports.up = function(knex) {
         table.string('medico', 100).notNull()
         table.string('servico', 100).notNull()
         table.string('especialidade').notNull()
-        table.binary('relatorio').notNull()
+        table.string('relatorio', 10000).notNull()
     })
 };
 

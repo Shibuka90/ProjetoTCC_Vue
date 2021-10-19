@@ -36,9 +36,7 @@
           <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy" >
             <template v-slot:cell(actions)="data">
               <b-button variant ="warning" @click="loadEspecialidade(data.item)" class="mr-2"><i class="fa fa-pencil"></i></b-button>
-               <b-button variant='danger' @click="loadConvenio(data.item, 'remove')">
-                 <i class="fas fa-trash"></i>
-             </b-button>
+               <b-button variant='danger' @click="loadEspecialidade(data.item, 'remove')"><i class="fas fa-trash"></i></b-button>
             </template>
           </b-table>
         </b-row>
