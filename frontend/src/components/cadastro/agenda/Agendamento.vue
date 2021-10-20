@@ -1,6 +1,6 @@
 <template>
-    <div class="agendamento">
-        <PageTitle icon="far fa-calendar-alt" main="Agendamento"/>
+    <div class="agendamentos">
+        <PageTitle icon="far fa-calendar-alt" main="Agendamentos"/>
         <div class="pesquisa">
             <b-form>
                 <b-row>
@@ -72,7 +72,7 @@
                             </b-form-group>
                         </b-col>
                         <b-col md="2">
-                        <b-button variant="primary" class="mt-4" size="lg">Novo Agendamento</b-button>
+                        <b-button variant="primary" class="mt-4" size="lg" router-link to="/novoagendamento">Novo Agendamento</b-button>
 
                         </b-col>
                     </b-row>

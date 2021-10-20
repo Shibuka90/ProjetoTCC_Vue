@@ -48,7 +48,7 @@ export default {
             agendas: [],
             fields: [
                 { key: "codigo", label: "Código", sortable: true},
-                { key: "medico", label: "Médico", sortable: true},
+                { key: "medico", label: "Agenda", sortable: true},
                 { key: "especialidade", label: "Especialidade", sortable: true},
             ],
             sortBy: 'codigo',
