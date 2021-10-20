@@ -51,17 +51,6 @@ module.exports = app => {
     }
     const remove = async (req, res) => {
         try {
-            // existsOrError(req.params.id, 'Código da Especialidade não informado.!')
-
-            // const subcategory = await app.db('categories')
-            //     .where({ parentId: req.params.id })
-
-            //     notExistsOrError(subcategory, 'Categoria possui subcategorias.!')
-
-            // const articles = await app.db('articles')
-            //     .where({ categoryId: req.params.id })
-            //     notExistsOrError(articles, 'Categoria possui artigos')
-
             const rowsDeleted = await app.db('servicos')
                 .where ({ codigo: req.params.codigo }).del()
                 existsOrError(rowsDeleted, 'Serviço não encontrada')

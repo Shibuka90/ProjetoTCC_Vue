@@ -71,10 +71,24 @@
                                 <b-form-input id="agenda-tempodeatendimento" v-model="agenda.tempodeatendimento" readonly  type="text" ></b-form-input>
                             </b-form-group>
                         </b-col>
+                        <b-col md="2">
+                        <b-button variant="primary" class="mt-4" size="lg">Novo Agendamento</b-button>
+
+                        </b-col>
                     </b-row>
                 </b-row>
             </b-form>
             <hr>
+            <b-row>
+                <b-col md="2">
+                    <template>
+                        <div>
+                            <label for="example-datepicker">Choose a date</label>
+                                <b-form-datepicker id="example-datepicker" v-model="agendamento.dataagendamento" class="mb-2"></b-form-datepicker>
+                        </div>
+                    </template>
+                </b-col>
+            </b-row>
         </div>
     </div>
 </template>
@@ -92,6 +106,8 @@ export default {
             mode: "save",
             agenda: {},
             agendas: [],
+            agendamento: {},
+            agendamentos: [],
             fields: [
                 { key: "codigo", label: "Código", sortable: true},
                 { key: "medico", label: "Médico", sortable: true},
