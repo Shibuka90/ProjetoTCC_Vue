@@ -41,7 +41,7 @@
                     </b-col>
                     <b-col md="4">
                         <b-form-group label="Agenda" label-for="agendamento-agenda">
-                            <b-form-input type="text" id="agendamento-agenda" v-model="agenda.medico"></b-form-input>
+                            <b-form-input type="text" id="agendamento-agenda" :value="agenda.medico" @blur="agendamento.agenda = $event.target.value"></b-form-input>
                         </b-form-group>
                     </b-col>
                   <b-col md="2">
@@ -70,11 +70,6 @@
                             </b-col>
                         </b-row>
                         <b-row>
-                            <b-col md="auto">
-                                <b-form-group label="Códgio" label-for="paciente-codigo">
-                                    <b-form-input id="paciente-codigo" v-model="paciente.codigo" readonly size="lg" type="text" ></b-form-input>
-                                </b-form-group>
-                            </b-col>
                             <b-col md="8">
                                 <b-form-group label="Paciente" label-for="paciente-nome">
                                     <b-form-input id="paciente-nome" v-model="paciente.nome" readonly size="lg" type="text" ></b-form-input>
@@ -85,17 +80,32 @@
                             <template slot="actions"> </template>
                         </b-table>
                     </b-modal>
-                    <b-col md="2">
-                        <b-form-group label="Código Paciente:" label-for="agendamento-codigopaciente">
-                            <b-form-input type="text" id="agendamento-codigopaciente" :value="paciente.codigo" @blur="agendamento.codigopaciente = $event.target.value"></b-form-input>
-                        </b-form-group>
-                    </b-col>
                     <b-col md="4">
                         <b-form-group label="Paciente:" label-for="agendamento-paciente">
                             <b-form-input type="text" id="agendamento-paciente" :value="paciente.nome" @blur="agendamento.paciente = $event.target.value"></b-form-input>
                         </b-form-group>
                     </b-col>
+                    <b-col md="4">
+                        <b-form-group label="Serviço:" label-for="agendamento-servico">
+                            <b-form-select type="text" id="agendamento-servico" :options="servicos" v-model="agendamento.servico"></b-form-select>
+                        </b-form-group>
+                    </b-col>
               </b-row>
+              <b-row>
+                    <b-col md="12">
+                        <b-form-group label="Observação:" label-for="agendamento-observacao">
+                            <VueEditor v-model="agendamento.observacao" placeholder="Relatar algo do paciente (alergias, necessidades e etc.)...." />
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col md="6">
+                        <b-button router-link to="/agendamentos" size='lg' class="mb-2" block>Cancelar</b-button>
+                    </b-col>
+                    <b-col md="6">
+                        <b-button variant="success" size='lg' class="mb-2" block  @click="save" >Incluir</b-button>
+                    </b-col>
+            </b-row> 
           </b-form>
       </div>
   </div>
@@ -103,12 +113,13 @@
 
 <script>
 import PageTitle from '../../template/PageTitle.vue'
-import { baseApiUrl} from "@/global";
+import { VueEditor } from "vue2-editor"
+import { baseApiUrl, showError} from "@/global";
 import axios from "axios";
 
 export default {
     name: 'NovoAgendamento',
-    components: {PageTitle},
+    components: {PageTitle, VueEditor},
     data: function(){
         return{
             mode: "save",
@@ -118,6 +129,7 @@ export default {
             agendas: [],
             paciente: {},
             pacientes: [],
+            servicos: [],
             page: 1,
             limit: 0,
             count: 0,
@@ -141,6 +153,21 @@ export default {
         }
     },
     methods: {
+        reset(){
+            this.mode = 'save'
+            this.agendamento = {}
+        },
+
+        save() {
+            const method = this.agendamento.codigo ? 'put' : 'post'
+            const codigo = this.agendamento.codigo ? `/${this.agendamento.codigo}` : ''
+            axios[method](`${baseApiUrl}/agendamentos${codigo}`, this.agendamento)
+            .then(() => {
+                this.$toasted.global.defaultSuccess()
+                this.reset()
+                })
+                .catch(showError)
+            },
 
         loadAgendas() {
              const url = `${baseApiUrl}/agendas`;
@@ -170,6 +197,15 @@ export default {
             this.paciente = {...paciente}
         },
 
+        loadServicos() {
+            const url = `${baseApiUrl}/servicos`;
+            axios.get(url).then((res) => {
+            this.servicos = res.data.map(servico => {
+                return{value: servico.servico, text: `${servico.servico}` }
+            })
+            })
+        },
+
         resetFilter(){
             this.filter = null
             },
@@ -182,6 +218,7 @@ export default {
     mounted(){
         this.loadAgendas()
         this.loadPacientes()
+        this.loadServicos()
     }
 }
 </script>

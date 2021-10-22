@@ -88,6 +88,11 @@
                         </div>
                     </template>
                 </b-col>
+                <b-col>
+                    <b-table hover striped :items="agendamentos" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadAgendamento" :sort-by.sync="sortBy">
+                            <template slot="actions"> </template>
+                        </b-table>
+                </b-col>
             </b-row>
         </div>
     </div>
@@ -110,8 +115,9 @@ export default {
             agendamentos: [],
             fields: [
                 { key: "codigo", label: "Código", sortable: true},
-                { key: "medico", label: "Médico", sortable: true},
-                { key: "especialidade", label: "Especialidade", sortable: true},
+                { key: "agenda", label: "Agenda", sortable: true},
+                { key: "paciente", label: "Paciente"},
+                { key: "servico", label: "Serviço"},
             ],
             sortBy: 'codigo',
             page: 1,
@@ -138,6 +144,20 @@ export default {
             this.mode = mode
             this.agenda = {...agenda}
             },
+
+        loadAgendamentos() {
+            const url = `${baseApiUrl}/agendamentos`;
+            axios.get(url).then((res) => {
+                this.agendamentos = res.data; 
+                this.count = res.data.count
+                this.limit = res.data.limit 
+                });
+            },
+        
+        loadAgendamento(agendamento, mode='save'){
+            this.mode = mode
+            this.agendamento = {...agendamento}
+            },
         
         onFiltered(filteredItems) {
             // Trigger pagination to update the number of buttons/pages due to filtering
@@ -156,6 +176,7 @@ export default {
     },
     mounted(){
         this.loadAgendas()
+        this.loadAgendamentos()
     }
 
 }

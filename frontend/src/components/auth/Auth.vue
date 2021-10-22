@@ -1,7 +1,7 @@
 <template>
 <div class="auth-content">
     <div class="auth-modal">
-        <img src="@/assets/SGCM.png" width="200" alt="Logo" />
+        <img src="@/assets/SGCM2_1.jpg" width="200" alt="Logo" />
         <hr>
         <div class="auth-title">Login</div>
         <input type="text" v-model="usuario.email" placeholder="E-mail">
