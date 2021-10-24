@@ -61,12 +61,12 @@ module.exports = app => {
         .delete(admin(app.api.medico.remove))
         
     app.route('/pacientes')
-        // .all(app.config.passport.authenticate())
+        .all(app.config.passport.authenticate())
         .post(app.api.paciente.save)
         .get(app.api.paciente.get)
 
     app.route('/pacientes/:codigopac')
-        // .all(app.config.passport.authenticate())
+        .all(app.config.passport.authenticate())
         .put(app.api.paciente.save)
         .get(app.api.paciente.getByCodigo)
         .delete(admin(app.api.paciente.remove))

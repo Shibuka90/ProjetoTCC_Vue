@@ -121,14 +121,7 @@ export default {
         this.totalRows = filteredItems.length
         this.currentPage = 1
       },
-    },
-    //"Assiste a tabela para fazer a paginação"
-     watch: {
-      page() {
-        this.loadEspecialidades() //Carrega os dados das Especialidades para a página
-      }
-  },
-  
+    },  
     //Clico de Vida -> Renderização
     mounted() {
       this.loadEspecialidades();//Carrega os dados para montar a Tabela de Especialidades

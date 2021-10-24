@@ -55,9 +55,16 @@ module.exports = app => {
 
     const remove = async (req, res) => {
         try {
+
+            existsOrError(req.params.codigo, 'Código do Convênio não informado...')
+
+            const pacientes = await app.db('pacientes')
+                .where({codconvenio: req.params.codigo})
+                notExistsOrError(pacientes, "Convênio amarrado a Paciente")
+
             const rowsDeleted = await app.db('convenios')
                 .where ({ codigo: req.params.codigo }).del()
-                existsOrError(rowsDeleted, 'Convênio não encontrada')
+                existsOrError(rowsDeleted, 'Convênio não encontrado')
 
             res.status(204).send()
         }catch(msg) {
