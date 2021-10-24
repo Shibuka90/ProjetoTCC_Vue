@@ -116,6 +116,8 @@ export default {
             fields: [
                 { key: "codigo", label: "Código", sortable: true},
                 { key: "agenda", label: "Agenda", sortable: true},
+                { key: "datadoagendamento", label: "Data", sortable: true},
+                { key: "horario", label: "Horario", sortable: true},
                 { key: "paciente", label: "Paciente"},
                 { key: "servico", label: "Serviço"},
             ],

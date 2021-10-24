@@ -145,7 +145,7 @@ export default {
             ],
             fieldsPac: [
                 { key: "codigo", label: "Código", sortable: true },
-                { key: "nome", label: "Nome", sortable: true },
+                { key: "nome", label: "Nome", sortable: true},
                 { key: "datanasc", label: "Data Nasc." },
                 { key: "convenio", label: "Convênio" },
                 { key: "matricula", label: "Matricula" },

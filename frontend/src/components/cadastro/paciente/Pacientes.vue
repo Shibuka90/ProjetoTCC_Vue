@@ -88,6 +88,7 @@ export default {
      loadPaciente(paciente, mode='save'){
             this.mode = mode
             this.paciente = {...paciente}
+            console.log(this.paciente)
         },
         
         onFiltered(filteredItems) {
