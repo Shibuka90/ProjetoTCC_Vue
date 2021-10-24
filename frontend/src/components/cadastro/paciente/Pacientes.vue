@@ -1,27 +1,28 @@
+<!--Página da Tabela de Pacientes -->
+
 <template>
+<!-- titulo da página -->
   <div class="pacientes">
-    <PageTitle
-      icon="fa fa-user"
-      main="Pacientes"
-      sub="Grid de Pacientes"
-    />
+    <PageTitle icon="fa fa-user" main="Pacientes" sub="Grid de Pacientes" />
+
+    <!-- Início da Tabela  -->
      <div class="pesquisa"> 
-      <b-form>
-      <b-row >
-        <b-col md="2"> 
-          <b-button router-link to="/" class="fa fa-home mr-4 mb-4" variant="info" size="lg"></b-button>
-          <b-button router-link to="/homecadastro"  size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
-        </b-col>
-        <b-col md="6">
-          <b-form-input input type="text" id="paciente-codigo" readonly v-model="paciente.nome" autofocus size="lg" class="mb-4"></b-form-input> 
-        </b-col>
-       <b-col md="4">
-         <b-button router-link to="/novopaciente" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
-          <b-button v-if="paciente.nome" @click="getPaciente" router-link :to="'/pacientes/' + this.paciente.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
-        </b-col> 
-      </b-row>
-    </b-form>     
-    </div>
+       <b-form>
+          <b-row >
+            <b-col md="2"> 
+              <b-button router-link to="/" class="fa fa-home mr-4 mb-4" variant="info" size="lg"></b-button>
+              <b-button router-link to="/homecadastro"  size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
+            </b-col>
+            <b-col md="6">
+              <b-form-input input type="text" id="paciente-codigo" readonly v-model="paciente.nome" autofocus size="lg" class="mb-4"></b-form-input> 
+            </b-col>
+            <b-col md="4">
+              <b-button router-link to="/novopaciente" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
+              <b-button v-if="paciente.nome" @click="getPaciente" router-link :to="'/pacientes/' + this.paciente.codigopac" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
+            </b-col> 
+          </b-row>
+        </b-form>     
+      </div>
     <hr>
         <b-row>
           <b-col md="6">
@@ -30,18 +31,15 @@
             </b-form-group>
           </b-col>
         </b-row>
-    <b-table hover striped :items="pacientes" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadPaciente" :sort-by.sync="sortBy">
-      <template slot="actions" > 
-      </template>
-    </b-table>
-    <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
+        <b-table hover striped :items="pacientes" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadPaciente" :sort-by.sync="sortBy"></b-table>
+        <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
   </div>
 </template>
 
 <script>
-import PageTitle from "../../template/PageTitle.vue";
-import { baseApiUrl} from "@/global";
-import axios from "axios";
+import PageTitle from "../../template/PageTitle.vue" // Importa o layout do titulo da página
+import { baseApiUrl} from '@/global' // Importa as configuração de acesso para página e mensagens
+import axios from 'axios' // Importa as configurações do AXIOS
 
 
 export default {
@@ -49,7 +47,6 @@ export default {
   components: { PageTitle },
   data: function () {
     return {
-      mode: "save",
       paciente: {},
       pacientes: [],
       sortBy: 'codigo',
@@ -57,7 +54,7 @@ export default {
       limit: 0,
       count: 0,
       fields: [
-        { key: "codigo", label: "Código", sortable: true },
+        { key: "codigopac", label: "Código", sortable: true },
         { key: "nome", label: "Nome", sortable: true },
         { key: "datanasc", label: "Data Nasc." },
         { key: "convenio", label: "Convênio" },
@@ -71,6 +68,7 @@ export default {
     
   },
   methods: {
+    //Carrega os dados da Tabela Pacientes
     loadPacientes() {
       const url = `${baseApiUrl}/pacientes`;
       axios.get(url).then((res) => {
@@ -79,31 +77,34 @@ export default {
         this.limit = res.data.limit      
       });
     },
-  
-     getPaciente(){
-            const url = `${baseApiUrl}/pacientes/${this.paciente.codigo}`
-             axios(url).then(res => this.paciente = res.data)
-     },
 
-     loadPaciente(paciente, mode='save'){
-            this.mode = mode
-            this.paciente = {...paciente}
-            console.log(this.paciente)
-        },
-        
-        onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
-        this.totalRows = filteredItems.length
+    //Pega os dados do Paciente pelo CODIGO DO PACIENTE que foi carregado pelo loadPaciente
+    getPaciente(){
+        const url = `${baseApiUrl}/pacientes/${this.paciente.codigopac}`
+        axios(url).then(res => this.paciente = res.data)
+    },
+
+    //Carrega os dados do Paciente para acessar a página de Alteração/Exclusão
+    loadPaciente(paciente){
+        this.paciente = {...paciente}
+    },
+    
+    //Traz os dados filtrados para a tabela
+    onFiltered(filteredItems) {
+    // Acione a paginação para atualizar o número de botões / páginas devido à filtragem
+    this.totalRows = filteredItems.length
        
       }
   }, 
+  //"Assiste a tabela para fazer a paginação"
   watch: {
       page() {
-        this.loadPacientes()
+        this.loadPacientes() //Carrega os dados dos Pacientes para a página
       }
-  } ,   
+  },  
+  //Clico de Vida -> Renderização
   mounted() {
-    this.loadPacientes();  
+    this.loadPacientes(); //Carrega os dados para montar a Tabela de Pacientes
   }
 }
 </script>

@@ -4,7 +4,7 @@ module.exports = app => {
     
     const save = async (req, res) => {
         const paciente = { ...req.body }
-        if(req.params.codigo) paciente.codigo = req.params.codigo
+        if(req.params.codigopac) paciente.codigopac = req.params.codigopac
                 
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try{
@@ -25,7 +25,7 @@ module.exports = app => {
             existsOrError(paciente.ufmunicipio, 'UF do Municipio não informado')
             existsOrError(paciente.celddd, 'DDD do Celular não informado')
             existsOrError(paciente.cel, 'Celular não informado')
-            existsOrError(paciente.convenio, 'Convenio não informado')
+            existsOrError(paciente.codconvenio, 'Convenio não informado')
             existsOrError(paciente.matricula, 'Matricula não informada')
             existsOrError(paciente.vencimento, 'Vencimento não informado')
         
@@ -33,10 +33,10 @@ module.exports = app => {
             return res.status(400).send(msg)
         } 
 
-        if(paciente.codigo){
+        if(paciente.codigopac){
             app.db('pacientes')
                 .update(paciente)
-                .where({ codigo: paciente.codigo })
+                .where({ codigopac: paciente.codigopac })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
@@ -49,16 +49,18 @@ module.exports = app => {
     }
 
     const get = (req, res) => {
-        app.db('pacientes')
-            .select('codigo', 'nome', 'email', 'cpf', 'datanasc', 'estadocivil', 'sexo', 'mae', 'pai', 'ceppaciente', 'tipo', 
-            'endereco', 'numero', 'bairro', 'municipio', 'ufmunicipio', 'telddd', 'tel', 'celddd', 'cel', 'convenio', 'matricula', 'vencimento' )
+        app.db({p: 'pacientes', c: 'convenios'})
+            .select('p.codigopac', 'p.nome', 'p.email', 'p.cpf', 'p.datanasc', 'p.estadocivil', 'p.sexo', 'p.mae', 'p.pai', 'p.ceppaciente', 'p.tipo', 
+            'p.endereco', 'p.numero', 'p.bairro', 'p.municipio', 'p.ufmunicipio', 'p.telddd', 'p.tel', 'p.celddd', 'p.cel', {convenio: 'c.convenio'},
+            'p.matricula', 'p.vencimento' )
+            .whereRaw('?? = ??', ['p.codconvenio', 'c.codigo'])
             .then(pacientes => res.json(pacientes))
             .catch(err => res.status(500).send(err))
     }
 
     const getByCodigo = (req, res) => {
         app.db('pacientes')
-            .where({ codigo: req.params.codigo })
+            .where({ codigopac: req.params.codigopac })
             .first()
             .then(paciente => res.json(paciente))
             .catch(err => res.status(500).send(err))
@@ -67,7 +69,7 @@ module.exports = app => {
     const remove = async (req, res) => {
         try {
             const rowsDeleted = await app.db('pacientes')
-                .where ({ codigo: req.params.codigo }).del()
+                .where ({ codigopac: req.params.codigopac }).del()
                 existsOrError(rowsDeleted, 'Paciente não encontrado')
 
             res.status(204).send()

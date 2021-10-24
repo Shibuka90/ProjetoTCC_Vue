@@ -1,90 +1,79 @@
+<!--Página de cadastro do Paciente -->
 <template>
+<!-- titulo da página -->
   <div class="novopaciente">
-        <PageTitle
-      icon="fa fa-user"
-      main="Pacientes"
-      sub="Cadastro de Paciente"
+        <PageTitle icon="fa fa-user" main="Pacientes" sub="Cadastro de Paciente"
     />
+    <!-- início do formulário do cadastro do paciente -->
     <div class="form">
         <b-form>
-            <input id="paciente-codigo" type="hidden" v-model="paciente.codigo">
+            <input id="paciente-codigo" type="hidden" v-model="paciente.codigopac">
             <b-row>
                 <b-col md="6" sm="12">
-                     <b-form-group label="Nome:" label-for="paciente-nome">
-                    <b-form-input id="paciente-nome" type="text" v-model="paciente.nome" required 
-                    :readonly="mode === 'remove'" placeholder="Informe o Nome do(a) Colaborador(a)...."/>
-                </b-form-group>
+                    <b-form-group label="Nome:" label-for="paciente-nome">
+                        <b-form-input id="paciente-nome" type="text" v-model="paciente.nome" required  placeholder="Informe o Nome do(a) Colaborador(a)...."/>
+                    </b-form-group>
                 </b-col>
                 <b-col md="6" sm="12">
-                <b-form-group label="E-mail:" label-for="paciente-email">
-                    <b-form-input id="paciente-email" type="text" v-model="paciente.email" required 
-                    :readonly="mode === 'remove'" placeholder="Informe o E-mail do(a) Colaborador(a)...."/>
-                </b-form-group>
-              </b-col>
+                    <b-form-group label="E-mail:" label-for="paciente-email">
+                        <b-form-input id="paciente-email" type="text" v-model="paciente.email" required  placeholder="Informe o E-mail do(a) Colaborador(a)...."/>
+                    </b-form-group>
+                </b-col>
             </b-row>
             <b-row>
                 <b-col  md="auto">
                     <b-form-group label="CPF:" label-for="paciente-cpf">
-                        <b-form-input id="paciente-cpf" type="text" v-mask="'###.###.###-##'" v-model="paciente.cpf" required
-                        :readonly="mode === 'remove'" placeholder="xxx.xxx.xxx-xx" />
+                        <b-form-input id="paciente-cpf" type="text" v-mask="'###.###.###-##'" v-model="paciente.cpf" required placeholder="xxx.xxx.xxx-xx" />
                     </b-form-group>
                 </b-col>
                  <b-col md="auto">
                     <b-form-group label="Data de Nascimento:" label-for="paciente-datanasc">
-                        <b-form-input id="paciente-datanasc" type="date"  v-model="paciente.datanasc" required
-                        :readonly="mode === 'remove'" />
+                        <b-form-input id="paciente-datanasc" type="date"  v-model="paciente.datanasc" required />
                     </b-form-group>
                 </b-col>
-                  <b-col md="auto">
+                 <b-col md="auto">
                     <b-form-group label="Estado Civil:" label-for="paciente-estadocivil">
-                        <b-form-input list="paciente-estadocivil" type="text"  v-model="paciente.estadocivil" required
-                        :readonly="mode === 'remove'" />
-                        <datalist id="paciente-estadocivil">
-                            <option v-for="estadoCivil in estadoCivil" :key="estadoCivil">{{estadoCivil}}</option>
-                        </datalist>
+                        <b-form-input list="paciente-estadocivil" type="text"  v-model="paciente.estadocivil" required />
+                            <datalist id="paciente-estadocivil">
+                                <option v-for="estadoCivil in estadoCivil" :key="estadoCivil">{{estadoCivil}}</option>
+                            </datalist>
                     </b-form-group>
                 </b-col>   
-                  <b-col md="auto">
+                <b-col md="auto">
                     <b-form-group label="Sexo:" label-for="paciente-sexo">
-                        <b-form-input list="paciente-sexo" type="text"  v-model="paciente.sexo" required
-                        :readonly="mode === 'remove'" />
-                        <datalist id="paciente-sexo">
-                            <option v-for="sexo in sexo" :key="sexo">{{sexo}}</option>
-                        </datalist>
+                        <b-form-input list="paciente-sexo" type="text"  v-model="paciente.sexo" required />
+                            <datalist id="paciente-sexo">
+                                <option v-for="sexo in sexo" :key="sexo">{{sexo}}</option>
+                            </datalist>
                     </b-form-group>
                 </b-col>  
                 <b-col md="4"> 
                     <b-form-group label="Convênio:" label-for="paciente-convenio">
-                        <b-form-select id="paciente-convenio" :options="convenios" v-model="paciente.convenio" required>
-                        </b-form-select>
+                        <b-form-select id="paciente-convenio" :options="convenios" v-model="paciente.codconvenio" required></b-form-select>
                     </b-form-group>
                 </b-col>     
             </b-row>
             <b-row>
                   <b-col md="6">
                     <b-form-group label="Mãe:" label-for="paciente-mae">
-                        <b-form-input id="paciente-mae" type="text" v-model="paciente.mae" required
-                        :readonly="mode === 'remove'" placeholder="Informe o Cargo do(a) Colaborador(a)" />
+                        <b-form-input id="paciente-mae" type="text" v-model="paciente.mae" required placeholder="Informe o Cargo do(a) Colaborador(a)" />
                     </b-form-group>
                 </b-col> 
-                 <b-col md="6">
+                <b-col md="6">
                     <b-form-group label="Pai:" label-for="paciente-pai">
-                      <b-form-input id="paciente-pai" type="text" v-model="paciente.pai" required
-                        :readonly="mode === 'remove'" placeholder="Informe o Cargo do(a) Colaborador(a)" />
+                      <b-form-input id="paciente-pai" type="text" v-model="paciente.pai" required placeholder="Informe o Cargo do(a) Colaborador(a)" />
                     </b-form-group>
                 </b-col> 
             </b-row>
             <b-row>
                <b-col md="auto">
                     <b-form-group label="CEP:" label-for="paciente-ceppaciente">
-                        <b-form-input id="paciente-ceppaciente" type="text" v-mask="'#####-###'" v-model="paciente.ceppaciente" required
-                        :readonly="mode === 'remove'" placeholder="xxxxx-xxx" />
+                        <b-form-input id="paciente-ceppaciente" type="text" v-mask="'#####-###'" v-model="paciente.ceppaciente" required placeholder="xxxxx-xxx" />
                     </b-form-group>
                 </b-col>
                 <b-col md="auto">
                      <b-form-group label="Tipo:" label-for="paciente-tipo">
-                        <b-form-input list="paciente-tipo" type="text"  v-model="paciente.tipo" 
-                         :readonly="mode === 'remove'" />
+                        <b-form-input list="paciente-tipo" type="text"  v-model="paciente.tipo"  />
                             <datalist id="paciente-tipo">
                                  <option v-for="tipo in tipo" :key="tipo">{{tipo}}</option>
                             </datalist>
@@ -92,91 +81,78 @@
                 </b-col> 
                 <b-col md="6">
                     <b-form-group label="Endereço:" label-for="paciente-enderenco">
-                        <b-form-input id="paciente-enderenco" type="text"  v-model="paciente.endereco" required
-                        :readonly="mode === 'remove'" placeholder="Informe o Endereço......." />
+                        <b-form-input id="paciente-enderenco" type="text"  v-model="paciente.endereco" required placeholder="Informe o Endereço......." />
                     </b-form-group>
                 </b-col>
                    <b-col md="auto">
                     <b-form-group label="Número:" label-for="paciente-numero">
-                        <b-form-input id="paciente-numero" type="text"  v-model="paciente.numero" required
-                        :readonly="mode === 'remove'" placeholder="Informe o Número......." />
+                        <b-form-input id="paciente-numero" type="text"  v-model="paciente.numero" required placeholder="Informe o Número......." />
                     </b-form-group>
                 </b-col>
             </b-row>
             <b-row>
                 <b-col md="auto">
                     <b-form-group label="Complemento:" label-for="paciente-complemento">
-                        <b-form-input id="paciente-complemento" type="text"  v-model="paciente.complemento"
-                        :readonly="mode === 'remove'" placeholder="Informe o Complemento......." />
+                        <b-form-input id="paciente-complemento" type="text"  v-model="paciente.complemento" placeholder="Informe o Complemento......." />
                     </b-form-group>
                 </b-col>
-                 <b-col md="6">
+                <b-col md="6">
                     <b-form-group label="Bairro:" label-for="paciente-bairro">
-                        <b-form-input id="paciente-bairro" type="text"  v-model="paciente.bairro" required
-                        :readonly="mode === 'remove'" placeholder="Informe o Bairro......." />
+                        <b-form-input id="paciente-bairro" type="text"  v-model="paciente.bairro" required placeholder="Informe o Bairro......." />
                     </b-form-group>
                 </b-col>
-                 <b-col md="auto">
+                <b-col md="auto">
                     <b-form-group label="Municipio:" label-for="paciente-municipio">
-                        <b-form-input id="paciente-municipio" type="text" v-model="paciente.municipio" required
-                        :readonly="mode === 'remove'" placeholder="Informe o Municipio..." />
+                        <b-form-input id="paciente-municipio" type="text" v-model="paciente.municipio" required placeholder="Informe o Municipio..." />
                     </b-form-group>
                 </b-col>
-                    <b-col md="auto">
-                     <b-form-group label="UF:" label-for="paciente-ufmunicipio">
-                        <b-form-input list="paciente-ufmunicipio" type="text"  v-model="paciente.ufmunicipio" 
-                         :readonly="mode === 'remove'" />
+                <b-col md="auto">
+                    <b-form-group label="UF:" label-for="paciente-ufmunicipio">
+                        <b-form-input list="paciente-ufmunicipio" type="text"  v-model="paciente.ufmunicipio"  />
                             <datalist id="paciente-ufmunicipio">
-                                 <option v-for="ufmunicipio in ufmunicipio" :key="ufmunicipio">{{ufmunicipio}}</option>
+                                <option v-for="ufmunicipio in ufmunicipio" :key="ufmunicipio">{{ufmunicipio}}</option>
                             </datalist>
-                    </b-form-group>
+                        </b-form-group>
                 </b-col> 
             </b-row>
             <b-row>
                 <b-col md="auto">
                     <b-form-group label="Matricula:" label-for="paciente-matricula">
-                        <b-form-input id="paciente-matricula" type="text" v-model="paciente.matricula" required
-                        :readonly="mode === 'remove'" placeholder="xxxxxxxxxxxxxx" />
+                        <b-form-input id="paciente-matricula" type="text" v-model="paciente.matricula" required placeholder="xxxxxxxxxxxxxx" />
                     </b-form-group>
                 </b-col>
                 <b-col md="auto">
                     <b-form-group label="Vencimento:" label-for="paciente-vencimento">
-                        <b-form-input id="paciente-vencimento" type="date" v-model="paciente.vencimento" required
-                        :readonly="mode === 'remove'" />
+                        <b-form-input id="paciente-vencimento" type="date" v-model="paciente.vencimento" required />
                     </b-form-group>
                 </b-col>
                 <b-col md="auto">
                     <b-form-group label="Tel.DDD:" label-for="paciente-telddd">
-                        <b-form-input id="paciente-telddd" type="text" v-mask="'##'" v-model="paciente.telddd" 
-                        :readonly="mode === 'remove'" placeholder="xx" />
+                        <b-form-input id="paciente-telddd" type="text" v-mask="'##'" v-model="paciente.telddd"  placeholder="xx" />
                     </b-form-group>
                 </b-col>
                 <b-col md="auto">
                     <b-form-group label="Telefone:" label-for="paciente-telefone">
-                        <b-form-input id="paciente-telefone" type="text" v-mask="'####-####'" v-model="paciente.tel" 
-                        :readonly="mode === 'remove'" placeholder="xxxx-xxxx " />
+                        <b-form-input id="paciente-telefone" type="text" v-mask="'####-####'" v-model="paciente.tel"  placeholder="xxxx-xxxx " />
                     </b-form-group>
                 </b-col>
                   <b-col md="auto">
                     <b-form-group label="Cel.DDD:" label-for="paciente-celddd">
-                        <b-form-input id="paciente-celddd" type="text" v-mask="'##'" v-model="paciente.celddd" required
-                        :readonly="mode === 'remove'" placeholder="xx" />
+                        <b-form-input id="paciente-celddd" type="text" v-mask="'##'" v-model="paciente.celddd" required placeholder="xx" />
                     </b-form-group>
                 </b-col>
-                 <b-col md="auto">
+                <b-col md="auto">
                     <b-form-group label="Celular:" label-for="paciente-celular">
-                        <b-form-input id="paciente-celular" type="text" v-mask="'#####-####'" v-model="paciente.cel" required
-                        :readonly="mode === 'remove'" placeholder="xxxxx-xxxx " />
+                        <b-form-input id="paciente-celular" type="text" v-mask="'#####-####'" v-model="paciente.cel" required placeholder="xxxxx-xxxx " />
                     </b-form-group>
                 </b-col>
             </b-row>
             <b-row>
                 <b-col md="6">
-                <b-button router-link to="/pacientes" size='lg' class="mb-2" block>Cancelar</b-button>
+                    <b-button router-link to="/pacientes" size='lg' class="mb-2" block>Cancelar</b-button>
                 </b-col>
                 <b-col md="6">
-                <b-button variant="success" size='lg' class="mb-2" block v-if="mode === 'save'" @click="save" >Incluir</b-button>
-                <b-button variant="danger"  size='lg' block v-if="mode === 'remove'" @click="remove">Excluir</b-button>
+                    <b-button variant="success" size='lg' class="mb-2" block @click="save" >Incluir</b-button>
                 </b-col>
             </b-row>
         </b-form>
@@ -185,16 +161,15 @@
 </template>
 
 <script>
-import PageTitle from "../../template/PageTitle.vue"
-import { baseApiUrl, showError } from '@/global'
-import axios from 'axios'
+import PageTitle from "../../template/PageTitle.vue" // Importa o layout do titulo da página
+import { baseApiUrl, showError } from '@/global' // Importa as configuração de acesso para página e mensagens
+import axios from 'axios' // Importa as configurações do AXIOS
 
 export default {
     name: "NovoPaciente",
     components: { PageTitle },
     data: function() {
         return {
-            mode:'save',
             paciente: {},
             convenio: {},
             convenios:[],
@@ -210,44 +185,48 @@ export default {
         }
     },
     methods: {
-          loadConvenios() {
+        // Carregada as informações da Tabela Convênio para o FORM-SELECT
+        loadConvenios() {
             const url = `${baseApiUrl}/convenios`;
             axios.get(url).then((res) => {
             this.convenios = res.data.map(convenio => {
-                return{value: convenio.convenio, text: `${convenio.convenio}` }
+                return{value: convenio.codigo, text: `${convenio.convenio}` }
             })
             })
         },
-           reset(){
-            this.mode = 'save'
+
+        //Limpa a tela após a inclusão do Paciente
+        reset(){
             this.paciente = {}
         },
-       save() {
-            const method = this.paciente.codigo ? 'put' : 'post'
-            const codigo = this.paciente.codigo ? `/${this.paciente.codigo}` : ''
-            axios[method](`${baseApiUrl}/pacientes${codigo}`, this.paciente)
+
+        //Inclui ou Altera o Cadastro Paciente
+        save() {
+            const method = this.paciente.codigopac ? 'put' : 'post'
+            const codigopac = this.paciente.codigopac ? `/${this.paciente.codigopac}` : ''
+            axios[method](`${baseApiUrl}/pacientes${codigopac}`, this.paciente)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.reset()
                 })
                 .catch(showError)
         },
-         remove() {
-            const codigo = this.paciente.codigo
-            axios.delete(`${baseApiUrl}/pacientes/${codigo}`)
+
+        //Exclui o Paciente
+        remove() {
+            const codigopac = this.paciente.codigopac
+            axios.delete(`${baseApiUrl}/pacientes/${codigopac}`)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.reset()
                 })
                 .catch(showError)
-         },
-        loadPaciente(paciente, mode='save'){
-            this.mode = mode
-            this.paciente = {...paciente}
         },
+
     },
+    //Clico de Vida -> Renderização
     mounted(){
-        this.loadConvenios()
+        this.loadConvenios()//Carrega as informações da Tabela Convênios
     }
  
 }

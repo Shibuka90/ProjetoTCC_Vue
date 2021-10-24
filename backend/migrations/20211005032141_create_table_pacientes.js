@@ -1,6 +1,6 @@
 exports.up = function(knex) {
     return knex.schema.createTable('pacientes', table => {
-        table.increments('codigo').primary()
+        table.increments('codigopac').primary()
         table.string('nome', 50).notNull()
         table.string('email', 50).notNull().unique()
         table.string('cpf', 14).notNull().unique()
@@ -21,7 +21,7 @@ exports.up = function(knex) {
         table.string('tel',9)
         table.string('celddd',4).notNull()
         table.string('cel', 10).notNull()
-        table.string('convenio', 100).notNull()
+        table.integer('codconvenio').references('codigo').inTable('convenios').notNull()
         table.string('matricula', 30).notNull()
         table.string('vencimento', 10).notNull()
         
@@ -31,17 +31,3 @@ exports.up = function(knex) {
   exports.down = function(knex) {
     return knex.schema.dropTable('pacientes')
   };
-
-
-  // table.increments('codigo').primary()
-  // table.integer('codigomedico').references('codigo').inTable('medicos').notNull()
-  // table.string('medico', 50).notNull()
-  // table.string('tipodaagenda', 20).notNull()
-  // table.string('diasdasemana', 2).notNull()  
-  // table.timestamp('tempodeatendimento', 10 ).notNull()
-  // table.timestamp('periodo', 30 ).notNull()
-  // table.timestamp('inntervalo', 30).notNull()
-  // table.integer('codigoservico').references('codigo').inTable('servicos').notNull()
-  // table.string('servico', 100).notNull()
-  // table.integer('codigoespecialidade').references('codigo').inTable('especialidades').notNull()
-  // table.string('especialidade').notNull()

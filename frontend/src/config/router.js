@@ -63,7 +63,7 @@ const routes = [{
     component: NovoPaciente
 }, {
     name: 'pacientealterado',
-    path: '/pacientes/:codigo',
+    path: '/pacientes/:codigopac',
     component: PacienteAlterado
 }, {
     name: 'usuario',

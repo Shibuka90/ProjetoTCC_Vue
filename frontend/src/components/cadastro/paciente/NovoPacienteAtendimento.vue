@@ -7,7 +7,7 @@
     />
     <div class="form">
         <b-form>
-            <input id="paciente-codigo" type="hidden" v-model="paciente.codigo">
+            <input id="paciente-codigo" type="hidden" v-model="paciente.codigopac">
             <b-row>
                 <b-col md="6" sm="12">
                      <b-form-group label="Nome:" label-for="paciente-nome">
@@ -55,7 +55,7 @@
                 </b-col>  
                 <b-col md="4"> 
                     <b-form-group label="Convênio:" label-for="paciente-convenio">
-                        <b-form-select id="paciente-convenio" :options="convenios" v-model="paciente.convenio" required>
+                        <b-form-select id="paciente-convenio" :options="convenios" v-model="paciente.codconvenio" required>
                         </b-form-select>
                     </b-form-group>
                 </b-col>     
@@ -213,7 +213,7 @@ export default {
             const url = `${baseApiUrl}/convenios`;
             axios.get(url).then((res) => {
             this.convenios = res.data.map(convenio => {
-                return{value: convenio.convenio, text: `${convenio.convenio}` }
+                return{value: convenio.codigo, text: `${convenio.convenio}` }
             })
             })
         },
@@ -222,27 +222,14 @@ export default {
             this.paciente = {}
         },
        save() {
-            const method = this.paciente.codigo ? 'put' : 'post'
-            const codigo = this.paciente.codigo ? `/${this.paciente.codigo}` : ''
-            axios[method](`${baseApiUrl}/pacientes${codigo}`, this.paciente)
+            const method = this.paciente.codigopac ? 'put' : 'post'
+            const codigopac = this.paciente.codigopac ? `/${this.paciente.codigopac}` : ''
+            axios[method](`${baseApiUrl}/pacientes${codigopac}`, this.paciente)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.reset()
                 })
                 .catch(showError)
-        },
-         remove() {
-            const codigo = this.paciente.codigo
-            axios.delete(`${baseApiUrl}/pacientes/${codigo}`)
-                .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    this.reset()
-                })
-                .catch(showError)
-         },
-        loadPaciente(paciente, mode='save'){
-            this.mode = mode
-            this.paciente = {...paciente}
         },
     },
     mounted(){
