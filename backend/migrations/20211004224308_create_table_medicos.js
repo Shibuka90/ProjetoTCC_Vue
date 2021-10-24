@@ -1,13 +1,13 @@
 exports.up = function(knex) {
     return knex.schema.createTable('medicos', table => {
-        table.increments('codigo').primary()
+        table.increments('codigomed').primary()
         table.string('nome', 50).notNull()
         table.string('email', 50).notNull().unique()
         table.string('cpf', 14).notNull().unique()
         table.string('datanasc', 10).notNull()
         table.string('estadocivil', 20).notNull()
         table.string('sexo',2).notNull()
-        table.string('especialidade', 50).notNull()
+        table.integer('codespecialidade').references('codigo').inTable('especialidades').notNull()
         table.string('crm', 15).unique().notNull()
         table.string('ufcr', 2).notNull()
         table.string('cepmedico',9).notNull()

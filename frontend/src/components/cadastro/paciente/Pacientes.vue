@@ -31,7 +31,7 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <b-table hover striped :items="pacientes" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy" :current-page="currentPage"
+        <b-table hover striped :items="pacientes" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadPaciente" :sort-by.sync="sortBy" :current-page="currentPage"
           :per-page="perPage" />
         <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
   </div>
@@ -89,15 +89,10 @@ export default {
     onFiltered(filteredItems) {
     // Acione a paginação para atualizar o número de botões / páginas devido à filtragem
     this.totalRows = filteredItems.length
+    this.currentPage = 1
        
       }
   }, 
-  //"Assiste a tabela para fazer a paginação"
-  watch: {
-      page() {
-        this.loadPacientes() //Carrega os dados dos Pacientes para a página
-      }
-  },  
   //Clico de Vida -> Renderização
   mounted() {
     this.loadPacientes(); //Carrega os dados para montar a Tabela de Pacientes

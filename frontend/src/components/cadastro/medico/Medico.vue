@@ -17,7 +17,7 @@
         </b-col>
        <b-col md="4">
          <b-button router-link to="/novomedico" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
-          <b-button v-if="medico.nome" @click="getMedico" router-link :to="'/medicos/' + this.medico.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
+          <b-button v-if="medico.nome" @click="getMedico" router-link :to="'/medicos/' + this.medico.codigomed" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
         </b-col> 
       </b-row>
     </b-form>     
@@ -30,7 +30,8 @@
             </b-form-group>
           </b-col>
         </b-row>
-    <b-table hover striped :items="medicos" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadMedico" :sort-by.sync="sortBy">
+    <b-table hover striped :items="medicos" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadMedico" :sort-by.sync="sortBy" :current-page="currentPage"
+          :per-page="perPage" >
       <template slot="actions"> </template>
     </b-table>
     <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
@@ -48,13 +49,9 @@ export default {
   components: { PageTitle },
   data: function () {
     return {
-      mode: "save",
       medico: {},
       medicos: [],
       sortBy: 'codigo',
-      page: 1,
-      limit: 0,
-      count: 0,
       fields: [
         { key: "codigo", label: "Código", sortable: true },
         { key: "nome", label: "Nome", sortable: true },
@@ -74,33 +71,29 @@ export default {
       const url = `${baseApiUrl}/medicos`;
       axios.get(url).then((res) => {
         this.medicos = res.data; 
-        this.count = res.data.count
-        this.limit = res.data.limit 
+        
       });
     },
   
-     getMedico(){
-            const url = `${baseApiUrl}/medicos/${this.medico.codigo}`
-             axios(url).then(res => this.medico = res.data)
-     },
+    getMedico(){
+      const url = `${baseApiUrl}/medicos/${this.medico.codigomed}`
+      axios(url).then(res => this.medico = res.data)
+    },
 
-     loadMedico(medico, mode='save'){
-            this.mode = mode
-            this.medico = {...medico}
-        },
-        onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
-        this.totalRows = filteredItems.length
-        this.currentPage = 1
-      }
-  }, 
-  watch: {
-      page() {
-        this.loadMedicos()
-      }
-  } ,   
+    loadMedico(medico){
+        this.medico = {...medico}
+    },
+
+    onFiltered(filteredItems) {
+    // Trigger pagination to update the number of buttons/pages due to filtering
+    this.totalRows = filteredItems.length
+    this.currentPage = 1
+    }
+
+  },   
   mounted() {
-    this.loadMedicos();  
+    this.loadMedicos(); 
+    this.totalRows = this.medicos.length //Total de linhas pela quantidade de Cadastro de Pacientes 
   }
 }
 </script>

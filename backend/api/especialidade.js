@@ -53,6 +53,13 @@ module.exports = app => {
   
     const remove = async (req, res) => {
         try {
+
+            existsOrError(req.params.codigo, 'Código da Especialidade não informado...')
+
+            const pacientes = await app.db('medicos')
+                .where({codespecialidade: req.params.codigo})
+                notExistsOrError(pacientes, "Especialidade amarrado a Médico")
+
             const rowsDeleted = await app.db('especialidades')
                 .where ({ codigo: req.params.codigo }).del()
                 existsOrError(rowsDeleted, 'Especialidade não encontrada')

@@ -103,7 +103,7 @@ const routes = [{
     component: NovoMedico
 }, {
     name: 'medicoalterado',
-    path: '/medicos/:codigo',
+    path: '/medicos/:codigomed',
     component: MedicoAlterado
 }, {
     name:'homeagendamento',

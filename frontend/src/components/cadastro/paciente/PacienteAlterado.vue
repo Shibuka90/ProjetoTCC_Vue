@@ -195,7 +195,7 @@ export default {
         }
     },
     methods: {
-        // Carregada os dados da Tabela Convênio para o FORM-SELECT
+        // Carregada os dados da Tabela Convênios para o B-FORM-SELECT
         loadConvenios() {
             const url = `${baseApiUrl}/convenios`;
             axios.get(url).then((res) => {
@@ -205,7 +205,7 @@ export default {
             })
         },
 
-        //Inclui ou Altera o Cadastro Paciente
+        //Inclui ou Altera o Cadastro do Paciente
         save() {
             const method = this.paciente.codigopac ? 'put' : 'post'
             const codigopac = this.paciente.codigopac ? `/${this.paciente.codigopac}` : ''

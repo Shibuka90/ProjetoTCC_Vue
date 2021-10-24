@@ -4,7 +4,7 @@ module.exports = app => {
     
     const save = async (req, res) => {
         const medico = { ...req.body }
-        if(req.params.codigo) medico.codigo = req.params.codigo
+        if(req.params.codigomed) medico.codigomed = req.params.codigomed
         
         // if(!req.originalUrl.startWith('/medicos')) medico.admin = false
         // if(!req.medico || !req.medico.admin) medico.admin = false
@@ -17,7 +17,7 @@ module.exports = app => {
             existsOrError(medico.datanasc, 'Data de Nascimento não informada')
             existsOrError(medico.estadocivil, 'Estado Civil não informado')
             existsOrError(medico.sexo, 'Sexo não informado')
-            existsOrError(medico.especialidade, 'Cargo não informado')
+            existsOrError(medico.codespecialidade, 'Cargo não informado')
             existsOrError(medico.crm, 'CRM não informado')
             existsOrError(medico.ufcr, 'Uf não informado')
             existsOrError(medico.cepmedico, 'CEP não informado')
@@ -34,10 +34,10 @@ module.exports = app => {
             return res.status(400).send(msg)
         } 
 
-        if(medico.codigo){
+        if(medico.codigomed){
             app.db('medicos')
                 .update(medico)
-                .where({ codigo: medico.codigo })
+                .where({ codigomed: medico.codigomed })
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
@@ -50,17 +50,18 @@ module.exports = app => {
     }
 
     const get = (req, res) => {
-        app.db('medicos')
-            .select('codigo', 'nome', 'email', 'cpf', 'datanasc', 'estadocivil', 'sexo', 'especialidade', 'crm', 'ufcr',
-                    'cepmedico', 'tipo', 'endereco', 'numero', 'bairro', 'municipio', 'ufmunicipio', 'telddd', 'tel',
-                    'celddd', 'cel' )
+        app.db({m: 'medicos', e: 'especialidades'})
+            .select('m.codigomed', 'm.nome', 'm.email', 'm.cpf', 'm.datanasc', 'm.estadocivil', 'm.sexo', {especialidade: 'e.especialidade'}, 'm.crm', 'm.ufcr',
+                    'm.cepmedico', 'm.tipo', 'm.endereco', 'm.numero', 'm.bairro', 'm.municipio', 'm.ufmunicipio', 'm.telddd', 'm.tel',
+                    'm.celddd', 'm.cel' )
+            .whereRaw('?? = ??', ['m.codespecialidade', 'e.codigo'])
             .then(medicos => res.json(medicos))
             .catch(err => res.status(500).send(err))
     }
 
     const getByCodigo = (req, res) => {
         app.db('medicos')
-            .where({ codigo: req.params.codigo })
+            .where({ codigomed: req.params.codigomed })
             .first()
             .then(medico => res.json(medico))
             .catch(err => res.status(500).send(err))
@@ -69,7 +70,7 @@ module.exports = app => {
     const remove = async (req, res) => {
         try {
             const rowsDeleted = await app.db('medicos')
-                .where ({ codigo: req.params.codigo }).del()
+                .where ({ codigomed: req.params.codigomed }).del()
                 existsOrError(rowsDeleted, 'Medico não encontrado')
 
             res.status(204).send()

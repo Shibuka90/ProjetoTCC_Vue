@@ -54,7 +54,7 @@ module.exports = app => {
         .post(admin(app.api.medico.save))
         .get(app.api.medico.get)
 
-    app.route('/medicos/:codigo')
+    app.route('/medicos/:codigomed')
         .all(app.config.passport.authenticate())
         .put(admin(app.api.medico.save))
         .get(admin(app.api.medico.getByCodigo))

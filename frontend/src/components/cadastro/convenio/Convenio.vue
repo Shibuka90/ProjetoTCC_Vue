@@ -123,14 +123,7 @@ export default {
       this.totalRows = filteredItems.length
       this.currentPage = 1
       }
-    },
-
-    //"Assiste a tabela para fazer a paginação"
-    watch: {
-      page() {
-        this.loadConvenios()//Carrega os dados das Convênios para a página
-      }
-  }, 
+    }, 
     //Clico de Vida -> Renderização  
     mounted() {
         this.loadConvenios(); //Carrega os dados para montar a Tabela de Convênios
