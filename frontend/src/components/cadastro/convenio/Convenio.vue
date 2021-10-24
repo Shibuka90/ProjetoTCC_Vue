@@ -1,10 +1,10 @@
+<!--Página de Cadastro/Alteração/Exclusão dos dados da Tabela de Convênios -->
 <template>
+<!-- titulo da página -->
   <div class="convenios">
-       <PageTitle
-      icon="fa fa-book-medical"
-      main="Convênios"
-      sub="Grid de Convênios"
-    />
+       <PageTitle icon="fa fa-book-medical" main="Convênios" sub="Grid/Cadastro/Ateração/Exclusão de Convênios" />
+    
+     <!-- início do formulário do cadastro de Convênio -->
     <div class="pesquisa">
       <b-form>
       <b-row >
@@ -32,7 +32,8 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <b-table hover striped :items="convenios" :fields="fields" :filter="filter" @filtered="onFiltered"  :sort-by.sync="sortBy">
+        <b-table hover striped :items="convenios" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy" :current-page="currentPage"
+          :per-page="perPage" >
           <template v-slot:cell(actions)="data">
              <b-button variant='warning' @click="loadConvenio(data.item)" class="mr-2">
                  <i class="fa fa-pencil"></i>
@@ -47,9 +48,10 @@
 </template>
 
 <script>
-import PageTitle from '../../template/PageTitle.vue';
-import { baseApiUrl, showError} from "@/global";
-import axios from "axios";
+import PageTitle from "../../template/PageTitle.vue" // Importa o layout do titulo da página
+import { baseApiUrl, showError } from '@/global' // Importa as configuração de acesso para página e mensagens
+import axios from 'axios' // Importa as configurações do AXIOS
+
 export default {
     name: "Convenios",
     components: { PageTitle },
@@ -58,9 +60,6 @@ export default {
             mode: 'save',
             convenio: {},
             convenios: [],
-             page: 1,
-             limit: 0,
-             count: 0,
              fields: [
                  { key: "codigo", label: "Código", sortable: true},
                  { key: "convenio", label: "Convênio"},
@@ -74,57 +73,68 @@ export default {
         };
     },
     methods: {
-          loadConvenios() {
-            const url = `${baseApiUrl}/convenios`;
-            axios.get(url).then((res) => {
-            this.convenios = res.data; 
-            this.count = res.data.count
-            this.limit = res.data.limit
-            })
-        },
-        reset() {
-            this.mode = 'save'
-            this.convenio = {}
-            this.loadConvenios()
-        },
-        save() {
-            const method = this.convenio.codigo ? 'put' : 'post'
-            const codigo = this.convenio.codigo ? `/${this.convenio.codigo}` : ''
-            axios[method](`${baseApiUrl}/convenios${codigo}`, this.convenio)
-                .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    this.reset()
-                })
-                .catch(showError)
-        },
-        remove() {
-            const codigo = this.convenio.codigo
-            axios.delete(`${baseApiUrl}/convenios/${codigo}`)
-                .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    this.reset()
-                })
-                .catch(showError)
-        },
+      //Carrega os dados da Tabela Convênios
+      loadConvenios() {
+        const url = `${baseApiUrl}/convenios`;
+        axios.get(url).then((res) => {
+        this.convenios = res.data; 
+        })
+      },
 
-        loadConvenio(convenios, mode='save'){
-            this.mode = mode
-            this.convenio = {...convenios}
-        },
-
-        onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
-        this.totalRows = filteredItems.length
-        this.currentPage = 1
-        }
-    },
-     watch: {
-      page() {
+      //Limpa o formulário após a Inclusão/Ateração
+      reset() {
+        this.mode = 'save'
+        this.convenio = {}
         this.loadConvenios()
+      },
+      
+      //Inclui ou Altera o cadastro do Convênio
+      save() {
+        const method = this.convenio.codigo ? 'put' : 'post'
+        const codigo = this.convenio.codigo ? `/${this.convenio.codigo}` : ''
+        axios[method](`${baseApiUrl}/convenios${codigo}`, this.convenio)
+          .then(() => {
+            this.$toasted.global.defaultSuccess()
+             this.reset()
+            })
+          .catch(showError)
+        },
+
+      //Exclui o Convênio
+      remove() {
+        const codigo = this.convenio.codigo
+        axios.delete(`${baseApiUrl}/convenios/${codigo}`)
+          .then(() => {
+            this.$toasted.global.defaultSuccess()
+            this.reset()
+            })
+          .catch(showError)
+        },
+
+      //Carrega os dados do Convênio
+      loadConvenio(convenios, mode='save'){
+        this.mode = mode
+        this.convenio = {...convenios}
+      },
+
+      //Traz os dados filtrados para a tabela
+      onFiltered(filteredItems) {
+      // Acione a paginação para atualizar o número de botões / páginas devido à filtragem
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
       }
-  } ,   
+    },
+
+    //"Assiste a tabela para fazer a paginação"
+    watch: {
+      page() {
+        this.loadConvenios()//Carrega os dados das Convênios para a página
+      }
+  }, 
+    //Clico de Vida -> Renderização  
     mounted() {
-        this.loadConvenios();  
+        this.loadConvenios(); //Carrega os dados para montar a Tabela de Convênios
+      this.totalRows = this.convenios.length//Total de linhas pela quantidade de Cadastro de Convênios
   }
 }
 </script>

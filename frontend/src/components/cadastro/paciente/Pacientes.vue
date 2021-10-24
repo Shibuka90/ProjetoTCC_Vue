@@ -31,7 +31,8 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <b-table hover striped :items="pacientes" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadPaciente" :sort-by.sync="sortBy"></b-table>
+        <b-table hover striped :items="pacientes" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy" :current-page="currentPage"
+          :per-page="perPage" />
         <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
   </div>
 </template>
@@ -49,10 +50,6 @@ export default {
     return {
       paciente: {},
       pacientes: [],
-      sortBy: 'codigo',
-      page: 1,
-      limit: 0,
-      count: 0,
       fields: [
         { key: "codigopac", label: "Código", sortable: true },
         { key: "nome", label: "Nome", sortable: true },
@@ -64,6 +61,7 @@ export default {
       currentPage: 1,
       perPage: 5,
       filter: null,
+      sortBy: 'codigo',
     };
     
   },
@@ -72,9 +70,7 @@ export default {
     loadPacientes() {
       const url = `${baseApiUrl}/pacientes`;
       axios.get(url).then((res) => {
-        this.pacientes = res.data; 
-        this.count = res.data.count
-        this.limit = res.data.limit      
+        this.pacientes = res.data;      
       });
     },
 
@@ -105,6 +101,7 @@ export default {
   //Clico de Vida -> Renderização
   mounted() {
     this.loadPacientes(); //Carrega os dados para montar a Tabela de Pacientes
+    this.totalRows = this.pacientes.length //Total de linhas pela quantidade de Cadastro de Pacientes
   }
 }
 </script>

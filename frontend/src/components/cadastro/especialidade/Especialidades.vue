@@ -1,11 +1,11 @@
+<!--Página de Cadastro/Alteração/Exclusão dos dados da Tabela de Especialidades -->
 <template>
+<!-- titulo da página -->
   <div class="especialidades">
-       <PageTitle
-      icon="fa fa-stethoscope"
-      main="Especialidades"
-      sub="Grid de Especiadlidades"
-    />
-    <div class="pesquisa" >
+       <PageTitle icon="fa fa-stethoscope" main="Especialidades" sub="Grid/Cadastro/Alteração/Exclusão de Especiadlidades" />
+    
+    <!-- início do formulário do cadastro de Especialidade -->
+    <div class="pesquisa" >  
     <b-form>
       <b-row >
         <b-col md="2"> 
@@ -33,20 +33,23 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy" >
+          <b-table hover striped :items="especialidades" :fields="fields" :filter="filter" @filtered="onFiltered" :sort-by.sync="sortBy" :current-page="currentPage"
+          :per-page="perPage" >
             <template v-slot:cell(actions)="data">
               <b-button variant ="warning" @click="loadEspecialidade(data.item)" class="mr-2"><i class="fa fa-pencil"></i></b-button>
                <b-button variant='danger' @click="loadEspecialidade(data.item, 'remove')"><i class="fas fa-trash"></i></b-button>
             </template>
           </b-table>
+          <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
         </b-row>
   </div>
 </template>
 
 <script>
-import PageTitle from "../../template/PageTitle.vue";
-import { baseApiUrl, showError} from "@/global";
-import axios from "axios";
+import PageTitle from "../../template/PageTitle.vue" // Importa o layout do titulo da página
+import { baseApiUrl, showError } from '@/global' // Importa as configuração de acesso para página e mensagens
+import axios from 'axios' // Importa as configurações do AXIOS
+
 export default {
     name: "Especialidades",
     components: { PageTitle },
@@ -54,74 +57,82 @@ export default {
         return{
             mode: 'save',
             especialidade: {},
-            especialidades: [],
-            page: 1,
-            limit: 0,
-            count: 0,         
+            especialidades: [],       
             fields: [
                  { key: "codigo", label: "Código", sortable: true},
                  { key: "especialidade", label: "Especialidades"},
                  { key: "actions", label: "Ações"},
              ],
-             totalRows: 1,
-             currentPage: 1,
-             perPage: 5,
-             filter: null,
-             sortBy: 'codigo',
+            totalRows: 1,
+            currentPage: 1,
+            perPage: 5,
+            filter: null,
+            sortBy: 'codigo',
         };
     },
     methods: {
-        loadEspecialidades(){
-          const url = `${baseApiUrl}/especialidades`;
-            axios.get(url).then((res) => {
-            this.especialidades = res.data;
-            this.count = res.data.count;
-            this.limit = res.data.limit; 
+      //Carrega os dados da Tadbela Especialidades
+      loadEspecialidades(){
+        const url = `${baseApiUrl}/especialidades`;
+        axios.get(url).then((res) => {
+        this.especialidades = res.data;
+        })
+      },
+      
+      //Limpa o formulário após a Inclusão/Alteração
+      reset() {
+        this.mode = 'save'
+        this.especialidade = {}
+        this.loadEspecialidades()
+      },
+
+      //Inclui ou Altera o cadastro da Especialidade
+      save() {
+        const method = this.especialidade.codigo ? 'put' : 'post'
+        const codigo = this.especialidade.codigo ? `/${this.especialidade.codigo}` : ''
+        axios[method](`${baseApiUrl}/especialidades${codigo}`, this.especialidade)
+          .then(() => {
+            this.$toasted.global.defaultSuccess()
+            this.reset()
             })
-        },
-        reset() {
-            this.mode = 'save'
-            this.especialidade = {}
-            this.loadEspecialidades()
-        },
-        save() {
-            const method = this.especialidade.codigo ? 'put' : 'post'
-            const codigo = this.especialidade.codigo ? `/${this.especialidade.codigo}` : ''
-            axios[method](`${baseApiUrl}/especialidades${codigo}`, this.especialidade)
-                .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    this.reset()
-                })
-                .catch(showError)
-        },
-        remove() {
-            const codigo = this.especialidade.codigo
-            axios.delete(`${baseApiUrl}/especialidades/${codigo}`)
-                .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    this.reset()
-                })
-                .catch(showError)
+          .catch(showError)
         },
 
-        loadEspecialidade(especialidade, mode='save'){
-            this.mode = mode
-            this.especialidade = {...especialidade}
-        },
+      //Exclui a Especialidade
+      remove() {
+        const codigo = this.especialidade.codigo
+        axios.delete(`${baseApiUrl}/especialidades/${codigo}`)
+          .then(() => {
+            this.$toasted.global.defaultSuccess()
+            this.reset()
+            })
+          .catch(showError)
+      },
+
+      //Carrega os dados da Especiadlidade
+      loadEspecialidade(especialidade, mode='save'){
+        this.mode = mode
+        this.especialidade = {...especialidade}
+      },
         
-        onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
+      //Traz os dados filtrados para a tabela
+      onFiltered(filteredItems) {
+      // Acione a paginação para atualizar o número de botões / páginas devido à filtragem
         this.totalRows = filteredItems.length
         this.currentPage = 1
-        },
+      },
     },
+    //"Assiste a tabela para fazer a paginação"
      watch: {
       page() {
-        this.loadEspecialidades()
+        this.loadEspecialidades() //Carrega os dados das Especialidades para a página
       }
-  } ,   
+  },
+  
+    //Clico de Vida -> Renderização
     mounted() {
-        this.loadEspecialidades();
+      this.loadEspecialidades();//Carrega os dados para montar a Tabela de Especialidades
+      this.totalRows = this.especialidades.length//Total de linhas pela quantidade de Cadastro de Especialidades
   }
 }
 </script>
