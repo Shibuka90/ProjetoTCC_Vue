@@ -11,11 +11,11 @@
           <b-button router-link to="/homeatendimento"  size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button>  
         </b-col>
         <b-col md="6">
-          <b-form-input input type="text" id="atedimento-codigo" readonly v-model="atendimento.paciente" size="lg" class="mb-4 "></b-form-input> 
+          <b-form-input input type="text" id="atedimento-codigo" readonly v-model="atendimento.codigoatend" size="lg" class="mb-4 "></b-form-input> 
         </b-col>
        <b-col md="4">
          <b-button router-link to="/novoatendimento" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
-          <b-button v-if="atendimento.paciente" @click="getAtendimento" router-link :to="'/atendimentos/' + this.atendimento.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
+          <b-button v-if="atendimento.codigoatend" @click="getAtendimento" router-link :to="'/atendimentos/' + this.atendimento.codigoatend" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
         </b-col> 
       </b-row>
     </b-form>     
@@ -28,9 +28,8 @@
             </b-form-group>
           </b-col>
         </b-row>
-    <b-table hover striped :items="atendimentos" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadAtendimento" :sort-by.sync="sortBy">
-      <template slot="actions"> </template>
-    </b-table>
+    <b-table hover striped :items="atendimentos" :fields="fields" :filter="filter" @filtered="onFiltered" @row-clicked="loadAtendimento" :sort-by.sync="sortBy" 
+    :current-page="currentPage" :per-page="perPage" />
     <b-pagination size="md" v-model="currentPage" :total-rows="totalRows" :per-page="perPage" />
         </div>
     </div>
@@ -49,19 +48,14 @@ export default {
             atendimento: {},
             atendimentos: [],
             fields: [
-                { key: "codigo", label: "Atendimento", sortable: true },
+                { key: "codigoatend", label: "Atendimento", sortable: true },
                 { key: "datadoatendimento", label: "Data do Atend.", sortable: true},
                 { key: "alta", label: "Alta", sortable: true},
-                { key: "codigopaciente", label: "Cod.Pac", sortable: true},
-                { key: "paciente", label: "Paceinte", sortable: true},
+                { key: "paciente", label: "Paciente", sortable: true},
                 { key: "convenio", label: "Convênio" },
                 { key: "servico", label: "Serviço"},
-                { key: "medico", label: "Médico"},
             ],
             sortBy: 'codigo',
-            page: 1,
-            limit: 0,
-            count: 0,
             totalRows: 1,
             currentPage: 1,
             perPage: 5,
@@ -73,19 +67,16 @@ export default {
             const url = `${baseApiUrl}/atendimentos`;
             axios.get(url).then((res) => {
                 this.atendimentos = res.data; 
-                this.count = res.data.count
-                this.limit = res.data.limit 
                 });
             },
             
-        loadAtendimento(atendimento, mode='save'){
-            this.mode = mode
+        loadAtendimento(atendimento){
             this.atendimento = {...atendimento}
            
             },
 
         getAtendimento(){
-            const url = `${baseApiUrl}/atendimentos/${this.atendimento.codigo}`
+            const url = `${baseApiUrl}/atendimentos/${this.atendimento.codigotend}`
             axios(url).then(res => this.atendimento = res.data)
             },
         

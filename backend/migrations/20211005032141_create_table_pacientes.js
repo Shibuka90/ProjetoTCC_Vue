@@ -1,7 +1,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('pacientes', table => {
         table.increments('codigopac').primary()
-        table.string('nome', 50).notNull()
+        table.string('nomepac', 50).notNull()
         table.string('email', 50).notNull().unique()
         table.string('cpf', 14).notNull().unique()
         table.string('datanasc', 10).notNull()

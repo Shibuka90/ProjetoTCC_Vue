@@ -11,7 +11,7 @@
             <b-row>
                 <b-col md="6" sm="12">
                      <b-form-group label="Nome:" label-for="paciente-nome">
-                    <b-form-input id="paciente-nome" type="text" v-model="paciente.nome" required  placeholder="Informe o Nome do(a) Colaborador(a)...."/>
+                    <b-form-input id="paciente-nome" type="text" v-model="paciente.nomepac" required  placeholder="Informe o Nome do(a) Colaborador(a)...."/>
                 </b-form-group>
                 </b-col>
                 <b-col md="6" sm="12">

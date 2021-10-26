@@ -8,7 +8,7 @@ module.exports = app => {
                 
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try{
-            existsOrError(paciente.nome, 'Nome não informado')
+            existsOrError(paciente.nomepac, 'Nome não informado')
             existsOrError(paciente.email, 'Email não informado')
             existsOrError(paciente.cpf, 'CPF não informado')
             existsOrError(paciente.datanasc, 'Data de Nascimento não informada')
@@ -50,7 +50,7 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db({p: 'pacientes', c: 'convenios'})
-            .select('p.codigopac', 'p.nome', 'p.email', 'p.cpf', 'p.datanasc', 'p.estadocivil', 'p.sexo', 'p.mae', 'p.pai', 'p.ceppaciente', 'p.tipo', 
+            .select('p.codigopac', 'p.nomepac', 'p.email', 'p.cpf', 'p.datanasc', 'p.estadocivil', 'p.sexo', 'p.mae', 'p.pai', 'p.ceppaciente', 'p.tipo', 
             'p.endereco', 'p.numero', 'p.bairro', 'p.municipio', 'p.ufmunicipio', 'p.telddd', 'p.tel', 'p.celddd', 'p.cel', {convenio: 'c.convenio'},
             'p.matricula', 'p.vencimento' )
             .whereRaw('?? = ??', ['p.codconvenio', 'c.codigo'])

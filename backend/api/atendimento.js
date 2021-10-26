@@ -3,17 +3,16 @@ module.exports = app => {
 
     const save = async (req, res) => {
         const atendimento = { ...req.body }
-        if(req.params.codigo) atendimento.codigo = req.params.codigo
+        if(req.params.codigoatend) atendimento.codigoatend = req.params.codigoatend
                
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
-            existsOrError(atendimento.codigopaciente, 'Código Paciente não informado')
-            existsOrError(atendimento.paciente, 'Paciente não informado')
+            existsOrError(atendimento.codpaciente, 'Código Paciente não informado')
             existsOrError(atendimento.datadoatendimento, 'Data não informada')
-            existsOrError(atendimento.medico, 'Médico não informado')
-            existsOrError(atendimento.servico, 'Serviço não informado')
-            existsOrError(atendimento.especialidade, 'Especialidade não informado')
+            existsOrError(atendimento.codmedico, 'Médico não informado')
             existsOrError(atendimento.convenio, 'Convênio não informado')
+            existsOrError(atendimento.codservico, 'Serviço não informado')
+            existsOrError(atendimento.codespecialidade, 'Especialidade não informado')
             existsOrError(atendimento.matricula, 'Matricula não informada')
             existsOrError(atendimento.vencimento, 'Vencimento não informado')
             
@@ -22,10 +21,10 @@ module.exports = app => {
         return res.status(400).send(msg)
     }       
     
-    if(atendimento.codigo){
+    if(atendimento.codigoatend){
         app.db('atendimentos')
             .update(atendimento)
-            .where({ codigo: atendimento.codigo })
+            .where({ codigoatend: atendimento.codigoatend })
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
      } else {
@@ -37,17 +36,17 @@ module.exports = app => {
     }
 
     const get = (req, res) => {
-        app.db('atendimentos')
-            .select('codigo', 'datadoatendimento', 'codigopaciente', 
-            'paciente', 'convenio', 'medico', 'servico', 'especialidade', 'matricula', 'vencimento', 'alta' )
-            .whereRaw('censo = ?', true)
+        app.db({a: 'atendimentos',p: 'pacientes'})
+            .select('a.codigoatend','a.datadoatendimento','a.alta', 'a.convenio', 'a.matricula', 'a.vencimento', 
+            {paciente: 'p.nomepac'})
+            .whereRaw('?? = ??', ['a.codpaciente', 'p.codigopac'])
             .then(atendimentos => res.json(atendimentos))
             .catch(err => res.status(500).send(err))
     }
 
     const getByCodigo = (req, res) =>{ 
         app.db('atendimentos')
-            .where({ codigo: req.params.codigo })
+            .where({ codigoatend: req.params.codigoatend })
             .first()
             .then(atendimento => res.json(atendimento))
             .catch(err => res.status(500).send(err))
@@ -57,7 +56,7 @@ module.exports = app => {
         try {
             const rowsUpdate = await app.db('atendimentos')
                 .update({ alta: new Date() })
-                .where({ codigo: req.params.codigo })
+                .where({ codigoatend: req.params.codigoatend })
         existsOrError(rowsUpdate, 'Atendimento não foi encontrado.')
         
         res.status(204).send()

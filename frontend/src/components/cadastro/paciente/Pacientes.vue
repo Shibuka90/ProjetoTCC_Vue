@@ -52,7 +52,7 @@ export default {
       pacientes: [],
       fields: [
         { key: "codigopac", label: "Código", sortable: true },
-        { key: "nome", label: "Nome", sortable: true },
+        { key: "nomepac", label: "Nome", sortable: true },
         { key: "datanasc", label: "Data Nasc." },
         { key: "convenio", label: "Convênio" },
         { key: "matricula", label: "Matricula" },

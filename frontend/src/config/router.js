@@ -143,7 +143,7 @@ const routes = [{
     component: NovoAtendimento
 }, {
     name: 'atendimentoalterado',
-    path: '/atendimentos/:codigo',
+    path: '/atendimentos/:codigoatend',
     component: AtendimentoAlterado
 }, {
     name: 'novopacienteatendimento',

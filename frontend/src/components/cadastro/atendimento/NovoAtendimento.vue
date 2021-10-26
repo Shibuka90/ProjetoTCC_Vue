@@ -3,14 +3,14 @@
       <PageTitle icon="fas fa-address-book" main="Atendimentos" sub="Cadastro de Atendimento"/>
       <div class="form">
           <b-form>
-                <input type="hidden" id="atendimento-codigo" v-model="atendimento.codigo" />
+                <input type="hidden" id="atendimento-codigo" v-model="atendimento.codigoatend" />
             <b-row>
             <b-col md="2">
                     <b-form-group label="Pesquisar:" label-for="pesquisar-atendimento"> 
                         <b-button v-b-modal="'modal-atendimentos'" variant="primary" block><i class="fas fa-search"> Pacientes</i></b-button>  
                     </b-form-group>                  
                 </b-col>
-                    <b-modal id="modal-atendimentos"  centered size="xl" title="Pacinetes" @ok="resetFilter">
+                    <b-modal id="modal-atendimentos"  centered size="xl" title="Pacientes" @ok="resetFilter">
                         <b-row>
                             <b-col md="8">
                                 <b-form-group label="Pesquisar:" label-for="filtro-atendimento">
@@ -24,12 +24,12 @@
                         <b-row>
                             <b-col md="auto">
                                 <b-form-group label="Códgio" label-for="paciente-codigo">
-                                    <b-form-input id="paciente-codigo" v-model="paciente.codigo" readonly size="lg" type="text" ></b-form-input>
+                                    <b-form-input id="paciente-codigo" v-model="paciente.codigopac" readonly size="lg" type="text" ></b-form-input>
                                 </b-form-group>
                             </b-col>
                             <b-col md="8">
                                 <b-form-group label="Paciente" label-for="paciente-paciente">
-                                    <b-form-input id="paciente-paciente" v-model="paciente.nome" readonly size="lg" type="text" ></b-form-input>
+                                    <b-form-input id="paciente-paciente" v-model="paciente.nomepac" readonly size="lg" type="text" ></b-form-input>
                                 </b-form-group>
                             </b-col>
                         </b-row>                  
@@ -39,12 +39,12 @@
                     </b-modal>
                     <b-col md="auto">
                      <b-form-group label="Código Paciente:" label-for="atendimento-codigopaciente">
-                        <b-form-input id="atendimento-codigopaciente" type="text" :value="paciente.codigo" @blur="atendimento.codigopaciente = $event.target.value" required />
+                        <b-form-input id="atendimento-codigopaciente" type="text" :value="paciente.codigopac" @blur="atendimento.codpaciente = $event.target.value" required />
                 </b-form-group>
                 </b-col>
                    <b-col md="6" sm="12">
                      <b-form-group label="Paciente:" label-for="atendimento-paciente">
-                    <b-form-input id="atendimento-paciente" type="text" :value="paciente.nome" @blur="atendimento.paciente = $event.target.value" required 
+                    <b-form-input id="atendimento-paciente" type="text" :value="paciente.nomepac" required 
                      placeholder="Informe o Nome do(a) Paciente(a)...." />
                 </b-form-group>
                 </b-col>
@@ -57,17 +57,17 @@
             <b-row>
                 <b-col md="4"> 
                     <b-form-group label="Médico:" label-for="atendimento-medico">
-                        <b-form-select id="atendimento-medico" :options="medicos" v-model="atendimento.medico" required  />
+                        <b-form-select id="atendimento-medico" :options="medicos" v-model="atendimento.codmedico" required  />
                     </b-form-group>
                 </b-col>
                 <b-col md="4"> 
                     <b-form-group label="Serviço:" label-for="atendimento-servico">
-                        <b-form-select id="atendimento-servico" :options="servicos" v-model="atendimento.servico" required  />
+                        <b-form-select id="atendimento-servico" :options="servicos" v-model="atendimento.codservico" required  />
                     </b-form-group>
                 </b-col>
                 <b-col md="4"> 
                     <b-form-group label="Especialidade:" label-for="atendimento-especialidade">
-                        <b-form-select id="atendimento-especialidade" :options="especialidades" v-model="atendimento.especialidade" required  />
+                        <b-form-select id="atendimento-especialidade" :options="especialidades" v-model="atendimento.codespecialidade" required  />
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -121,15 +121,12 @@ export default {
             convenios: [],
             especialidades: [],
             fields: [
-                { key: "codigo", label: "Código", sortable: true },
-                { key: "nome", label: "Nome", sortable: true },
+                { key: "codigopac", label: "Código", sortable: true },
+                { key: "nomepac", label: "Nome", sortable: true },
                 { key: "datanasc", label: "Data Nasc." },
                 { key: "convenio", label: "Convênio" },
                 { key: "matricula", label: "Matricula" },
             ],
-            page: 1,
-            limit: 0,
-            count: 0,
             totalRows: 1,
             currentPage: 1,
             perPage: 5,
@@ -139,14 +136,13 @@ export default {
     },
     methods: {
         reset(){
-            this.mode = 'save'
             this.atendimento = {}
         },
 
         save() {
-            const method = this.atendimento.codigo ? 'put' : 'post'
-            const codigo = this.atendimento.codigo ? `/${this.atendimento.codigo}` : ''
-            axios[method](`${baseApiUrl}/atendimentos${codigo}`, this.atendimento)
+            const method = this.atendimento.codigoatend ? 'put' : 'post'
+            const codigoatend = this.atendimento.codigoatend ? `/${this.atendimento.codigoatend}` : ''
+            axios[method](`${baseApiUrl}/atendimentos${codigoatend}`, this.atendimento)
             .then(() => {
                 this.$toasted.global.defaultSuccess()
                 this.reset()
@@ -157,14 +153,11 @@ export default {
         loadPacientes() {
             const url = `${baseApiUrl}/pacientes`;
             axios.get(url).then((res) => {
-                this.pacientes = res.data; 
-                this.count = res.data.count
-                this.limit = res.data.limit      
+                this.pacientes = res.data;     
                 });
             },
         
-        loadPaciente(paciente, mode='save'){
-            this.mode = mode
+        loadPaciente(paciente){
             this.paciente = {...paciente}
             },
 
@@ -172,7 +165,7 @@ export default {
             const url = `${baseApiUrl}/medicos`;
             axios.get(url).then((res) => {
             this.medicos = res.data.map(medico => {
-                return{value: medico.nome, text: `${medico.nome}` }
+                return{value: medico.codigomed, text: `${medico.nome}` }
             })
             })
         },
@@ -181,16 +174,7 @@ export default {
             const url = `${baseApiUrl}/servicos`;
             axios.get(url).then((res) => {
             this.servicos = res.data.map(servico => {
-                return{value: servico.servico, text: `${servico.servico}` }
-            })
-            })
-        },
-
-        loadConvenios() {
-            const url = `${baseApiUrl}/convenios`;
-            axios.get(url).then((res) => {
-            this.convenios = res.data.map(convenio => {
-                return{value: convenio.convenio, text: `${convenio.convenio}` }
+                return{value: servico.codigo, text: `${servico.servico}` }
             })
             })
         },
@@ -199,7 +183,7 @@ export default {
             const url = `${baseApiUrl}/especialidades`;
             axios.get(url).then((res) => {
             this.especialidades = res.data.map(especialidade => {
-                return{value: especialidade.especialidade, text: `${especialidade.especialidade}` }
+                return{value: especialidade.codigo, text: `${especialidade.especialidade}` }
             })
             })
         },
@@ -218,7 +202,6 @@ export default {
         this.loadPacientes()
         this.loadMedicos()
         this.loadServicos()
-        this.loadConvenios()
         this.loadEspecialidades()
     }
 
