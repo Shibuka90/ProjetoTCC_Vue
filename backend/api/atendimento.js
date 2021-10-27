@@ -38,8 +38,8 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db({a: 'atendimentos', s: 'servicos', p: 'pacientes', e: 'especialidades'})
-            .select('a.codigoatend','a.datadoatendimento','a.alta', 'a.convenio', 'a.matricula', 'a.vencimento', 
-            {servico: 's.servico'}, {paciente: 'p.nomepac'}, {especialidade: 'e.especialidade'})
+            .select('a.codigoatend','a.codpaciente', 'a.nomepaciente', 'a.datadoatendimento','a.alta', 'a.convenio', 'a.matricula', 'a.vencimento', 
+            {servico: 's.servico'}, {especialidade: 'e.especialidade'})
             .whereRaw('?? = ??', ['a.codservico', 's.codigo'])
             .whereRaw('?? = ??', ['a.codespecialidade', 'e.codigo'])
             .whereRaw('?? = ??', ['a.codpaciente', 'p.codigopac'])

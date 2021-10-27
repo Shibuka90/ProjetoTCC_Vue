@@ -54,7 +54,7 @@ export default {
                 { key: "codigoatend", label: "Atendimento", sortable: true },
                 { key: "datadoatendimento", label: "Data do Atend.", sortable: true},
                 { key: "alta", label: "Alta", sortable: true},
-                { key: "paciente", label: "Paciente", sortable: true},
+                { key: "nomepaciente", label: "Paciente", sortable: true},
                 { key: "convenio", label: "Convênio" },
                 { key: "servico", label: "Serviço"},
                 { key: "especialidade", label: "Especialidade"},
@@ -79,13 +79,14 @@ export default {
       
       //Carrega os dados do Atendimento para acessar a página de Alteração/Exclusão
       loadAtendimento(atendimento){
-          this.atendimento = {...atendimento}           
+          this.atendimento = {...atendimento}        
         },
 
       //Pega os dados do Atendimento pelo CODIGO DO ATENDIMENTO que foi carregado pelo loadAtendimento
       getAtendimento(){
           const url = `${baseApiUrl}/atendimentos/${this.atendimento.codigotend}`
           axios(url).then(res => this.atendimento = res.data)
+          console.log(url)
         },
       
       //Traz os dados filtrados para a tabela
