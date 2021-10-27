@@ -15,7 +15,7 @@
         </b-col>
        <b-col md="4">
          <b-button router-link to="/novoatendimento" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
-          <b-button v-if="atendimento.codigoatend" @click="getAtendimento" router-link :to="'/atendimentos/' + this.atendimento.codigoatend" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
+          <b-button v-if="atendimento.codigoatend" @click="getAtendimento" router-link :to="'/atendimentos/' + this.atendimento.codigoatend" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Alta</b-button>  
         </b-col> 
       </b-row>
     </b-form>     
@@ -54,6 +54,8 @@ export default {
                 { key: "paciente", label: "Paciente", sortable: true},
                 { key: "convenio", label: "Convênio" },
                 { key: "servico", label: "Serviço"},
+                { key: "especialidade", label: "Especialidade"},
+
             ],
             sortBy: 'codigo',
             totalRows: 1,
@@ -71,8 +73,7 @@ export default {
             },
             
         loadAtendimento(atendimento){
-            this.atendimento = {...atendimento}
-           
+            this.atendimento = {...atendimento}           
             },
 
         getAtendimento(){

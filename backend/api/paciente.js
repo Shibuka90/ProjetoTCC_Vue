@@ -68,6 +68,11 @@ module.exports = app => {
  
     const remove = async (req, res) => {
         try {
+
+            const atendimentos = await app.db('atendimentos')
+                .where({codpaciente: req.params.codigopac})
+                notExistsOrError(atendimentos, "Paciente amarrado a Atendimento")
+
             const rowsDeleted = await app.db('pacientes')
                 .where ({ codigopac: req.params.codigopac }).del()
                 existsOrError(rowsDeleted, 'Paciente não encontrado')

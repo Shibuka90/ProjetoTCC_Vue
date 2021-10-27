@@ -94,12 +94,12 @@ module.exports = app => {
         .delete(app.api.agendamento.remove)
     
     app.route('/atendimentos')
-        // .all(app.config.passport.authenticate())
+        .all(app.config.passport.authenticate())
         .post(app.api.atendimento.save)
         .get(app.api.atendimento.get)
 
     app.route('/atendimentos/:codigoatend')
-        // .all(app.config.passport.authenticate())
+        .all(app.config.passport.authenticate())
         .put(app.api.atendimento.save)
         .get(app.api.atendimento.getByCodigo)
         .delete(app.api.atendimento.remove)

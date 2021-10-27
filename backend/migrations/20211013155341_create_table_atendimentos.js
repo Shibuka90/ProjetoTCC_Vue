@@ -4,6 +4,7 @@ exports.up = function(knex) {
         table.increments('codigoatend').primary()
         table.string('datadoatendimento')
         table.integer('codpaciente').references('codigopac').inTable('pacientes').notNull()
+        table.string('nomepaciente',100).notNull()
         table.integer('codmedico').references('codigomed').inTable('medicos').notNull()
         table.integer('codservico').references('codigo').inTable('servicos').notNull()
         table.integer('codespecialidade').references('codigo').inTable('especialidades').notNull() 

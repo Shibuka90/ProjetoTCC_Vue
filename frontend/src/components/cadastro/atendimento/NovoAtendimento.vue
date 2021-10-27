@@ -44,7 +44,7 @@
                 </b-col>
                    <b-col md="6" sm="12">
                      <b-form-group label="Paciente:" label-for="atendimento-paciente">
-                    <b-form-input id="atendimento-paciente" type="text" :value="paciente.nomepac" required 
+                    <b-form-input id="atendimento-paciente" type="text" :value="paciente.nomepac" @blur="atendimento.nomepaciente = $event.target.value" required 
                      placeholder="Informe o Nome do(a) Paciente(a)...." />
                 </b-form-group>
                 </b-col>

@@ -3,16 +3,16 @@
     <PageTitle icom="fas fa-address-book" main="Atendimentos" sub="Cadastro do Atendimento" />
     <div class="form">
         <b-form>
-            <input type="hidden" id="atendimento-codigo" v-model="atendimento.codigo">
+            <input type="hidden" id="atendimento-codigo" v-model="atendimento.codigoatend">
             <b-row>
                 <b-col md="auto">
                     <b-form-group label="Código Paciente :" label-for="atendimento-codigopaciente">    
-                        <b-form-input id="atendimento-codigopaciente" type="text" v-model="atendimento.codigopaciente" required readonly/>
+                        <b-form-input id="atendimento-codigopaciente" type="text" v-model="atendimento.codpaciente" required readonly/>
                 </b-form-group>
                 </b-col>
                    <b-col md="6" sm="12">
                      <b-form-group label="Paciente:" label-for="atendimento-paciente">
-                    <b-form-input id="atendimento-paciente" type="text" v-model="atendimento.paciente" readonly required 
+                    <b-form-input id="atendimento-paciente" v-model="atendimento.nomepaciente" type="text"  readonly required 
                      placeholder="Informe o Nome do(a) Paciente(a)...." />
                 </b-form-group>
                 </b-col>
@@ -22,30 +22,30 @@
                     </b-form-group>
                 </b-col>
                 <b-col md="2"> 
-                    <b-form-checkbox id="atendimento" v-show="mode === 'save'" v-model="atendimento.censo" class="mt-4" size="lg">Censo</b-form-checkbox>
+                    <b-form-checkbox id="atendimento" v-model="atendimento.censo" class="mt-4" size="lg">Censo</b-form-checkbox>
                 </b-col>
             </b-row>
             <b-row>
                  <b-col md="4">
                     <b-form-group label="Médico:" label-for="atendimento-medico">
-                      <b-form-select id="atendimento-medico" :options="medicos" v-model="atendimento.medico"></b-form-select>
+                      <b-form-select id="atendimento-medico" :options="medicos" v-model="atendimento.codmedico"></b-form-select>
                     </b-form-group>
                 </b-col>
                  <b-col md="4">
                     <b-form-group label="Serviço:" label-for="atendimento-servico">
-                      <b-form-select id="atendimento-servico" :options="servicos" v-model="atendimento.servico"></b-form-select>
+                      <b-form-select id="atendimento-servico" :options="servicos" v-model="atendimento.codservico"></b-form-select>
                     </b-form-group>
                 </b-col>
                  <b-col md="4">
                     <b-form-group label="Especialidade:" label-for="atendimento-especialidade">
-                      <b-form-select id="atendimento-especialidade" :options="especialidades" v-model="atendimento.especialidade"></b-form-select>
+                      <b-form-select id="atendimento-especialidade" :options="especialidades" v-model="atendimento.codespecialidade"></b-form-select>
                     </b-form-group>
                 </b-col>
             </b-row> 
               <b-row>
                  <b-col md="4">
                     <b-form-group label="Convênio:" label-for="atendimento-convenio">
-                      <b-form-select id="atendimento-convenio" :options="convenios" v-model="atendimento.convenio"></b-form-select>
+                      <b-form-input id="atendimento-convenio" :options="convenios" v-model="atendimento.convenio"></b-form-input>
                     </b-form-group>
                 </b-col>
                  <b-col md="4">
@@ -86,7 +86,6 @@ export default {
     components: { PageTitle  },
     data: function() {
         return{
-            mode:"save",
             atendimento: {},
             atenimentos: [],
             paciente: {},
@@ -103,9 +102,6 @@ export default {
                 { key: "convenio", label: "Convênio" },
                 { key: "matricula", label: "Matricula" },
             ],
-            page: 1,
-            limit: 0,
-            count: 0,
             totalRows: 1,
             currentPage: 1,
             perPage: 5,
@@ -115,14 +111,13 @@ export default {
     },
     methods: {
         reset(){
-            this.mode = 'save'
             this.atenimento = {}
         },
 
         save() {
-            const method = this.atendimento.codigo ? 'put' : 'post'
-            const codigo = this.atendimento.codigo ? `/${this.atendimento.codigo}` : ''
-            axios[method](`${baseApiUrl}/atendimentos${codigo}`, this.atendimento)
+            const method = this.atendimento.codigoatend ? 'put' : 'post'
+            const codigoatend = this.atendimento.codigoatend ? `/${this.atendimento.codigoatend}` : ''
+            axios[method](`${baseApiUrl}/atendimentos${codigoatend}`, this.atendimento)
             .then(() => {
                 this.$toasted.global.defaultSuccess()
                 this.reset()
@@ -131,8 +126,8 @@ export default {
             },
 
         remove() {
-            const codigo = this.atendimento.codigo
-            axios.delete(`${baseApiUrl}/atendimentos/${codigo}`)
+            const codigoatend = this.atendimento.codigoatend
+            axios.delete(`${baseApiUrl}/atendimentos/${codigoatend}`)
             .then(() => {
                 this.$toasted.global.defaultSuccess()
                 })
@@ -143,14 +138,11 @@ export default {
         loadPacientes() {
             const url = `${baseApiUrl}/pacientes`;
             axios.get(url).then((res) => {
-                this.pacientes = res.data; 
-                this.count = res.data.count
-                this.limit = res.data.limit      
+                this.pacientes = res.data;      
                 });
             },
         
-        loadPaciente(paciente, mode='save'){
-            this.mode = mode
+        loadPaciente(paciente,){
             this.paciente = {...paciente}
             },
 
@@ -158,7 +150,7 @@ export default {
             const url = `${baseApiUrl}/medicos`;
             axios.get(url).then((res) => {
             this.medicos = res.data.map(medico => {
-                return{value: medico.nome, text: `${medico.nome}` }
+                return{value: medico.codigomed, text: `${medico.nome}` }
             })
             })
         },  
@@ -167,7 +159,7 @@ export default {
             const url = `${baseApiUrl}/servicos`;
             axios.get(url).then((res) => {
             this.servicos = res.data.map(servico => {
-                return{value: servico.servico, text: `${servico.servico}` }
+                return{value: servico.codigo, text: `${servico.servico}` }
             })
             })
         },
@@ -176,7 +168,7 @@ export default {
             const url = `${baseApiUrl}/especialidades`;
             axios.get(url).then((res) => {
             this.especialidades = res.data.map(especialidade => {
-                return{value: especialidade.especialidade, text: `${especialidade.especialidade}` }
+                return{value: especialidade.codigo, text: `${especialidade.especialidade}` }
             })
             })
         },
@@ -185,13 +177,13 @@ export default {
             const url = `${baseApiUrl}/convenios`;
             axios.get(url).then((res) => {
             this.convenios = res.data.map(convenio => {
-                return{value: convenio.convenio, text: `${convenio.convenio}` }
+                return{value: convenio.codigo, text: `${convenio.convenio}` }
             })
             })
         },
         
         getAtendimento(){
-            const url = `${baseApiUrl}/atendimentos/${this.atendimento.codigo}`
+            const url = `${baseApiUrl}/atendimentos/${this.atendimento.codigoatend}`
              axios(url).then(res => this.atendimento = res.data)
             },
 
@@ -206,7 +198,7 @@ export default {
 
     },
     mounted(){
-        this.atendimento.codigo = this.$route.params.codigo
+        this.atendimento.codigoatend = this.$route.params.codigoatend
         this.getAtendimento()
         this.loadPacientes()
         this.loadMedicos()

@@ -51,6 +51,13 @@ module.exports = app => {
     }
     const remove = async (req, res) => {
         try {
+
+            existsOrError(req.params.codigo, 'Código do Serviço não informado...')
+           
+                const atendimentos = await app.db('atendimentos')
+                .where({codservico: req.params.codigo})
+                notExistsOrError(atendimentos, "Serviço amarrado a Atendimento")
+
             const rowsDeleted = await app.db('servicos')
                 .where ({ codigo: req.params.codigo }).del()
                 existsOrError(rowsDeleted, 'Serviço não encontrada')
