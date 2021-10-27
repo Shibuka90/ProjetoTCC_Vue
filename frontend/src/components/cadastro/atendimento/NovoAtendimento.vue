@@ -130,7 +130,7 @@ export default {
                 { key: "matricula", label: "Matricula" },
             ],
             filter: null,
-            sortBy: 'codigo',
+            sortBy: 'codigopac',
         }
     },
     methods: {

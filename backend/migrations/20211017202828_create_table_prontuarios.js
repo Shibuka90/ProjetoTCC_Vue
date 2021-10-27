@@ -1,9 +1,9 @@
 
 exports.up = function(knex) {
     return knex.schema.createTable('prontuarios', table => {
-        table.increments('codigo').primary()
+        table.increments('codigopront').primary()
         table.string('datadoprontuario')
-        table.integer('codigoatendimento').references('codigo').inTable('atendimentos').notNull()
+        table.integer('codatendimento').references('codigoatend').inTable('atendimentos').notNull()
         table.string('paciente', 100).notNull()
         table.string('convenio', 100).notNull()
         table.string('medico', 100).notNull()

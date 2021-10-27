@@ -167,7 +167,7 @@ const routes = [{
     component: NovoProntuario
 }, {
     name: 'prontuarioalterado',
-    path: '/prontuarios/:codigo',
+    path: '/prontuarios/:codigopront',
     component: ProntuarioAlterado
 }
 ]

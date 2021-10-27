@@ -105,12 +105,12 @@ module.exports = app => {
         .delete(app.api.atendimento.remove)
     
     app.route('/prontuarios')
-        .all(app.config.passport.authenticate())
+        // .all(app.config.passport.authenticate())
         .post(app.api.prontuario.save)
         .get(app.api.prontuario.get)
 
-    app.route('/prontuarios/:codigo')
-        .all(app.config.passport.authenticate())
+    app.route('/prontuarios/:codigopront')
+        // .all(app.config.passport.authenticate())
         .put(app.api.prontuario.save)
         .get(app.api.prontuario.getByCodigo)
         .delete(app.api.prontuario.remove)

@@ -4,11 +4,11 @@ module.exports = app => {
 
     const save = async (req, res) => {
         const prontuario = { ...req.body }
-        if(req.params.codigo) prontuario.codigo = req.params.codigo
+        if(req.params.codigopront) prontuario.codigopront = req.params.codigopront
                
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
-            existsOrError(prontuario.codigoatendimento, 'Código Atendimento não informado')
+            existsOrError(prontuario.codatendimento, 'Código Atendimento não informado')
             existsOrError(prontuario.paciente, 'Paciente não informado')
             existsOrError(prontuario.datadoprontuario, 'Data não informada')
             existsOrError(prontuario.medico, 'Médico não informado')
@@ -20,10 +20,10 @@ module.exports = app => {
         return res.status(400).send(msg)
     }       
     
-    if(prontuario.codigo){
+    if(prontuario.codigopront){
         app.db('prontuarios')
             .update(prontuario)
-            .where({ codigo: prontuario.codigo })
+            .where({ codigopront: prontuario.codigopront })
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
      } else {
@@ -36,14 +36,14 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('prontuarios')
-            .select('codigo', 'datadoprontuario', 'codigoatendimento', 'paciente', 'convenio', 'medico', 'servico', 'especialidade')
+            .select('codigopront', 'datadoprontuario', 'codatendimento', 'paciente', 'convenio', 'medico', 'servico', 'especialidade')
             .then(prontuarios => res.json(prontuarios))
             .catch(err => res.status(500).send(err))
     }
 
     const getByCodigo = (req, res) =>{ 
         app.db('prontuarios')
-            .where({ codigo: req.params.codigo })
+            .where({ codigopront: req.params.codigopront })
             .first()
             .then(prontuario => res.json(prontuario))
             .catch(err => res.status(500).send(err))
@@ -52,7 +52,7 @@ module.exports = app => {
     const remove = async (req, res) => {
         try {
             const rowsDeleted = await app.db('prontuario')
-                .where({ codigo: req.params.codigo }).del()
+                .where({ codigopront: req.params.codigopront }).del()
             
             try {
                 existsOrError(rowsDeleted, 'Prontuario não foi encontrado.')

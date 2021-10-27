@@ -37,12 +37,13 @@ module.exports = app => {
     }
 
     const get = (req, res) => {
-        app.db({a: 'atendimentos', s: 'servicos', p: 'pacientes', e: 'especialidades'})
+        app.db({a: 'atendimentos', s: 'servicos', p: 'pacientes', e: 'especialidades', m: 'medicos'})
             .select('a.codigoatend','a.codpaciente', 'a.nomepaciente', 'a.datadoatendimento','a.alta', 'a.convenio', 'a.matricula', 'a.vencimento', 
-            {servico: 's.servico'}, {especialidade: 'e.especialidade'})
+            {servico: 's.servico'}, {especialidade: 'e.especialidade'}, {medico: 'm.nome'})
             .whereRaw('?? = ??', ['a.codservico', 's.codigo'])
             .whereRaw('?? = ??', ['a.codespecialidade', 'e.codigo'])
             .whereRaw('?? = ??', ['a.codpaciente', 'p.codigopac'])
+            .whereRaw('?? = ??', ['a.codmedico', 'm.codigomed'])
             .then(atendimentos => res.json(atendimentos))
             .catch(err => res.status(500).send(err))
     }

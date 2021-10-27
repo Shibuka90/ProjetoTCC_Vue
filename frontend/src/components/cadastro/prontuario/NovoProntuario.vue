@@ -6,7 +6,7 @@
       sub="Abertura de Prontuario"
     />
     <div class="form">
-        <input type="hidden" id="prontuario-codigo" v-model="prontuario.codigo" />
+        <input type="hidden" id="prontuario-codigo" v-model="prontuario.codigopront" />
         <b-row>
             <b-col md="2">
                     <b-form-group label="Pesquisar:" label-for="pesquisar-prontuario"> 
@@ -24,12 +24,12 @@
                         <b-row>
                             <b-col md="auto">
                                 <b-form-group label="Códgio" label-for="atendimento-codigo">
-                                    <b-form-input id="atendimento-codigo" v-model="atendimento.codigo" readonly size="lg" type="text" ></b-form-input>
+                                    <b-form-input id="atendimento-codigo" v-model="atendimento.codigoatend" readonly size="lg" type="text" ></b-form-input>
                                 </b-form-group>
                             </b-col>
                             <b-col md="8">
                                 <b-form-group label="Atendimento" label-for="atendimento-paciente">
-                                    <b-form-input id="atendimento-paciente" v-model="atendimento.paciente" readonly size="lg" type="text" ></b-form-input>
+                                    <b-form-input id="atendimento-paciente" v-model="atendimento.nomepaciente" readonly size="lg" type="text" ></b-form-input>
                                 </b-form-group>
                             </b-col>
                         </b-row>                  
@@ -39,12 +39,12 @@
                     </b-modal>
                 <b-col md="auto">
                     <b-form-group label="Código Atendimento:" label-for="prontuario-codigoatendimento">
-                        <b-form-input id="prontuario-codigoatendimento" type="text" :value="atendimento.codigo" @blur="prontuario.codigoatendimento = $event.target.value" required></b-form-input>
+                        <b-form-input id="prontuario-codigoatendimento" type="text" :value="atendimento.codigoatend" @blur="prontuario.codatendimento = $event.target.value" required></b-form-input>
                     </b-form-group>
                 </b-col>
                   <b-col md="6" sm="12">
                      <b-form-group label="Paciente:" label-for="prontuario-paciente">
-                    <b-form-input id="prontuario-paciente" type="text" :value="atendimento.paciente" @blur="prontuario.paciente = $event.target.value" required 
+                    <b-form-input id="prontuario-paciente" type="text" :value="atendimento.nomepaciente" @blur="prontuario.paciente = $event.target.value" required 
                      placeholder="Informe o Nome do(a) Paciente(a)...." />
                 </b-form-group>
                 </b-col>
@@ -107,23 +107,19 @@ export default {
     components: {PageTitle, VueEditor},
     data: function() {
         return{
-            mode: "save",
             prontuario: {},
             prontuarios: [],
             atendimento: {},
             atendimentos: [],
             fields: [
-                { key: "codigo", label: "Código", sortable: true},
+                { key: "codigoatend", label: "Código", sortable: true},
                 { key: "datadoatendimento", label: "Data do Atend.", sortable: true},
                 { key: "alta", label: "Alta", sortable: true},
-                { key: "paciente", label: "Paciente", sortable: true},
+                { key: "nomepaciente", label: "Paciente", sortable: true},
                 { key: "medico", label:"Médico"},
                 { key: "especialidade", label: "Especialidade"},
             ],
-            sortBy: 'codigo',
-            page: 1,
-            limit: 0,
-            count: 0,
+            sortBy: 'codigoatend',
             totalRows: 1,
             currentPage: 1,
             perPage: 5,
@@ -132,14 +128,13 @@ export default {
     },
     methods: {
         reset(){
-            this.mode = 'save'
             this.atendimento = {}
         },
 
         save() {
-            const method = this.prontuario.codigo ? 'put' : 'post'
-            const codigo = this.prontuario.codigo ? `/${this.prontuario.codigo}` : ''
-            axios[method](`${baseApiUrl}/prontuarios${codigo}`, this.prontuario)
+            const method = this.prontuario.codigopront ? 'put' : 'post'
+            const codigopront = this.prontuario.codigopront ? `/${this.prontuario.codigopront}` : ''
+            axios[method](`${baseApiUrl}/prontuarios${codigopront}`, this.prontuario)
             .then(() => {
                 this.$toasted.global.defaultSuccess()
                 this.reset()
@@ -151,24 +146,12 @@ export default {
             const url = `${baseApiUrl}/atendimentos`;
             axios.get(url).then((res) => {
                 this.atendimentos = res.data; 
-                this.count = res.data.count
-                this.limit = res.data.limit 
                 });
             },
 
-        loadAtendimento(atendimento, mode='save'){
-            this.mode = mode
+        loadAtendimento(atendimento){
             this.atendimento = {...atendimento}           
             },
-
-        loadProntuarios(){
-            const url = `${baseApiUrl}/prontuarios`;
-            axios.get(url).then((res) => {
-            this.prontuarios = res.data;
-            this.count = res.data.count;
-            this.limit = res.data.limit; 
-            })
-        },
 
         resetFilter(){
             this.filter = null
@@ -181,7 +164,6 @@ export default {
     },
     mounted(){
         this.loadAtendimentos()
-        this.loadProntuarios()
     }
 
 }

@@ -1,10 +1,6 @@
 <template>
 <div class="prontuarios">
-      <PageTitle
-      icon="fa fa-first-aid"
-      main="Prontuários"
-      sub="Grid de Prontuarios"
-    />
+      <PageTitle icon="fa fa-first-aid" main="Prontuários" sub="Grid de Prontuarios" />
     <div class="pesquisa"> 
       <b-form>
       <b-row >
@@ -17,7 +13,7 @@
         </b-col>
        <b-col md="4">
          <b-button router-link to="/novoprontuario" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
-          <b-button v-if="prontuario.paciente" @click="getProntuario" router-link :to="'/prontuarios/' + this.prontuario.codigo" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
+          <b-button v-if="prontuario.paciente" @click="getProntuario" router-link :to="'/prontuarios/' + this.prontuario.codigopront" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
         </b-col> 
       </b-row>
     </b-form>     
@@ -57,8 +53,8 @@ export default {
             limit: 0,
             count: 0,
             fields: [
-                { key: "codigo", label: "Código", sortable: true },
-                { key: "codigoatendimento", label: "Atendimento", sortable: true },
+                { key: "codigopront", label: "Código", sortable: true },
+                { key: "codatendimento", label: "Atendimento", sortable: true },
                 { key: "paciente", label: "Paciente", sortable: true },
                 { key: "medico", label: "Médico" },
                 { key: "especialidade", label: "Especialidade" },
@@ -74,19 +70,17 @@ export default {
             const url = `${baseApiUrl}/prontuarios`;
             axios.get(url).then((res) => {
                 this.prontuarios = res.data; 
-                this.count = res.data.count
-                this.limit = res.data.limit 
                 });
             },
         
         getProntuario(){
-            const url = `${baseApiUrl}/prontuarios/${this.prontuario.codigo}`
+            const url = `${baseApiUrl}/prontuarios/${this.prontuario.codigopront}`
             axios(url).then(res => this.prontuario = res.data)
             },
             
          loadProntuario(prontuario, mode = 'save') {
             this.mode = mode
-            axios.get(`${baseApiUrl}/prontuarios/${prontuario.codigo}`)
+            axios.get(`${baseApiUrl}/prontuarios/${prontuario.codigopront}`)
                 .then(res => this.prontuario = res.data)          
         },
             

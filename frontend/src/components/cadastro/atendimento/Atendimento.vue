@@ -58,6 +58,8 @@ export default {
                 { key: "convenio", label: "Convênio" },
                 { key: "servico", label: "Serviço"},
                 { key: "especialidade", label: "Especialidade"},
+                { key: "medico", label: "Medico"},
+
 
             ],
             sortBy: 'codigoatend',
