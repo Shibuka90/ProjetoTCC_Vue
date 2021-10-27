@@ -212,17 +212,6 @@ export default {
                 .catch(showError)
         },
 
-        //Exclui o Paciente
-        remove() {
-            const codigopac = this.paciente.codigopac
-            axios.delete(`${baseApiUrl}/pacientes/${codigopac}`)
-                .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    this.reset()
-                })
-                .catch(showError)
-        },
-
     },
     //Clico de Vida -> Renderização
     mounted(){
