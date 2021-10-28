@@ -12,7 +12,7 @@ exports.up = function(knex) {
         table.string('matricula',25).notNull()
         table.string('vencimento',10).notNull()
         table.boolean('censo').notNull().defaultTo(true)
-        table.timestamp('alta')
+        table.string('alta')
     })
 };
 

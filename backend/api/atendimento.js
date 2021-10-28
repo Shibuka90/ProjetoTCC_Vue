@@ -56,7 +56,7 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const remove = async (req, res) => {
+    const alta = async (req, res) => {
         try {
             const rowsUpdate = await app.db('atendimentos')
                 .update({ alta: new Date() })
@@ -69,5 +69,5 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getByCodigo, remove}
+    return { save, get, getByCodigo, alta}
 }

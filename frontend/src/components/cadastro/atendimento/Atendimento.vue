@@ -86,9 +86,8 @@ export default {
 
       //Pega os dados do Atendimento pelo CODIGO DO ATENDIMENTO que foi carregado pelo loadAtendimento
       getAtendimento(){
-          const url = `${baseApiUrl}/atendimentos/${this.atendimento.codigotend}`
+          const url = `${baseApiUrl}/atendimentos/${this.atendimento.codigoatend}`
           axios(url).then(res => this.atendimento = res.data)
-          console.log(url)
         },
       
       //Traz os dados filtrados para a tabela
