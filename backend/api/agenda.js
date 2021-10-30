@@ -4,17 +4,15 @@ module.exports = app => {
 
     const save = async (req, res) => {
         const agenda = { ...req.body }
-        if(req.params.codigo) agenda.codigo = req.params.codigo
+        if(req.params.codigoag) agenda.codigoag = req.params.codigoag
         
         // if(!req.originalUrl.startWith('/agendas')) agenda.admin = false
         // if(!req.agenda || !req.agenda.admin) agenda.admin = false
         
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem
         try {
-            existsOrError(agenda.codigomedico, 'Código Médico não informado')
-            existsOrError(agenda.medico, 'Médico não informado')
-            existsOrError(agenda.codigoespecialidade, 'Código da Especialidade não informada')
-            existsOrError(agenda.especialidade, 'Especialidade não informada')
+            existsOrError(agenda.codmedico, 'Código Médico não informado')
+            existsOrError(agenda.codespecialidade, 'Código da Especialidade não informada')
             existsOrError(agenda.tempodeatendimento, 'Tempo de Atendimento não informado')
             existsOrError(agenda.horainicial, 'Hora Inicial não informada')
             existsOrError(agenda.horafinal, 'Hora Final não informada')
@@ -25,10 +23,10 @@ module.exports = app => {
         return res.status(400).send(msg)
     }       
     
-    if(agenda.codigo){
+    if(agenda.codigoag){
         app.db('agendas')
             .update(agenda)
-            .where({ codigo: agenda.codigo })
+            .where({ codigoag: agenda.codigoag })
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
      } else {
@@ -40,17 +38,18 @@ module.exports = app => {
     }
 
     const get = (req, res) => {
-        app.db('agendas')
-            .select('codigo', 'codigomedico', 'medico', 'tempodeatendimento', 
-            'horainicial', 'horafinal', 'intervaloinicial', 'intervalofinal', 
-            'codigoespecialidade', 'especialidade')
+        app.db({a: 'agendas', m: 'medicos', e: 'especialidades'})
+            .select('a.codigoag', 'a.tempodeatendimento', 
+            'a.horainicial', 'a.horafinal', 'a.intervaloinicial', 'a.intervalofinal', {medico: 'm.nome'}, {especialidade: 'e.especialidade'})
+            .whereRaw('?? = ??', ['a.codmedico', 'm.codigomed'])
+            .whereRaw('?? = ??', ['a.codespecialidade', 'e.codigo'])
             .then(agendas => res.json(agendas))
             .catch(err => res.status(500).send(err))
     }
 
     const getByCodigo = (req, res) =>{ 
         app.db('agendas')
-            .where({ codigo: req.params.codigo })
+            .where({ codigoag: req.params.codigoag })
             .first()
             .then(agenda => res.json(agenda))
             .catch(err => res.status(500).send(err))
@@ -58,7 +57,7 @@ module.exports = app => {
     const remove = async (req, res) => {
         try {
             const rowsDeleted = await app.db('agendas')
-                .where ({ codigo: req.params.codigo }).del()
+                .where ({ codigoag: req.params.codigoag }).del()
                 existsOrError(rowsDeleted, 'Agenda não encontrada')
 
             res.status(204).send()

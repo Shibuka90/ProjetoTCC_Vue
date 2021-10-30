@@ -119,7 +119,7 @@ const routes = [{
     component: NovaAgenda
 },{
     name: 'agendaalterada',
-    path: '/agendas/:codigo',
+    path: '/agendas/:codigoag',
     component: AgendaAlterada
 },{
     name: 'agendamento',
