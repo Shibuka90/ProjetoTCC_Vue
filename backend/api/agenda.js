@@ -54,8 +54,14 @@ module.exports = app => {
             .then(agenda => res.json(agenda))
             .catch(err => res.status(500).send(err))
     }
+
     const remove = async (req, res) => {
         try {
+
+            const agendamentos = await app.db('agendamentos')
+                .where({codagenda: req.params.codigoag})
+                notExistsOrError(agendamentos, "Agenda amarrada a Agendamento")
+
             const rowsDeleted = await app.db('agendas')
                 .where ({ codigoag: req.params.codigoag }).del()
                 existsOrError(rowsDeleted, 'Agenda não encontrada')

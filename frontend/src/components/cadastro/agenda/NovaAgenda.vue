@@ -2,7 +2,7 @@
 
 <template>
 <!-- titulo da página -->
-  <div class="agendaalterada">
+  <div class="novaagenda">
       <PageTitle icon="fas fa-calendar-alt" main="Agendas" sub="Cadastro de Agendas" />
 
        <!-- início do formulário do cadastro da agenda -->

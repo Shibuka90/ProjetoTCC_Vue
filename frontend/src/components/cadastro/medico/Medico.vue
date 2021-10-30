@@ -53,7 +53,7 @@ export default {
       medicos: [],
       sortBy: 'codigo',
       fields: [
-        { key: "codigo", label: "Código", sortable: true },
+        { key: "codigomed", label: "Código", sortable: true },
         { key: "nome", label: "Nome", sortable: true },
         { key: "email", label: "E-mail" },
         { key: "crm", label: "CRM" },

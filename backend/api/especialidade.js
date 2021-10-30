@@ -55,14 +55,19 @@ module.exports = app => {
         try {
 
             existsOrError(req.params.codigo, 'Código da Especialidade não informado...')
+            
+            const medicos = await app.db('medicos')
+                .where({codespecialidade: req.params.codigo})
+                notExistsOrError(medicos, "Especialidade amarrada a Médico")
+            
+            const agendas = await app.db('agendas')
+                .where({codespecialidade: req.params.codigo})
+                notExistsOrError(agendas, "Especialidade amarrada a Agenda")
 
             const atendimentos = await app.db('atendimentos')
-                .where({codespecialidade: req.params.codigo})
-                notExistsOrError(atendimentos, "Especialidade amarrada a Atendimento")
-
-            const pacientes = await app.db('medicos')
-                .where({codespecialidade: req.params.codigo})
-                notExistsOrError(pacientes, "Especialidade amarrada a Médico")
+            .where({codespecialidade: req.params.codigo})
+            notExistsOrError(atendimentos, "Especialidade amarrada a Atendimento")
+            
 
             const rowsDeleted = await app.db('especialidades')
                 .where ({ codigo: req.params.codigo }).del()

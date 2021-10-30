@@ -10,15 +10,22 @@
             <b-form>
                 <b-row>
                     <b-col md="2">
-                        <b-button router-link to="/" class="fa fa-home mr-4 mb-4" variant="info" size="lg"></b-button>
-                        <b-button router-link to="/homeagendamento"  size="lg" class="mb-4"><i class="fas fa-arrow-left"></i> Voltar</b-button> 
+                        <b-button router-link to="/" class="fa fa-home mt-4 mr-4 mb-4" variant="info" size="lg"></b-button>
+                        <b-button router-link to="/homeagendamento"  size="lg" class="mb-4 mt-4"><i class="fas fa-arrow-left"></i> Voltar</b-button> 
                     </b-col>
-                    <b-col md="6">
-                        <b-form-input input type="text" id="agenda-codigo" readonly size="lg" v-model="agenda.medico" class="mb-4 "></b-form-input>
+                    <b-col md="2">
+                        <b-form-group label="Código Agenda:" label-for="agenda-codigo"> 
+                            <b-form-input input type="text" id="agenda-codigo" readonly size="lg" v-model="agenda.codigoag" class="mb-4 "></b-form-input>
+                        </b-form-group>
                     </b-col>
                     <b-col md="4">
-                        <b-button router-link to="/novaagenda" variant="primary" size='lg' class="ml-2 mr-4">Novo</b-button>
-                        <b-button v-if="agenda.medico" @click="getAgenda" router-link :to="'/agendas/' + this.agenda.codigoag" class="ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
+                        <b-form-group label="Agenda:" label-for="agenda-medico">
+                            <b-form-input input type="text" id="agenda-medico" readonly size="lg" v-model="agenda.medico" class="mb-4 "></b-form-input>
+                        </b-form-group>
+                    </b-col>
+                    <b-col md="4">
+                        <b-button router-link to="/novaagenda" variant="primary" size='lg' class="mt-4 ml-2 mr-4">Novo</b-button>
+                        <b-button v-if="agenda.medico" @click="getAgenda" router-link :to="'/agendas/' + this.agenda.codigoag" class=" mt-4 ml-2 mr-2" size="lg" variant="danger">Alterar/Excluir</b-button>  
                     </b-col> 
                 </b-row>
             </b-form>
@@ -69,7 +76,6 @@ export default {
             const url = `${baseApiUrl}/agendas`;
             axios.get(url).then((res) => {
                 this.agendas = res.data; 
-                this.reset()
             });
             },
         

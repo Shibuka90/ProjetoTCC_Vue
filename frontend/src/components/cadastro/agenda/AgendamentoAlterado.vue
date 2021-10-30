@@ -33,7 +33,7 @@
               <b-row>
                     <b-col md="4">
                         <b-form-group label="Paciente:" label-for="agendamento-paciente">
-                            <b-form-input type="text" id="agendamento-paciente" v-model="agendamento.paciente"></b-form-input>
+                            <b-form-input type="text" id="agendamento-paciente" v-model="agendamento.paciente" readonly></b-form-input>
                         </b-form-group>
                     </b-col>
                     <b-col md="4">
