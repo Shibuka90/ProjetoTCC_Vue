@@ -1,9 +1,8 @@
+<!--Página da Home Prontuário -->
 <template>
   <div class="homeprontuario">
-    <PageTitle
-      icon="fa fa-first-aid"
-      main="Prontuários"
-      sub="Abertura de Prontuários"
+    <!-- titulo da divisão -->
+    <PageTitle icon="fa fa-first-aid" main="Prontuários" sub="Abertura de Prontuários"
     />
     <div class="menus-homecadastro">
       <div class="coluna1">
@@ -19,8 +18,8 @@
 </template>
 
 <script>
-import PageTitle from "../template/PageTitle.vue";
-import Menus from "./Menus.vue";
+import PageTitle from "../template/PageTitle.vue";//Importa o layput do título da página
+import Menus from "./Menus.vue";//Importa o layout do Menus da página
 
 export default {
   name: "HomeProntuario",

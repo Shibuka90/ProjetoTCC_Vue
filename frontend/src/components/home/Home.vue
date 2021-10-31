@@ -1,7 +1,11 @@
+<!--Página da Home  -->
+
 <template>
   <div class="home">
+    <!-- titulo da divisão -->
     <PageTitle icon="fa fa-folder" main="Gestão de Cadastros" sub="Cadastros gerais"
     />
+    <!-- Divisão de Cadastros Gerais -->
     <div class="menus-cadastro">
         <div class="cadastro">
             <router-link to="/homecadastro">
@@ -20,7 +24,9 @@
         </div>        
     </div>
     <hr />
+    <!-- titulo da divisão -->
     <PageTitle icon="fa fa-first-aid" main="Gestão Clínica" sub="Apoio Clínico" />
+    <!-- Divisão de Apoio Clínico -->
     <div class="menus-prontuario">
       <div class="prontuario">
         <router-link to="/homeprontuario">
@@ -33,8 +39,8 @@
 </template>
 
 <script>
-import PageTitle from "../template/PageTitle.vue";
-import Menus from './Menus.vue'
+import PageTitle from "../template/PageTitle.vue";//Importa o layout do titulo da página
+import Menus from './Menus.vue'//Importa o layout dos Menus da página
 
 export default {
   name: "Home",

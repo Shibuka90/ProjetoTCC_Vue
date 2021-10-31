@@ -1,6 +1,9 @@
+<!--Página da Home Agendamento -->
 <template>
   <div class="homeagendamento">
+    <!-- titulo da divisão -->
       <PageTitle icon="fa fa-calendar" main="Agendamento" sub="Cadastro de Agenda e Agendamento" />
+      <!-- Divisão de Agendas e Agendamento -->
       <div class="menus-homeagendamento">
          <div class="coluna1">
             <router-link to="/">
@@ -18,9 +21,9 @@
 </template>
 
 <script>
-import PageTitle from "../template/PageTitle.vue"
-import {mapState} from 'vuex'
-import Menus from "./Menus.vue"
+import PageTitle from "../template/PageTitle.vue"//importa o layout do títuo da página
+import {mapState} from 'vuex'//Importa as configuração da Store
+import Menus from "./Menus.vue"//IMporta o layout dos Menus da página
 
 export default {
     name: "HomeAgendamento",

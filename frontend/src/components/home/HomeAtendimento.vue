@@ -1,9 +1,9 @@
+<!--Página da Home  Atendimento-->
 <template>
+
   <div class="homeatendimento">
-    <PageTitle
-      icon="fa fa-users"
-      main="Atendimentos"
-      sub="Cadastro de Atendimentos"
+  <!-- titulo da divisão -->
+    <PageTitle icon="fa fa-users" main="Atendimentos" sub="Cadastro de Atendimentos"
     />
     <div class="menus-homecadastro">
       <div class="coluna1">
@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import PageTitle from "../template/PageTitle.vue";
-import Menus from "./Menus.vue";
+import PageTitle from "../template/PageTitle.vue";//Importa o layout do titulo da página
+import Menus from './Menus.vue'//Importa o layout dos Menus da página
 
 export default {
   name: "HomeAtendimento",

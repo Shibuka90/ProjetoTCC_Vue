@@ -1,4 +1,6 @@
+<!--Página de autenticação-->
 <template>
+<!-- Modal da Imagem e Campos de autenticação -->
 <div class="auth-content">
     <div class="auth-modal">
         <img src="@/assets/SGCM2_1.jpg" width="200" alt="Logo" />
@@ -6,7 +8,6 @@
         <div class="auth-title">Login</div>
         <input type="text" v-model="usuario.email" placeholder="E-mail">
         <input type="password" v-model="usuario.password" placeholder="Senha">
-
     <div class="botoes">
         <b-button class="mr-2" variant="success" @click="signin">Entrar</b-button>
         <b-button router-link to="/novousuarioauth" variant="info">Registra-se aqui</b-button>
@@ -16,8 +17,8 @@
 </template>
 
 <script>
-import { baseApiUrl, showError, userKey } from '@/global'
-import axios from 'axios'
+import { baseApiUrl, showError, userKey} from '@/global' // Importa as configuração de acesso para página e mensagens
+import axios from 'axios' // Importa as configurações do AXIOS
 
 export default {
     name: 'Auth',
@@ -27,6 +28,8 @@ export default {
         }
     },
     methods: {
+
+        //Método para logar no sistema
         signin() {
             axios.post(`${baseApiUrl}/signin`, this.usuario)
                 .then(res => {

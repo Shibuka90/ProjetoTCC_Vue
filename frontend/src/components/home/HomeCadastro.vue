@@ -1,10 +1,9 @@
+<!--Página da Home Cadastro -->
 <template>
   <div class="homecadastro">
-    <PageTitle
-      icon="fa fa-folder"
-      main="Cadastros Gerais"
-      sub="Pacientes - Médicos - Especialidades - Convênios - Serviços - Colaboradores"
+    <PageTitle icon="fa fa-folder" main="Cadastros Gerais" sub="Pacientes - Médicos - Especialidades - Convênios - Serviços - Colaboradores"
     />
+    <!-- Divisão de Cadastros  -->
     <div class="menus-homecadastro">
       <div class="coluna1">
         <router-link to="/">
@@ -40,9 +39,9 @@
 </template>
 
 <script>
-import PageTitle from "../template/PageTitle.vue";
-import { mapState } from 'vuex'
-import Menus from "./Menus.vue";
+import PageTitle from "../template/PageTitle.vue";//Importa o layout do título da página
+import { mapState } from 'vuex'//improta as configurações da Store
+import Menus from "./Menus.vue";//Importa o layout dos Menus da página
 
 export default {
   name: "HomeCadastro",
