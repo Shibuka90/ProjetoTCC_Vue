@@ -1,3 +1,5 @@
+//Cria a tabela pacientes
+
 exports.up = function(knex) {
     return knex.schema.createTable('pacientes', table => {
         table.increments('codigopac').primary()
@@ -28,6 +30,7 @@ exports.up = function(knex) {
     })
   };
   
+  //Exclui a tabela pacientes
   exports.down = function(knex) {
     return knex.schema.dropTable('pacientes')
   };

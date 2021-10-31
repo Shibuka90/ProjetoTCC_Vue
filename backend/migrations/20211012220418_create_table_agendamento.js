@@ -1,3 +1,5 @@
+//Cria a tabela Agendamentos
+
 exports.up = function(knex) {
     return knex.schema.createTable('agendamentos', table => {
         table.increments('codigo').primary()
@@ -11,6 +13,7 @@ exports.up = function(knex) {
     })
 };
 
+//Exclui a tabela Agendamentos
 exports.down = function(knex) {
     return knex.schema.dropTable('agendamentos')
 };

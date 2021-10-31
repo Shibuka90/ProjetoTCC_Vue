@@ -1,3 +1,5 @@
+//Cria a tabela Médicos
+
 exports.up = function(knex) {
     return knex.schema.createTable('medicos', table => {
         table.increments('codigomed').primary()
@@ -25,6 +27,7 @@ exports.up = function(knex) {
     })
   };
   
+  //Exclui a tabela Médicos
   exports.down = function(knex) {
     return knex.schema.dropTable('medicos')
   };

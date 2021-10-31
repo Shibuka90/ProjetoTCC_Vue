@@ -1,3 +1,5 @@
+//Cria a tabela Usuarios
+
 exports.up = function(knex) {
     return knex.schema.createTable('usuarios', table => {
         table.increments('codigo').primary()
@@ -31,6 +33,7 @@ exports.up = function(knex) {
     })
   };
   
+  //Exclui a tabela Usuários
   exports.down = function(knex) {
     return knex.schema.dropTable('usuarios')
   };

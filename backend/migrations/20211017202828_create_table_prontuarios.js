@@ -1,3 +1,5 @@
+//Cria a tabela Prontuários
+
 
 exports.up = function(knex) {
     return knex.schema.createTable('prontuarios', table => {
@@ -13,6 +15,8 @@ exports.up = function(knex) {
     })
 };
 
+
+//Exclui a tabela Prontuários
 exports.down = function(knex) {
     return knex.schema.dropTable('prontuarios')
 };

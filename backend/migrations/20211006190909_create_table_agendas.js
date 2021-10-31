@@ -1,4 +1,5 @@
 
+///Cria a tabela Agendas
 exports.up = function(knex) {
     return knex.schema.createTable('agendas', table => {
         table.increments('codigoag').primary()
@@ -13,6 +14,7 @@ exports.up = function(knex) {
     })
 };
 
+//Exclui a tabela Agendas
 exports.down = function(knex) {
     return knex.schema.dropTable('agendas')
 };

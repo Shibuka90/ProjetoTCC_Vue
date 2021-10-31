@@ -37,15 +37,14 @@ export default {
                 .catch(showError)
         },
 
-        signup() {
-            axios.post(`${baseApiUrl}/signup`, this.usuario)
-                .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    this.usuario = {}
-                    this.showSignup = false
-                })
-                .catch(showError)
-        }
+        // signup() {
+        //     axios.post(`${baseApiUrl}/signup`, this.usuario)
+        //         .then(() => {
+        //             this.$toasted.global.defaultSuccess()
+        //             this.usuario = {}
+        //         })
+        //         .catch(showError)
+        // }
     }
 
 }

@@ -1,3 +1,5 @@
+//Cria a tabela Especialidades
+
 exports.up = function(knex) {
     return knex.schema.createTable('especialidades', table => {
         table.increments('codigo').primary()
@@ -5,6 +7,7 @@ exports.up = function(knex) {
     })
 };
 
+//Exclui a tabela Especialidade
 exports.down = function(knex) {
   return knex.schema.dropTable('especialidades')
 };

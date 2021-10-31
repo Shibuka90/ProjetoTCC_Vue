@@ -1,4 +1,6 @@
 
+//Cria a tabela Atendimentos
+
 exports.up = function(knex) {
     return knex.schema.createTable('atendimentos', table => {
         table.increments('codigoatend').primary()
@@ -16,6 +18,8 @@ exports.up = function(knex) {
     })
 };
 
+
+//Exclui a tabela Atendimentos
 exports.down = function(knex) {
     return knex.schema.dropTable('atendimentos')
 };

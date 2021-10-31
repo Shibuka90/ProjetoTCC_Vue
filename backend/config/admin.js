@@ -1,3 +1,5 @@
+//Interface de programção da aplicação para Usuario Admin
+
 module.exports = middleware => {
     return (req, res, next) => {
         if(req.user.admin){
