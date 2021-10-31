@@ -1,3 +1,5 @@
+//Armazena a configuração da conexão com o bando de dados
+
 const { db } = require('./.env')
 
 module.exports = {
