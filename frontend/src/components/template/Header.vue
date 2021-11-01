@@ -1,11 +1,16 @@
+<!--Layout do Cabeçalho do Site -->
+
 <template>
   <header class="header">
+      <!-- Está inicial do Menu -->
       <a class="toggle" @click="toggleMenu" v-if="!hideToggle">
           <i class="fa fa-lg" :class="icon"></i>
       </a>
+      <!-- Título do Site e encaminha para o Home clicando no título -->
       <h1 class="title">
          <router-link to="/"> {{title}}</router-link>
       </h1>
+      <!-- Usado para identificar o usuário logado e onde o usuário desloga do sistema -->
       <UserDropDown v-if="!hideUserDropdown" />
   </header>
 </template>
@@ -23,11 +28,13 @@ export default {
         },
 
         computed: {
+            // Icone da Seta para o Menu visível e escondido
             icon() {
                 return this.$store.state.isMenuVisible ? "fa-angle-left" : "fa-angle-down"
             }
         },
         methods: {
+            //Traz as configuração do Menu da Store
             toggleMenu(){
                 this.$store.commit('toggleMenu')
             }

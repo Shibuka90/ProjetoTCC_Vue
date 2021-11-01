@@ -1,3 +1,4 @@
+<!--Layout da página de Carregamento, a página aparece caso algum tenha problema de acesso o sistema -->
 <template>
   <div class="loading">
       <img src="@/assets/loading.gif" alt="Loading">

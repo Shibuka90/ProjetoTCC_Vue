@@ -1,3 +1,5 @@
+<!-- Layout dos Menus de acessos -->
+
 <template>
   <aside class="menu" v-show="isMenuVisible">
       <div class="home-menu">
@@ -31,15 +33,19 @@
         <router-link to="/atendimentos">
             <p><i class="fas fa-address-book"></i>Atendimentos</p>
         </router-link>
+        <router-link to="/prontuarios">
+            <p><i class="fa fa-first-aid"></i>Prontuários</p>
+        </router-link>
       </div>
   </aside>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex'//Importa as configuração do vuex
 
 export default {
     name: 'Menu',
+    //Configuração de inicial do Menu após o login
     computed: mapState(['isMenuVisible', 'usuario'])
 }
 </script>

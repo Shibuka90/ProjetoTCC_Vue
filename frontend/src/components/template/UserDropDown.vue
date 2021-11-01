@@ -1,3 +1,5 @@
+<!--Layout da Identificação do usuário logado -->
+
 <template>
     <div class="user-dropdown">
         <div class="user-button">
@@ -15,15 +17,17 @@
 </template>
 
 <script>
-import { userKey } from '@/global'
-import { mapState } from 'vuex'
-import Gravatar from 'vue-gravatar'
+import { userKey } from '@/global'//Importa as configuraçãoes do arquivo global
+import { mapState } from 'vuex'//Importa as configurações do vuex
+import Gravatar from 'vue-gravatar'//Importa as configurações do vue-gravatar, colcoa uma imagem para cada usuário
 
 export default {
     name: 'UserFropDown',
     components: { Gravatar },
+    //Configuração de inicial do Menu após o login
     computed: mapState(['usuario']),
     methods: {
+        //Função de deslogar do sistema, remove o token, usuário fica "nulo" e votla para a página de login
         logout(){
             localStorage.removeItem(userKey)
             this.$store.commit('setUsuario', null)

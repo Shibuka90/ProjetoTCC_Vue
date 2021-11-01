@@ -1,3 +1,5 @@
+<!--Layout do Título da Página -->
+
 <template>
   <div class="page-title">
       <h1><i v-if="icon" :class="icon"></i>{{main}}</h1>

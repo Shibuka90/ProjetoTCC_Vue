@@ -12,7 +12,6 @@ import NovoPacienteAtendimento from '@/components/cadastro/paciente/NovoPaciente
 import Usuarios from '@/components/cadastro/usuario/Usuarios'
 import NovoUsuario from '@/components/cadastro/usuario/NovoUsuario'
 import UsuarioAlterado from '@/components/cadastro/usuario/UsuarioAlterado'
-import NovoUsuarioAuth from '@/components/cadastro/usuario/NovoUsuarioAuth'
 
 import Especialidades from '@/components/cadastro/especialidade/Especialidades'
 
@@ -74,10 +73,6 @@ const routes = [{
     name: 'novousuario',
     path: '/novousuario',
     component: NovoUsuario
-}, {
-    name: 'novousuarioatuh',
-    path: '/novousuarioauth',
-    component: NovoUsuarioAuth
 }, {
     name: 'usuarioalterado',
     path: '/usuarios/:codigo',

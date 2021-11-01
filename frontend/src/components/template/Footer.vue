@@ -1,3 +1,4 @@
+<!--Layout para o Rodapé do site -->
 <template>
   <footer class="footer">
       <i class="fa fa-code "></i><span>Desenvolvido pelos alunos <strong> - Grupo 3 TCC - Turma CC8P12 - 2018/2021</strong></span><i class="fa fa-code "></i>

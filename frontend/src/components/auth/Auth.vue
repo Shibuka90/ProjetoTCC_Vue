@@ -10,7 +10,6 @@
         <input type="password" v-model="usuario.password" placeholder="Senha">
     <div class="botoes">
         <b-button class="mr-2" variant="success" @click="signin">Entrar</b-button>
-        <b-button router-link to="/novousuarioauth" variant="info">Registra-se aqui</b-button>
     </div>
     </div>
 </div>
