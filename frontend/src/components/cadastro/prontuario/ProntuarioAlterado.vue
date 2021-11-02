@@ -57,7 +57,7 @@
             </b-row>
             <b-row>
                 <b-col md="4">
-                    <b-button router-link to="/prontuarios" size='lg' class="mb-2" block>Cancelar</b-button>
+                    <b-button router-link to="/prontuarios" size='lg' class="mb-2" block>Voltar/Cancelar</b-button>
                 </b-col>
                 <b-col md="2">
                     <b-button variant="danger" size='lg' class="mb-2" block @click="remove" router-link to="/prontuarios">Excluir</b-button>

@@ -66,7 +66,7 @@
             </b-row> 
             <b-row>
                 <b-col md="4">
-                    <b-button router-link to="/atendimentos" size='lg' class="mb-2" block>Cancelar</b-button>
+                    <b-button router-link to="/atendimentos" size='lg' class="mb-2" block>Voltar/Cancelar</b-button>
                 </b-col>
                 <b-col md="2">
                     <b-button variant="info" size='lg' class="mb-2" block @click="remove" router-link to="/atendimentos">Alta</b-button>

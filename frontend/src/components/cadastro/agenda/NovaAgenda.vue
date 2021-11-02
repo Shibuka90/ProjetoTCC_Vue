@@ -83,7 +83,7 @@
                 </b-row>
                 <b-row>
                     <b-col md="6">
-                        <b-button router-link to="/agendas" size='lg' class="mb-2" block>Cancelar</b-button>
+                        <b-button router-link to="/agendas" size='lg' class="mb-2" block>Voltar/Cancelar</b-button>
                     </b-col>
                     <b-col md="6">
                         <b-button variant="success" size='lg' class="mb-2" block  @click="save" >Incluir</b-button>
