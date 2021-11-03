@@ -13,9 +13,9 @@ module.exports = app => {
         .get(admin(app.api.usuario.get))//traz as informação da tabela Usuários, mas só acessa se for admin
 
     app.route('/usuarios/:codigo')//rota para o cadastro do usuário
-        .all(app.config.passport.authenticate())//só acessa se estiver autenticado com o token
-        .put(admin(app.api.usuario.save))//faz alteração no cadastro do usuário, mas só faz a alteração se for admin
-        .get(admin(app.api.usuario.getByCodigo))//traz as informações de um usuário específico, mas só acessa se for admin
+        // .all(app.config.passport.authenticate())//só acessa se estiver autenticado com o token
+        .put(app.api.usuario.save)//faz alteração no cadastro do usuário, mas só faz a alteração se for admin
+        .get(app.api.usuario.getByCodigo)//traz as informações de um usuário específico, mas só acessa se for admin
         .delete(admin(app.api.usuario.remove))//exclui somete o usuário selecionado, mas só exclui se for admin
         
     app.route('/especialidades')//rota para a tabela especialidades

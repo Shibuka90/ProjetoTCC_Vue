@@ -22,10 +22,7 @@ module.exports = app => {
     const save = async (req, res) => {
         const usuario = { ...req.body }
         if(req.params.codigo) usuario.codigo = req.params.codigo
-        
-        if(!req.originalUrl.startWith('/usuarios')) usuario.admin = false
-        if(!req.usuario || !req.usuario.admin) usuario.admin = false
-        
+                
         // Está verificando se o usuário esqueceu de preencher algum campo, se esqueceu o sistema irá mostrar uma mensagem e retorna status 400 no banco de dados
         try{
             existsOrError(usuario.nome, 'Nome não informado')
