@@ -5,13 +5,13 @@ import Toasted from 'vue-toasted'
 
 Vue.use(Toasted, {
     iconPack: 'fontawesome',//icone para o balão de mensagem no canto superior direito da tela
-    duration: 5000// tempo q dura a renderização da mensagem
+    duration: 10000// tempo q dura a renderização da mensagem
 })
 
 //Caso haja êxito com o registro, sistema mostra a mensagem de sucesso
 Vue.toasted.register(
     'defaultSuccess',
-    payload => !payload.msg ? 'Operação realidada com sucesso!' : payload.msg,
+    payload => !payload.msg ? 'Operação realizada com sucesso!' : payload.msg,
     { type: 'success', icon: 'check' }
 )
 

@@ -61,7 +61,7 @@ export default {
       currentPage: 1,
       perPage: 5,
       filter: null,
-      sortBy: 'codigo',
+      sortBy: 'codigopac',
     };
     
   },

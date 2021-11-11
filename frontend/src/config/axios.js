@@ -1,5 +1,4 @@
 //Configuração para as requisições ao backend
-
 import axios from 'axios'
 
 //Acesso se estiver tudo ok
